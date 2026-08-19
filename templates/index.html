@@ -1,0 +1,503 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chief Jerry's 80th Birthday Celebration</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<!-- <style>
+
+</style> -->
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+
+
+<a href="#home" class="nav-brand">
+  <div class="logo-emblem">
+    <!-- Crown -->
+    <svg class="crown-svg" viewBox="0 0 100 45" fill="currentColor">
+      <path d="M 50 0 L 53 4 L 57 4 L 57 7 L 53 7 L 53 11 L 47 11 L 47 7 L 43 7 L 43 4 L 47 4 Z"/>
+      <path d="M 50 11 L 60 22 L 76 12 L 86 28 L 98 16 L 90 42 H 10 L 2 16 L 14 28 L 24 12 L 40 22 Z"/>
+      <rect x="8" y="43" width="84" height="5" rx="1.5"/>
+    </svg>
+
+    <!-- Center 80 -->
+    <span class="brand-number">80</span>
+
+    <!-- High-Density Laurel Wreath Leaves -->
+    <svg class="wreath-svg" viewBox="0 0 100 100" fill="currentColor">
+      <g>
+        <!-- Stem Left -->
+        <path d="M 48 94 C 28 92 12 76 12 52 C 12 36 22 22 34 16" fill="none" stroke="currentColor" stroke-width="2"/>
+        <!-- Individual Leaves Left -->
+        <path d="M 46 95 C 40 92 38 88 42 85 C 46 88 48 91 46 95 Z"/>
+        <path d="M 38 92 C 32 87 30 83 36 80 C 40 83 40 87 38 92 Z"/>
+        <path d="M 28 85 C 22 79 20 74 27 72 C 31 75 30 80 28 85 Z"/>
+        <path d="M 20 76 C 14 69 12 64 19 62 C 23 65 22 71 20 76 Z"/>
+        <path d="M 14 65 C 8 57 7 52 14 50 C 18 53 16 60 14 65 Z"/>
+        <path d="M 12 52 C 6 44 6 38 12 37 C 16 40 15 47 12 52 Z"/>
+        <path d="M 14 39 C 9 31 10 25 16 25 C 19 29 17 35 14 39 Z"/>
+        <path d="M 20 28 C 16 20 18 14 24 15 C 27 19 23 25 20 28 Z"/>
+        <path d="M 28 19 C 25 11 28 6 33 8 C 35 12 30 17 28 19 Z"/>
+      </g>
+      <!-- Mirrored Right Side -->
+      <g transform="translate(100, 0) scale(-1, 1)">
+        <path d="M 48 94 C 28 92 12 76 12 52 C 12 36 22 22 34 16" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M 46 95 C 40 92 38 88 42 85 C 46 88 48 91 46 95 Z"/>
+        <path d="M 38 92 C 32 87 30 83 36 80 C 40 83 40 87 38 92 Z"/>
+        <path d="M 28 85 C 22 79 20 74 27 72 C 31 75 30 80 28 85 Z"/>
+        <path d="M 20 76 C 14 69 12 64 19 62 C 23 65 22 71 20 76 Z"/>
+        <path d="M 14 65 C 8 57 7 52 14 50 C 18 53 16 60 14 65 Z"/>
+        <path d="M 12 52 C 6 44 6 38 12 37 C 16 40 15 47 12 52 Z"/>
+        <path d="M 14 39 C 9 31 10 25 16 25 C 19 29 17 35 14 39 Z"/>
+        <path d="M 20 28 C 16 20 18 14 24 15 C 27 19 23 25 20 28 Z"/>
+        <path d="M 28 19 C 25 11 28 6 33 8 C 35 12 30 17 28 19 Z"/>
+      </g>
+    </svg>
+  </div>
+</a>
+
+
+    <div class="nav-links">
+      <a href="#home">HOME</a>
+      <a href="#about">ABOUT DAD</a>
+      <a href="#details">DETAILS</a>
+      <a href="#program">PROGRAM</a>
+      <a href="#rsvp">RSVP</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+    <a href="#rsvp" class="btn-gold-sm">RSVP NOW</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <header id="home" class="hero-section">
+    <div class="hero-content">
+      <p class="hero-subtitle-top">YOU ARE CORDIALLY INVITED TO THE CELEBRATION OF</p>
+      <h3 class="hero-title-prefix serif-font">Chief</h3>
+      <h1 class="hero-main-title serif-font">JERRY</h1>
+      <h2 class="hero-full-name serif-font">CHUKWUEMEKA AGUIYI <br><small>(OSIMIRIATATA)</small></h2>
+      <div class="age-badge">80<sup>TH</sup></div>
+      <p style="letter-spacing: 2px; color: var(--gold-light); margin-bottom: 10px;">BIRTHDAY</p>
+      <p class="hero-quote">"Ogom Nwoke Is A Star!"</p>
+      <a href="#rsvp" class="btn-gold-sm" style="padding: 12px 28px; font-size: 0.85rem;">RSVP NOW</a>
+    
+    </div>
+    
+    <div class="hero-image">
+      <img src="{% static 'images/Pic 2.jpeg' %}" alt="Chief Jerry Aguiyi Portrait">
+    </div>
+    
+  </header>
+    <!-- COUNTDOWN -->
+       <!-- Digital Countdown Timer Section -->
+        <!-- <div style="text-align: center; width: 100%;"> -->
+        <!-- <div class="countdown-container">
+        <div class="countdown-box">
+            <span id="days" class="time-value">00</span>
+            <span class="time-label">DAYS</span>
+        </div>
+        <div class="countdown-divider">:</div>
+        <div class="countdown-box">
+            <span id="hours" class="time-value">00</span>
+            <span class="time-label">HOURS</span>
+        </div>
+        <div class="countdown-divider">:</div>
+        <div class="countdown-box">
+            <span id="minutes" class="time-value">00</span>
+            <span class="time-label">MINUTES</span>
+        </div>
+        <div class="countdown-divider">:</div>
+        <div class="countdown-box">
+            <span id="seconds" class="time-value">00</span>
+            <span class="time-label">SECONDS</span>
+        </div>
+        </div>  -->
+        <!-- </div> -->
+
+        <!-- COUNTDOWN -->
+<!-- Digital Countdown Timer Section -->
+<div class="countdown-container">
+  <div class="countdown-box">
+    <span id="days" class="time-value">00</span>
+    <span class="time-label">DAYS</span>
+  </div>
+  <div class="countdown-divider">:</div>
+  <div class="countdown-box">
+    <span id="hours" class="time-value">00</span>
+    <span class="time-label">HOURS</span>
+  </div>
+  <div class="countdown-divider">:</div>
+  <div class="countdown-box">
+    <span id="minutes" class="time-value">00</span>
+    <span class="time-label">MINUTES</span>
+  </div>
+  <div class="countdown-divider">:</div>
+  <div class="countdown-box">
+    <span id="seconds" class="time-value">00</span>
+    <span class="time-label">SECONDS</span>
+  </div>
+</div> 
+<!-- END COUNTDOWN -->
+      <!--  -->
+
+  <!-- Celebration Details -->
+  <section id="details" class="section-padding text-center bg-cream">
+    <h2 class="section-title serif-font">CELEBRATION DETAILS</h2>
+    <div class="details-grid">
+      <div class="detail-card">
+        <h3>SATURDAY</h3>
+        <p>3 OCTOBER 2026</p>
+      </div>
+      <div class="detail-card">
+        <h3>5:00 PM - 12:00 AM</h3>
+        <p>(NO AFRICAN TIME PLEASE)</p>
+      </div>
+      <div class="detail-card">
+        <h3>PRINCE REGENT HOTEL</h3>
+        <p>Manor Rd, Chigwell, Essex IG8 8AE</p>
+      </div>
+      <div class="detail-card">
+        <h3>DRESS CODE</h3>
+        <p>DRESS TO IMPRESS</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section-padding bg-white">
+    <div class="about-container">
+      <div class="about-text">
+        <h2 class="section-title serif-font">ABOUT DAD</h2>
+        <p>A devoted husband, loving father, proud grandfather, cherished uncle, and a man of faith and integrity. For eight decades, he has inspired lives, built a legacy of hard work, kindness, and service, and continues to be a pillar of strength and wisdom to us all.</p>
+      </div>
+      <!-- <div class="about-gallery">
+        <img src="{% static 'images/Pic 3.jpeg' %}" alt="Dad Photo 1">
+        <img src="{% static 'images/Pic 1.jpeg' %}" alt="Dad Photo 2">
+        <img src="{% static 'images/Pic 9.jpeg' %}" alt="Dad Photo 3">
+        <img src="{% static 'images/Pic 6.jpeg' %}" alt="Dad Photo 4">
+      </div> -->
+
+      <div class="about-gallery">
+    <div class="about-slides">
+        <img src="{% static 'images/Pic 3.jpeg' %}" alt="Dad Photo 1">
+        <img src="{% static 'images/Pic 1.jpeg' %}" alt="Dad Photo 2">
+        <img src="{% static 'images/Pic 9.jpeg' %}" alt="Dad Photo 3">
+        <img src="{% static 'images/Pic 6.jpeg' %}" alt="Dad Photo 4">
+    </div>
+
+    <button class="about-prev" aria-label="Previous photo">&#10094;</button>
+    <button class="about-next" aria-label="Next photo">&#10095;</button>
+
+    <div class="about-dots">
+        <span class="about-dot active"></span>
+        <span class="about-dot"></span>
+        <span class="about-dot"></span>
+        <span class="about-dot"></span>
+    </div>
+<!-- </div> -->
+    
+      <!--  -->
+    </div>
+  </section>
+
+  
+</div>
+
+  <!-- Celebration Program -->
+  <section id="program" class="section-padding text-center bg-cream">
+    <h2 class="section-title serif-font">CELEBRATION PROGRAM</h2>
+    <div class="program-timeline">
+      <div class="program-step">
+        <div class="icon-bubble">🍸</div>
+        <p>ARRIVAL & RECEPTION</p>
+      </div>
+      <div class="program-step">
+        <div class="icon-bubble">👑</div>
+        <p>GRAND ENTRANCE</p>
+      </div>
+      <div class="program-step">
+        <div class="icon-bubble">🍽️</div>
+        <p>DINNER</p>
+      </div>
+      <div class="program-step">
+        <div class="icon-bubble">🎤</div>
+        <p>TRIBUTES</p>
+      </div>
+      <div class="program-step">
+        <div class="icon-bubble">🎂</div>
+        <p>CAKE CUTTING</p>
+      </div>
+      <div class="program-step">
+        <div class="icon-bubble">🎵</div>
+        <p>DANCING</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RSVP Section -->
+  <section id="rsvp" class="section-padding bg-white">
+    <div class="rsvp-container">
+      <h2 class="section-title serif-font text-center">KINDLY RSVP</h2>
+      <p style="text-align: center; color: var(--gold); font-size: 0.85rem; letter-spacing: 1px;">WE LOOK FORWARD TO CELEBRATING WITH YOU!</p>
+
+      <div class="notice-box">
+        <strong>IMPORTANT:</strong> This celebration is strictly by invitation. Entry will be limited to confirmed guests (Max 3 guests per invitation).
+      </div>
+
+      <form method="POST" action="#" class="rsvp-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label>FULL NAME (AS INVITED) *</label>
+          <input type="text" name="full_name" class="form-control" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>EMAIL ADDRESS *</label>
+            <input type="email" name="email" class="form-control" placeholder="Enter your email address" required>
+          </div>
+          <div class="form-group">
+            <label>PHONE NUMBER *</label>
+            <input type="tel" name="phone" class="form-control" placeholder="Enter your phone number" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>WILL YOU BE ATTENDING? *</label>
+          <div class="radio-options">
+            <label class="radio-label"><input type="radio" name="attending" value="YES" checked> Yes, I will be attending</label>
+            <label class="radio-label"><input type="radio" name="attending" value="NO"> No, I will not be attending</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>NUMBER OF GUESTS ATTENDING (MAX 3) *</label>
+          <select name="guest_count" id="id_guest_count" class="form-control">
+            <option value="1">1 Guest (Just Me)</option>
+            <option value="2">2 Guests</option>
+            <option value="3">3 Guests (Max)</option>
+          </select>
+        </div>
+
+        <!-- Primary Meal Preference -->
+        <div class="form-group">
+          <label>YOUR MEAL PREFERENCE *</label>
+          <select name="primary_meal" class="form-control" required>
+            <option value="">Select your meal preference</option>
+            {% for meal in meal_options %}
+              <option value="{{ meal.id }}">{{ meal.name }}</option>
+            {% empty %}
+              <option value="1">Jollof Rice & Spicy Beef</option>
+              <option value="2">Fried Rice & Croaker Fish</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Guest 2 Card -->
+        <div id="guest-2-card" class="guest-card" style="display: none;">
+          <h3 class="serif-font">Guest 2 Details</h3>
+          <div class="form-group">
+            <label>GUEST 2 FULL NAME *</label>
+            <input type="text" name="guest_2_name" class="form-control" placeholder="Guest 2 Full Name">
+          </div>
+          <div class="form-group">
+            <label>GUEST 2 MEAL PREFERENCE *</label>
+            <select name="guest_2_meal" class="form-control">
+              <option value="">Select guest 2 meal preference</option>
+              {% for meal in meal_options %}
+                <option value="{{ meal.id }}">{{ meal.name }}</option>
+              {% empty %}
+                <option value="1">Jollof Rice & Spicy Beef</option>
+                <option value="2">Fried Rice & Croaker Fish</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <!-- Guest 3 Card -->
+        <div id="guest-3-card" class="guest-card" style="display: none;">
+          <h3 class="serif-font">Guest 3 Details</h3>
+          <div class="form-group">
+            <label>GUEST 3 FULL NAME *</label>
+            <input type="text" name="guest_3_name" class="form-control" placeholder="Guest 3 Full Name">
+          </div>
+          <div class="form-group">
+            <label>GUEST 3 MEAL PREFERENCE *</label>
+            <select name="guest_3_meal" class="form-control">
+              <option value="">Select guest 3 meal preference</option>
+              {% for meal in meal_options %}
+                <option value="{{ meal.id }}">{{ meal.name }}</option>
+              {% empty %}
+                <option value="1">Jollof Rice & Spicy Beef</option>
+                <option value="2">Fried Rice & Croaker Fish</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>DIETARY REQUIREMENTS / ALLERGIES</label>
+          <textarea name="dietary_requirements" class="form-control" rows="3" placeholder="Please let us know of any allergies or dietary restrictions"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>A SPECIAL MESSAGE FOR GRANDDAD</label>
+          <textarea name="message" class="form-control" rows="4" placeholder="Write your birthday message here..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">SUBMIT RSVP &#9992;</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact" class="footer">
+    <p style="margin-bottom: 10px; color: var(--gold);">RSVP DEADLINE: SATURDAY, 5 SEPTEMBER 2026</p>
+    <p>&copy; 2026 Chief Jerry Chukwuemeka Aguiyi 80th Birthday Celebration. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Vanilla Dynamic JS Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const guestSelect = document.getElementById('id_guest_count');
+      const guest2Card = document.getElementById('guest-2-card');
+      const guest3Card = document.getElementById('guest-3-card');
+
+      function updateGuestCards() {
+        const selectedCount = parseInt(guestSelect.value, 10);
+
+        if (selectedCount === 1) {
+          guest2Card.style.display = 'none';
+          guest3Card.style.display = 'none';
+        } else if (selectedCount === 2) {
+          guest2Card.style.display = 'block';
+          guest3Card.style.display = 'none';
+        } else if (selectedCount === 3) {
+          guest2Card.style.display = 'block';
+          guest3Card.style.display = 'block';
+        }
+      }
+
+      guestSelect.addEventListener('change', updateGuestCards);
+      updateGuestCards();
+    });
+
+
+    // DIGITAL COUNTDOWN
+    // Event target date: October 3, 2026, 17:00:00
+    const eventDate = new Date("October 3, 2026 17:00:00").getTime();
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const timeRemaining = eventDate - now;
+
+        if (timeRemaining > 0) {
+        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerText = String(days).padStart(2, "0");
+        document.getElementById("hours").innerText = String(hours).padStart(2, "0");
+        document.getElementById("minutes").innerText = String(minutes).padStart(2, "0");
+        document.getElementById("seconds").innerText = String(seconds).padStart(2, "0");
+        } else {
+        document.querySelector(".countdown-container").innerHTML = "<h3 style='color: var(--gold-accent);'>THE CELEBRATION HAS BEGUN!</h3>";
+        }
+    }
+
+    // Initial call and 1-second interval refresh
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // Gallery Slides - Infinite Loop Fix
+        const slides = document.querySelector('.about-slides');
+        const originalImages = document.querySelectorAll('.about-slides img');
+        const dots = document.querySelectorAll('.about-dot');
+        const prevButton = document.querySelector('.about-prev');
+        const nextButton = document.querySelector('.about-next');
+
+        // 1. Clone first and last slides for infinite seamless sliding
+        const firstClone = originalImages[0].cloneNode(true);
+        const lastClone = originalImages[originalImages.length - 1].cloneNode(true);
+
+        slides.appendChild(firstClone);
+        slides.insertBefore(lastClone, originalImages[0]);
+
+        const allSlides = document.querySelectorAll('.about-slides img');
+        let currentSlide = 1; // Start at index 1 because index 0 is now lastClone
+
+        // Set initial position instantly without transition
+        slides.style.transition = 'none';
+        slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+        function updateDots() {
+            // Map cloned indices back to the active dot index (0 to originalImages.length - 1)
+            let dotIndex = currentSlide - 1;
+            if (currentSlide === 0) dotIndex = originalImages.length - 1;
+            if (currentSlide === allSlides.length - 1) dotIndex = 0;
+
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === dotIndex);
+            });
+        }
+
+        function showSlide(index) {
+            if (index >= allSlides.length || index < 0) return;
+
+            currentSlide = index;
+            slides.style.transition = 'transform 0.6s ease-in-out';
+            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+            updateDots();
+        }
+
+        // 2. Teleport instantly without transition when hitting clones
+        slides.addEventListener('transitionend', () => {
+            // If we transitioned to the cloned first slide at the end
+            if (allSlides[currentSlide] === firstClone) {
+                slides.style.transition = 'none';
+                currentSlide = 1; // Reset to real first slide
+                slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+            }
+
+            // If we transitioned to the cloned last slide at the beginning
+            if (allSlides[currentSlide] === lastClone) {
+                slides.style.transition = 'none';
+                currentSlide = allSlides.length - 2; // Reset to real last slide
+                slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+            }
+        });
+
+        // Controls
+        nextButton.addEventListener('click', () => {
+            showSlide(currentSlide + 1);
+        });
+
+        prevButton.addEventListener('click', () => {
+            showSlide(currentSlide - 1);
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index + 1); // +1 offset due to prepended clone
+            });
+        });
+
+        // Automatic sliding
+        setInterval(() => {
+            showSlide(currentSlide + 1);
+        }, 5000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,679 @@
+/* ==========================================================================
+    1. CORE CSS VARIABLES & BASE STYLES
+    ========================================================================== */
+:root {
+    --emerald: #0B2B1D;
+    --emerald-dark: #071C13;
+    --gold: #C5A059;
+    --gold-light: #E8D3A7;
+    --cream: #F9F6F0;
+    --white: #FFFFFF;
+    --text-dark: #2A2A2A;
+    --text-muted: #666666;
+    --border-color: #E2D7C5;
+    --shadow-sm: 0 4px 15px rgba(0,0,0,0.05);
+    --shadow-md: 0 8px 25px rgba(0,0,0,0.08);
+
+    --gold-glow: rgba(212, 175, 55, 0.25);
+    --gold-accent-hover: #f1c40f;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--cream);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, .serif-font {
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 1px;
+}
+
+/* ==========================================================================
+    2. NAVIGATION BAR
+    ========================================================================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background-color: var(--emerald);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+/* Emblem Canvas */
+.logo-emblem {
+  position: relative;
+  width: 72px;  /* Matched width to wreath width */
+  height: 75px; /* Added height so crown sits properly on top */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Crown - Sits above the wreath */
+.crown-svg {
+  position: absolute;
+  top: 0;
+  width: 36px;
+  height: 20px;
+  color: var(--gold-accent);
+  z-index: 2;
+}
+
+/* Wreath - Centered base */
+.wreath-svg {
+  position: absolute;
+  bottom: 0;
+  width: 72px;
+  height: 72px;
+  color: var(--gold-accent);
+  z-index: 1;
+}
+
+/* "80" Number - Centered inside the wreath */
+.brand-number {
+  position: relative;
+  z-index: 3;
+  font-family: var(--font-serif);
+  font-size: 2.2rem; /* Adjusted down slightly from 2.2rem to fit wreath ring */
+  font-weight: 700;
+  color: var(--gold-accent);
+  line-height: 1;
+  margin-top: 2px;  /* Nudges 80 into the center of the leaves */
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--gold);
+}
+
+.btn-gold-sm {
+    background-color: var(--gold);
+    color: var(--emerald);
+    padding: 8px 18px;
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-gold-sm:hover {
+    background-color: var(--gold-light);
+}
+
+/* ==========================================================================
+    3. HERO SECTION
+    ========================================================================== */
+.hero-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: var(--emerald);
+    color: var(--gold);
+    padding: 60px 8%;
+    align-items: center;
+    gap: 40px;
+}
+
+.hero-content {
+    text-align: center;
+}
+
+.hero-subtitle-top {
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: var(--white);
+    margin-bottom: 10px;
+}
+
+.hero-title-prefix {
+    font-size: 2.2rem;
+    color: var(--gold);
+    margin-bottom: -10px;
+}
+
+.hero-main-title {
+    font-size: 4.5rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.hero-full-name {
+    font-size: 1.6rem;
+    color: var(--white);
+    margin-bottom: 20px;
+}
+
+.hero-full-name small {
+    font-size: 1rem;
+    color: var(--gold-light);
+}
+
+.age-badge {
+    display: inline-block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    border-top: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+    padding: 0 20px;
+    margin-bottom: 15px;
+}
+
+.hero-quote {
+    color: var(--white);
+    font-style: italic;
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+/* .hero-image img {
+    width: 100%;
+    max-height: 600px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 2px solid var(--gold);
+} */
+
+.hero-image img {
+    width: 100%;
+    
+    /* 1. Allows the image to expand vertically so top/bottom are never cut */
+    height: auto; 
+    
+    /* 2. Fits the entire image within bounds instead of cropping it */
+    object-fit: contain; 
+    
+    /* 3. Optional: Centers the image if container has fixed dimensions */
+    object-position: center; 
+    
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 2px solid var(--gold);
+    display: block;
+}
+
+/* ==========================================================================
+   DIGITAL COUNTDOWN TIMER
+   ========================================================================== */
+
+.countdown-container {
+  display: flex;
+  justify-content: flex-end; /* Standard CSS flex property for right alignment */
+  align-items: center;
+  gap: 12px;
+  background-color: var(--emerald);
+  margin: 0 0 2rem 0;
+  width: 100%;
+  
+  /* Responsive right offset: 8% on desktop scales dynamically with screen size */
+  padding-right: 8%; 
+  box-sizing: border-box;
+}
+
+.countdown-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box !important;
+  margin-bottom: 1rem;
+  border: 1px solid var(--gold);
+  border-radius: 0.5rem;
+  padding: 10px 16px;
+  min-width: 65px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.2); 
+}
+
+
+.time-value {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 700;
+  /* color: var(--gold-accent) ; */
+  color: var(--gold);
+  line-height: 1;
+}
+
+.time-label {
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+  color: #94A3B8;
+  margin-top: 4px;
+}
+
+.countdown-divider {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  color: var(--gold-accent);
+  margin-top: -12px;
+}
+/*  */
+
+
+@media (max-width: 480px) {
+
+    /* .countdown-container {
+        justify-content: center;
+        padding-right: 0;
+    } */
+    .countdown-box {
+        min-width: 48px;
+        padding: 8px 10px;
+    }
+    .time-value {
+        font-size: 1.4rem;
+    }
+    .countdown-divider {
+        font-size: 1.2rem;
+    }
+}
+
+/* ============ */
+
+/* ==========================================================================
+    4. COMMON SECTION STYLES & DETAILS GRID
+    ========================================================================== */
+.section-padding {
+    padding: 70px 8%;
+}
+
+.text-center { text-align: center; }
+.bg-white { background-color: var(--white); }
+.bg-cream { background-color: var(--cream); }
+
+.section-title {
+    font-size: 2.2rem;
+    color: var(--emerald);
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.section-title::after {
+    content: '❖';
+    display: block;
+    font-size: 1rem;
+    color: var(--gold);
+    margin-top: 5px;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin: 40px 0;
+}
+
+.detail-card {
+    border-right: 1px solid var(--border-color);
+    padding: 10px 20px;
+
+    /* Smooth transition for the shadow and slight lift effect */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.detail-card:hover {
+    /* Rich elevation shadow */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    
+    /* Optional: lifts the card up slightly (2px) on hover for a tactile feel */
+    transform: translateY(-2px); 
+}
+
+.detail-card:last-child {
+    border-right: none;
+}
+
+.detail-card h3 {
+    color: var(--emerald);
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+}
+
+.detail-card p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+    5. ABOUT DAD & PROGRAM TIMELINE
+    ========================================================================== */
+.about-container {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.about-text p {
+    font-size: 1rem;
+    color: var(--text-dark);
+    margin-top: 20px;
+    line-height: 1.8;
+}
+
+
+.about-gallery {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 30rem;
+    border-radius: 8px; /* Optional rounded edges */
+    background-color: var(--emerald, #0b2b1d); /* Fills side spacing when image zooms out */
+}
+
+.about-slides {
+    display: flex;
+    height: 100%;
+    transition: transform 0.6s ease-in-out;
+}
+
+.about-slides img {
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    
+    /* 1. Scales/zooms image to fit completely without cutting top or bottom */
+    object-fit: contain; 
+    
+    /* 2. Centers the photo inside the card bounds */
+    object-position: center; 
+    
+    flex-shrink: 0;
+}
+
+/*  */
+
+/* Navigation buttons */
+.about-prev,
+.about-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: rgba(0, 0, 0, 0.45);
+    color: white;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 2;
+    font-size: 1.3rem;
+}
+
+.about-prev {
+    left: 1rem;
+}
+
+.about-next {
+    right: 1rem;
+}
+
+.about-prev:hover,
+.about-next:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+/* Dots */
+.about-dots {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    z-index: 2;
+}
+
+.about-dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.about-dot.active {
+    background: white;
+    transform: scale(1.25);
+}
+/*  */
+
+/* Mobile Responsive adjustment (single column on small screens) */
+@media (max-width: 600px) {
+  .about-gallery {
+    grid-template-columns: 1fr;
+  }
+}
+/*  */
+
+.program-timeline {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    position: relative;
+}
+
+.program-step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+.icon-bubble {
+    width: 50px;
+    height: 50px;
+    background-color: var(--emerald);
+    color: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin: 0 auto 15px;
+    box-shadow: var(--shadow-sm);
+}
+
+.program-step p {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--emerald);
+}
+
+/* ==========================================================================
+    6. RSVP FORM SECTION
+    ========================================================================== */
+.rsvp-container {
+    max-width: 680px;
+    margin: 0 auto;
+    background-color: var(--white);
+    padding: 40px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+}
+
+/*  */
+.rsvp-container:hover {
+    /* Rich elevation shadow */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    
+    /* Optional: lifts the card up slightly (2px) on hover for a tactile feel */
+    transform: translateY(-2px); 
+}
+/*  */
+
+.notice-box {
+    background-color: var(--emerald);
+    color: var(--white);
+    border-left: 4px solid var(--gold);
+    padding: 15px;
+    font-size: 0.85rem;
+    margin: 25px 0 30px;
+    border-radius: 2px;
+}
+
+.form-group {
+    margin-bottom: 22px;
+    text-align: left;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--emerald);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    background-color: #FAF8F5;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    border-radius: 2px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--gold);
+    background-color: var(--white);
+}
+
+.radio-options {
+    display: flex;
+    gap: 25px;
+    margin-top: 5px;
+}
+
+.radio-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.guest-card {
+    background-color: #FAF8F5;
+    border: 1px dashed var(--gold);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.guest-card h3 {
+    font-size: 1.1rem;
+    color: var(--emerald);
+    margin-bottom: 15px;
+}
+
+.btn-submit {
+    width: 100%;
+    background-color: var(--emerald);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 16px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-submit:hover {
+    background-color: var(--gold);
+    color: var(--emerald);
+}
+
+/* ==========================================================================
+    7. FOOTER
+    ========================================================================== */
+.footer {
+    background-color: var(--emerald-dark);
+    color: var(--gold-light);
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+/* ==========================================================================
+    8. RESPONSIVE BREAKPOINTS
+    ========================================================================== */
+@media (max-width: 900px) {
+    .hero-section, .about-container { grid-template-columns: 1fr; }
+    .details-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+    .detail-card { border-right: none; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
+    .program-timeline { flex-wrap: wrap; gap: 20px; }
+    .program-step { flex: 1 1 30%; }
+    .nav-links { display: none; } /* Mobile toggle can be added here */
+}
