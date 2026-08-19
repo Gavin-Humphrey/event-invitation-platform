@@ -13,3 +13,6 @@ __pycache__/
 
 # Ignore OS metadata
 .DS_Store
+
+staticfiles/
+db.sqlite3
