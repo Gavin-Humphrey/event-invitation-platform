@@ -421,10 +421,8 @@ h1, h2, h3, h4, .serif-font {
     width: 100%;
     height: 100%;
     
-    /* 1. Scales/zooms image to fit completely without cutting top or bottom */
     object-fit: contain; 
     
-    /* 2. Centers the photo inside the card bounds */
     object-position: center; 
     
     flex-shrink: 0;
@@ -655,7 +653,105 @@ label {
 }
 
 /* ==========================================================================
-    7. FOOTER
+    7. Pop-Up Modal Overlay
+    ========================================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Modal Card */
+.modal-card {
+    background: #ffffff;
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    max-width: 480px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    border: 2px solid var(--gold, #c5a059);
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-card {
+    transform: scale(1);
+}
+
+/* Top-Right "X" Close Button */
+.modal-close-icon {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    font-size: 1.8rem;
+    line-height: 1;
+    color: #888888;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.modal-close-icon:hover {
+    color: #0b2b1d;
+}
+
+.modal-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    color: #0b2b1d;
+    margin-bottom: 0.75rem;
+}
+
+.modal-body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.btn-modal-close {
+    background-color: var(--gold, #c5a059);
+    color: #ffffff;
+    border: none;
+    padding: 10px 28px;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-modal-close:hover {
+    background-color: #a38241;
+}
+
+/* ==========================================================================
+    8. FOOTER
     ========================================================================== */
 .footer {
     background-color: var(--emerald-dark);
@@ -667,7 +763,7 @@ label {
 }
 
 /* ==========================================================================
-    8. RESPONSIVE BREAKPOINTS
+    9. RESPONSIVE BREAKPOINTS
     ========================================================================== */
 @media (max-width: 900px) {
     .hero-section, .about-container { grid-template-columns: 1fr; }
