@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Chief Jerry's 80th Birthday Celebration{% endblock %}</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+
+  {% include "navbar.html" %}
+
+  {% block content %}
+  {% endblock %}
+
+  <!-- Global Footer -->
+  <footer id="contact" class="footer">
+    <div class="footer-contact">
+      <h3>Questions or Enquiries?</h3>
+      <p>Reach out directly to the event coordinators:</p>
+      <div class="contact-links">
+        <!-- <a href="tel:+1234567890" class="contact-link"> -->
+        <span class="contact-link">     
+          📞 <strong>Call:</strong> +1 (234) 567-890
+        </span>  
+        <!-- </a> -->
+        <!-- <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" class="contact-link whatsapp"> -->
+        <span class="contact-link whatsapp">   
+          💬 <strong>WhatsApp:</strong> +1 (234) 567-890
+        </span> 
+        <!-- </a> -->
+      </div>
+    </div>
+    <p>&copy; 2026 Chief Jerry Chukwuemeka Aguiyi 80th Birthday Celebration. All Rights Reserved.</p>
+  </footer>
+
+ <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

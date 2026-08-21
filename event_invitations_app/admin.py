@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Event, RSVP, AdditionalGuest
+from django.db.models import Sum
 
 
 class AdditionalGuestInline(admin.TabularInline):
@@ -15,6 +16,7 @@ class EventAdmin(admin.ModelAdmin):
 @admin.register(RSVP)
 class RSVPAdmin(admin.ModelAdmin):
     list_display = (
+        'suffix',
         'full_name', 
         'email', 
         'phone', 
@@ -23,7 +25,7 @@ class RSVPAdmin(admin.ModelAdmin):
         'additional_guests_list',
         'dietary_requirements', 
         'short_message', 
-        'created_at'
+        'created_at',
     )
     list_filter = ('attending', 'guest_count')
     search_fields = ('full_name', 'email', 'phone', 'dietary_requirements', 'message')
@@ -54,6 +56,30 @@ class RSVPAdmin(admin.ModelAdmin):
             return f"{obj.message[:40]}..."
         return obj.message or "-"
 
+    # ###
+    def changelist_view(self, request, extra_context=None):
+            extra_context = extra_context or {}
+    
+            # 1. Sum guest_count where attending == 'YES'
+            total_attending_guests = (
+                RSVP.objects.filter(attending='YES').aggregate(
+                    total=Sum('guest_count')
+                )['total']
+                or 0
+            )
+    
+            # 2. Count total primary RSVPs who said YES vs NO
+            total_yes_rsvps = RSVP.objects.filter(attending='YES').count()
+            total_no_rsvps = RSVP.objects.filter(attending='NO').count()
+    
+            # Inject into admin context banner
+            extra_context['title'] = (
+                f"Select RSVP to change | TOTAL ATTENDING GUESTS: {total_attending_guests} "
+                f"({total_yes_rsvps} RSVPs Accepted, {total_no_rsvps} Declined)"
+            )
+    
+            return super().changelist_view(request, extra_context=extra_context)
+    # ######
 
 @admin.register(AdditionalGuest)
 class AdditionalGuestAdmin(admin.ModelAdmin):

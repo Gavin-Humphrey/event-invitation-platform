@@ -35,12 +35,26 @@ class GalleryImage(models.Model):
 
 
 class RSVP(models.Model):
+    # Renamed to HONORIFIC_CHOICES or PREFIX_SUFFIX_CHOICES for clarity
+    SUFFIX_CHOICES = [
+        ('', 'None'),
+        ('Chief', 'Chief'),
+        ('Rev.', 'Rev.'),
+        ('Dr.', 'Dr.'),
+        ('Eng.', 'Eng.'),
+        ('Esq.', 'Esq.'),
+        ('Mr & Mrs', 'Mr & Mrs'),
+        ('Jr.', 'Jr.'),
+        ('Sr.', 'Sr.'),
+    ]
+
     class AttendingStatus(models.TextChoices):
         YES = 'YES', 'Yes, I will be attending'
         NO = 'NO', 'No, I will not be attending'
 
-    event = models.ForeignKey(Event, related_name='rsvps', on_delete=models.CASCADE)
-    full_name = models.CharField(max_length=200)
+    event = models.ForeignKey('Event', related_name='rsvps', on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=200)  # Renamed from full_name to avoid conflict
+    suffix = models.CharField(max_length=20, choices=SUFFIX_CHOICES, blank=True, default='')
     email = models.EmailField()
     phone = models.CharField(max_length=20)
     attending = models.CharField(
@@ -66,8 +80,27 @@ class RSVP(models.Model):
             models.Index(fields=['created_at']),
         ]
 
+    guest_count = models.PositiveSmallIntegerField(default=1)
+    
+    @property
+    def total_guests(self):
+        """Returns total party size (primary guest + additional guests)."""
+        if self.attending == 'YES':  
+            return self.guest_count
+        return 0
+
+    @property
+    def display_name(self):
+        """Returns name with prefix/suffix applied correctly."""
+        if not self.suffix:
+            return self.full_name
+        
+        if self.suffix in ['Chief', 'Rev.', 'Dr.', 'Eng.', 'Mr & Mrs']:
+            return f"{self.suffix} {self.full_name}"
+        return f"{self.full_name} {self.suffix}"
+
     def __str__(self):
-        return f"RSVP: {self.full_name} ({self.attending})"
+        return self.display_name
 
 
 class AdditionalGuest(models.Model):

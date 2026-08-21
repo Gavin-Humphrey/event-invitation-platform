@@ -1,98 +1,8 @@
+{% extends "main.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chief Jerry's 80th Birthday Celebration</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<style>
-  /* Ensure inputs and selects are clickable and visually visible */
-/* .rsvp-form select,
-.rsvp-form input,
-.rsvp-form textarea {
-  position: relative;
-  z-index: 10;
-  pointer-events: auto !important;
-  cursor: pointer;
-  background-color: #ffffff;
-  color: #333333;
-  appearance: auto !important; 
-  -webkit-appearance: select !important;
-  -moz-appearance: select !important;
-}
-
-.form-group {
-  position: relative;
-  z-index: 1;
-} */
-
-/* ------- */
-
-/* ------- */
-</style>
-<body>
-
-  <!-- Navigation Bar -->
-  <nav class="navbar">
-    <a href="#home" class="nav-brand">
-      <div class="logo-emblem">
-        <!-- Crown -->
-        <svg class="crown-svg" viewBox="0 0 100 45" fill="currentColor">
-          <path d="M 50 0 L 53 4 L 57 4 L 57 7 L 53 7 L 53 11 L 47 11 L 47 7 L 43 7 L 43 4 L 47 4 Z"/>
-          <path d="M 50 11 L 60 22 L 76 12 L 86 28 L 98 16 L 90 42 H 10 L 2 16 L 14 28 L 24 12 L 40 22 Z"/>
-          <rect x="8" y="43" width="84" height="5" rx="1.5"/>
-        </svg>
-
-        <!-- Center 80 -->
-        <span class="brand-number">80</span>
-
-        <!-- High-Density Laurel Wreath Leaves -->
-        <svg class="wreath-svg" viewBox="0 0 100 100" fill="currentColor">
-          <g>
-            <path d="M 48 94 C 28 92 12 76 12 52 C 12 36 22 22 34 16" fill="none" stroke="currentColor" stroke-width="2"/>
-            <path d="M 46 95 C 40 92 38 88 42 85 C 46 88 48 91 46 95 Z"/>
-            <path d="M 38 92 C 32 87 30 83 36 80 C 40 83 40 87 38 92 Z"/>
-            <path d="M 28 85 C 22 79 20 74 27 72 C 31 75 30 80 28 85 Z"/>
-            <path d="M 20 76 C 14 69 12 64 19 62 C 23 65 22 71 20 76 Z"/>
-            <path d="M 14 65 C 8 57 7 52 14 50 C 18 53 16 60 14 65 Z"/>
-            <path d="M 12 52 C 6 44 6 38 12 37 C 16 40 15 47 12 52 Z"/>
-            <path d="M 14 39 C 9 31 10 25 16 25 C 19 29 17 35 14 39 Z"/>
-            <path d="M 20 28 C 16 20 18 14 24 15 C 27 19 23 25 20 28 Z"/>
-            <path d="M 28 19 C 25 11 28 6 33 8 C 35 12 30 17 28 19 Z"/>
-          </g>
-          <g transform="translate(100, 0) scale(-1, 1)">
-            <path d="M 48 94 C 28 92 12 76 12 52 C 12 36 22 22 34 16" fill="none" stroke="currentColor" stroke-width="2"/>
-            <path d="M 46 95 C 40 92 38 88 42 85 C 46 88 48 91 46 95 Z"/>
-            <path d="M 38 92 C 32 87 30 83 36 80 C 40 83 40 87 38 92 Z"/>
-            <path d="M 28 85 C 22 79 20 74 27 72 C 31 75 30 80 28 85 Z"/>
-            <path d="M 20 76 C 14 69 12 64 19 62 C 23 65 22 71 20 76 Z"/>
-            <path d="M 14 65 C 8 57 7 52 14 50 C 18 53 16 60 14 65 Z"/>
-            <path d="M 12 52 C 6 44 6 38 12 37 C 16 40 15 47 12 52 Z"/>
-            <path d="M 14 39 C 9 31 10 25 16 25 C 19 29 17 35 14 39 Z"/>
-            <path d="M 20 28 C 16 20 18 14 24 15 C 27 19 23 25 20 28 Z"/>
-            <path d="M 28 19 C 25 11 28 6 33 8 C 35 12 30 17 28 19 Z"/>
-          </g>
-        </svg>
-      </div>
-    </a>
-
-    <div class="nav-links">
-      <a href="#home">HOME</a>
-      <a href="#about">ABOUT DAD</a>
-      <a href="#details">DETAILS</a>
-      <a href="#program">PROGRAM</a>
-      <a href="#rsvp">RSVP</a>
-      <a href="#contact">CONTACT</a>
-    </div>
-    <a href="#rsvp" class="btn-gold-sm">RSVP NOW</a>
-  </nav>
-
-  <!-- Hero Section -->
+{% block content %}
+<!-- Hero Section -->
   <header id="home" class="hero-section">
     <div class="hero-content">
       <p class="hero-subtitle-top">YOU ARE CORDIALLY INVITED TO THE CELEBRATION OF</p>
@@ -101,8 +11,8 @@
       <h2 class="hero-full-name serif-font">CHUKWUEMEKA AGUIYI <br><small>(OSIMIRIATATA)</small></h2>
       <div class="age-badge">80<sup>TH</sup></div>
       <p style="letter-spacing: 2px; color: var(--gold-light); margin-bottom: 10px;">BIRTHDAY</p>
-      <p class="hero-quote">"Ogom Nwoke Is A Star!"</p>
-      <a href="#rsvp" class="btn-gold-sm" style="padding: 12px 28px; font-size: 0.85rem;">RSVP NOW</a>
+      <p class="hero-quote">"Your life is a blessing and your legacy, an inspiration"</p>
+      <a href="#rsvp" class="btn-gold-sm btn-gold-sm-hero" style="padding: 12px 28px; font-size: 0.85rem;">RSVP NOW</a>
     </div>
     
     <div class="hero-image">
@@ -159,11 +69,27 @@
   <!-- About Section -->
   <section id="about" class="section-padding bg-white">
     <div class="about-container">
+      <!-- <div class="about-text">
+        <h2 class="section-title serif-font">ABOUT DAD</h2>
+        <p>A devoted husband, loving father, proud grandfather, cherished uncle, and a man of faith and integrity. For eight decades, he has inspired lives, built a legacy of hard work, kindness, and service, and continues to be a pillar of strength and wisdom to us all.</p>
+      </div> -->
+
       <div class="about-text">
         <h2 class="section-title serif-font">ABOUT DAD</h2>
         <p>A devoted husband, loving father, proud grandfather, cherished uncle, and a man of faith and integrity. For eight decades, he has inspired lives, built a legacy of hard work, kindness, and service, and continues to be a pillar of strength and wisdom to us all.</p>
-      </div>
+        
+        <!-- Collapsible Container -->
+        <div class="text-collapse" id="aboutTextCollapse">
+          <p>Throughout his full and vibrant journey, his dedication to family, community, and his core values has remained unwavering. From mentoring younger generations to offering guidance during challenging times, his presence brings comfort and joy to everyone fortunate enough to know him.</p>
+          <p>As we celebrate this milestone milestone, we honor not just the years he has lived, but the profound impact, warmth, and enduring wisdom he shares with every step forward.</p>
+        </div>
 
+        <button type="button" class="btn-read-more" id="readMoreBtn" onclick="toggleReadMore()">
+          <span class="btn-text">Read More</span>
+          <span class="btn-icon">▼</span>
+        </button>
+      </div>
+<!--  -->
       <div class="about-gallery">
         <div class="about-slides">
           <img src="{% static 'images/Pic 3.jpeg' %}" alt="Dad Photo 1">
@@ -186,7 +112,7 @@
   </section>
 
   <!-- Celebration Program -->
-  <section id="program" class="section-padding text-center bg-cream">
+  <!-- <section id="program" class="section-padding text-center bg-cream">
     <h2 class="section-title serif-font">CELEBRATION PROGRAM</h2>
     <div class="program-timeline">
       <div class="program-step">
@@ -214,7 +140,7 @@
         <p>DANCING</p>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- RSVP Section -->
   <section id="rsvp" class="section-padding bg-white">
@@ -222,13 +148,13 @@
       <h2 class="section-title serif-font text-center">KINDLY RSVP</h2>
       <p style="text-align: center; color: var(--gold); font-size: 0.85rem; letter-spacing: 1px;">WE LOOK FORWARD TO CELEBRATING WITH YOU!</p>
 
-      {% if messages %}
+      <!-- {% if messages %}
         {% for message in messages %}
           <div class="notice-box" style="border-color: var(--gold); background: rgba(197, 160, 89, 0.1);">
             <strong>{{ message }}</strong>
           </div>
         {% endfor %}
-      {% endif %}
+      {% endif %} -->
 
       <div class="notice-box">
         <strong>IMPORTANT:</strong> This celebration is strictly by invitation. Entry will be limited to confirmed guests (Max 3 guests per invitation).
@@ -249,6 +175,14 @@
         </div>
 
         <div class="form-group">
+          <label for="{{ form.suffix.id_for_label }}">TITLE / SUFFIX</label>
+          {{ form.suffix }}
+          {% if form.suffix.errors %}
+            <div class="invalid-feedback">{{ form.suffix.errors }}</div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
           <label>FULL NAME (AS INVITED) *</label>
           {{ form.full_name }}
           {% if form.full_name.errors %}
@@ -258,7 +192,7 @@
           {% endif %}
         </div>
 
-        <div class="form-row">
+        <div class="form-row form-row-contact">
           <div class="form-group">
             <label>EMAIL ADDRESS *</label>
             {{ form.email }}
@@ -337,13 +271,6 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer id="contact" class="footer">
-    <p>&copy; 2026 Chief Jerry Chukwuemeka Aguiyi 80th Birthday Celebration. All Rights Reserved.</p>
-  </footer>
-
-  <!-- ////////// -->
-  <!-- Thank You Pop-Up Modal -->
   <!-- Thank You Pop-Up Modal -->
   {% if messages %}
     {% for message in messages %}
@@ -567,7 +494,89 @@
           }
         });
       }
+
+    // Mobile Hamburger
+    document.addEventListener('DOMContentLoaded', () => {
+      const navToggle = document.getElementById('navToggle');
+      const navLinks = document.getElementById('navLinks');
+
+      if (navToggle && navLinks) {
+        navToggle.addEventListener('click', () => {
+          navLinks.classList.toggle('active');
+        });
+
+        // Close mobile dropdown after selecting a section link
+        navLinks.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+          });
+        });
+      }
+    });
+
+    // ABOUT DAD COLLAPSE
+    function toggleReadMore() {
+    const content = document.getElementById('aboutTextCollapse');
+    const button = document.getElementById('readMoreBtn');
+    const buttonText = button.querySelector('.btn-text');
+
+    content.classList.toggle('expanded');
+    button.classList.toggle('expanded');
+
+    if (content.classList.contains('expanded')) {
+        buttonText.textContent = 'Read Less';
+    } else {
+        buttonText.textContent = 'Read More';
+    }
+}
  
   </script>
-</body>
-</html>
+  <!-- <style>
+  /* ==========================================================================
+   ABOUT DAD READ MORE / COLLAPSE TOGGLE
+   ========================================================================== */
+.text-collapse {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease-in-out, opacity 0.4s ease-in-out, margin-top 0.3s ease;
+}
+
+.text-collapse.expanded {
+    max-height: 500px; /* Adjust if your content is longer */
+    opacity: 1;
+    margin-top: 10px;
+}
+
+.btn-read-more {
+    background: transparent;
+    border: none;
+    color: var(--gold);
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 15px;
+    padding: 0;
+    transition: color 0.3s ease;
+}
+
+.btn-read-more:hover {
+    color: var(--emerald);
+}
+
+.btn-read-more .btn-icon {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+}
+
+.btn-read-more.expanded .btn-icon {
+    transform: rotate(180deg);
+}
+  </style> -->
+{% endblock %}

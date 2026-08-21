@@ -2,20 +2,70 @@
     1. CORE CSS VARIABLES & BASE STYLES
     ========================================================================== */
 :root {
+    /* Brand & Primary Colors */
     --emerald: #0B2B1D;
     --emerald-dark: #071C13;
     --gold: #C5A059;
     --gold-light: #E8D3A7;
+    --gold-accent: #C5A059;
+    --gold-accent-hover: #F1C40F;
+    --gold-dark-hover: #A38241;
+    --gold-dark-alt: #B08C46;
+
+    /* Neutrals & Surfaces */
     --cream: #F9F6F0;
     --white: #FFFFFF;
-    --text-dark: #2A2A2A;
-    --text-muted: #666666;
+    --bg-light: #FAF8F5;
+    --bg-surface: #F9F9F9;
+    --bg-slate: #F4F6F8;
+    --bg-hover-slate: #F8FAFC;
+    --bg-divider-slate: #F1F5F9;
     --border-color: #E2D7C5;
-    --shadow-sm: 0 4px 15px rgba(0,0,0,0.05);
-    --shadow-md: 0 8px 25px rgba(0,0,0,0.08);
+    --border-light: #E2E8F0;
+    --border-muted: #CCCCCC;
+    --border-subtle: #EEEEEE;
 
+    /* Text Colors */
+    --text-dark: #2A2A2A;
+    --text-body: #333333;
+    --text-muted: #666666;
+    --text-slate-muted: #64748B;
+    --text-slate-light: #94A3B8;
+    --text-subtle: #888888;
+    --text-footer-light: #D1D5DB;
+    --text-footer-muted: #9CA3AF;
+
+    /* Status Colors */
+    --status-success: #2E7D32;
+    --status-success-bg: #E8F5E9;
+    --status-danger: #D9534F;
+    --status-danger-dark: #C62828;
+    --status-info: #2B5B84;
+    --btn-secondary: #6C757D;
+    --btn-secondary-hover: #5A6268;
+
+    /* Alpha / Transparency Variants */
     --gold-glow: rgba(212, 175, 55, 0.25);
-    --gold-accent-hover: #f1c40f;
+    --gold-border-alpha: rgba(197, 160, 89, 0.2);
+    --black-alpha-10: rgba(0, 0, 0, 0.05);
+    --black-alpha-15: rgba(0, 0, 0, 0.08);
+    --black-alpha-20: rgba(0, 0, 0, 0.2);
+    --black-alpha-30: rgba(0, 0, 0, 0.3);
+    --black-alpha-45: rgba(0, 0, 0, 0.45);
+    --black-alpha-70: rgba(0, 0, 0, 0.7);
+    --black-alpha-75: rgba(0, 0, 0, 0.75);
+    --white-alpha-10: rgba(255, 255, 255, 0.1);
+    --white-alpha-60: rgba(255, 255, 255, 0.6);
+
+    /* Shadow Assembly */
+    --shadow-sm: 0 4px 15px var(--black-alpha-10);
+    --shadow-md: 0 8px 25px var(--black-alpha-15);
+    --shadow-lg: 0 10px 30px var(--black-alpha-30);
+    --shadow-card: 0 4px 12px var(--black-alpha-15);
+
+    /* Typography Assemblies */
+    --font-sans: 'Montserrat', sans-serif;
+    --font-serif: 'Cormorant Garamond', serif;
 }
 
 * {
@@ -29,14 +79,14 @@ html {
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans);
     background-color: var(--cream);
     color: var(--text-dark);
     line-height: 1.6;
 }
 
 h1, h2, h3, h4, .serif-font {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-serif);
     letter-spacing: 1px;
 }
 
@@ -52,7 +102,7 @@ h1, h2, h3, h4, .serif-font {
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 10px var(--black-alpha-20);
 }
 
 /* Emblem Canvas */
@@ -90,11 +140,11 @@ h1, h2, h3, h4, .serif-font {
   position: relative;
   z-index: 3;
   font-family: var(--font-serif);
-  font-size: 2.2rem; /* Adjusted down slightly from 2.2rem to fit wreath ring */
+  font-size: 2.2rem;
   font-weight: 700;
   color: var(--gold-accent);
   line-height: 1;
-  margin-top: 2px;  /* Nudges 80 into the center of the leaves */
+  margin-top: 2px;
 }
 
 .nav-brand {
@@ -102,7 +152,7 @@ h1, h2, h3, h4, .serif-font {
     align-items: center;
     gap: 10px;
     color: var(--gold);
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-serif);
     font-size: 1.5rem;
     font-weight: 700;
     text-decoration: none;
@@ -140,6 +190,29 @@ h1, h2, h3, h4, .serif-font {
 
 .btn-gold-sm:hover {
     background-color: var(--gold-light);
+}
+
+/* Nav Toggle */
+/* Hamburger Icon (Hidden on Desktop) */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+}
+
+.nav-toggle span {
+  height: 3px;
+  width: 100%;
+  background-color: var(--gold);
+  border-radius: 2px;
+  transition: all 0.3s ease;
 }
 
 /* ==========================================================================
@@ -193,7 +266,7 @@ h1, h2, h3, h4, .serif-font {
 
 .age-badge {
     display: inline-block;
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-serif);
     font-size: 3.5rem;
     font-weight: 700;
     color: var(--gold);
@@ -211,29 +284,13 @@ h1, h2, h3, h4, .serif-font {
     opacity: 0.9;
 }
 
-/* .hero-image img {
-    width: 100%;
-    max-height: 600px;
-    object-fit: cover;
-    border-radius: 4px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    border: 2px solid var(--gold);
-} */
-
 .hero-image img {
     width: 100%;
-    
-    /* 1. Allows the image to expand vertically so top/bottom are never cut */
     height: auto; 
-    
-    /* 2. Fits the entire image within bounds instead of cropping it */
     object-fit: contain; 
-    
-    /* 3. Optional: Centers the image if container has fixed dimensions */
     object-position: center; 
-    
     border-radius: 4px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    box-shadow: var(--shadow-lg);
     border: 2px solid var(--gold);
     display: block;
 }
@@ -244,15 +301,14 @@ h1, h2, h3, h4, .serif-font {
 
 .countdown-container {
   display: flex;
-  justify-content: flex-end; /* Standard CSS flex property for right alignment */
+  justify-content: flex-end;
   align-items: center;
   gap: 12px;
   background-color: var(--emerald);
   margin: 0 0 2rem 0;
   width: 100%;
-  
-  /* Responsive right offset: 8% on desktop scales dynamically with screen size */
-  padding-right: 8%; 
+  /* padding-right: 8%;  */
+  padding-right: 7%;
   box-sizing: border-box;
 }
 
@@ -268,16 +324,14 @@ h1, h2, h3, h4, .serif-font {
   padding: 10px 16px;
   min-width: 65px;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.2); 
+  background-color: var(--black-alpha-20); 
 }
-
 
 .time-value {
   display: block;
   font-family: var(--font-serif);
   font-size: 2rem;
   font-weight: 700;
-  /* color: var(--gold-accent) ; */
   color: var(--gold);
   line-height: 1;
 }
@@ -286,7 +340,7 @@ h1, h2, h3, h4, .serif-font {
   display: block;
   font-size: 0.65rem;
   letter-spacing: 1.5px;
-  color: #94A3B8;
+  color: var(--text-slate-light);
   margin-top: 4px;
 }
 
@@ -296,15 +350,8 @@ h1, h2, h3, h4, .serif-font {
   color: var(--gold-accent);
   margin-top: -12px;
 }
-/*  */
-
 
 @media (max-width: 480px) {
-
-    /* .countdown-container {
-        justify-content: center;
-        padding-right: 0;
-    } */
     .countdown-box {
         min-width: 48px;
         padding: 8px 10px;
@@ -316,8 +363,6 @@ h1, h2, h3, h4, .serif-font {
         font-size: 1.2rem;
     }
 }
-
-/* ============ */
 
 /* ==========================================================================
     4. COMMON SECTION STYLES & DETAILS GRID
@@ -355,16 +400,11 @@ h1, h2, h3, h4, .serif-font {
 .detail-card {
     border-right: 1px solid var(--border-color);
     padding: 10px 20px;
-
-    /* Smooth transition for the shadow and slight lift effect */
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .detail-card:hover {
-    /* Rich elevation shadow */
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    
-    /* Optional: lifts the card up slightly (2px) on hover for a tactile feel */
+    box-shadow: 0 8px 24px var(--black-alpha-15);
     transform: translateY(-2px); 
 }
 
@@ -400,14 +440,13 @@ h1, h2, h3, h4, .serif-font {
     line-height: 1.8;
 }
 
-
 .about-gallery {
     position: relative;
     overflow: hidden;
     width: 100%;
     height: 30rem;
-    border-radius: 8px; /* Optional rounded edges */
-    background-color: var(--emerald, #0b2b1d); /* Fills side spacing when image zooms out */
+    border-radius: 8px;
+    background-color: var(--emerald);
 }
 
 .about-slides {
@@ -420,15 +459,10 @@ h1, h2, h3, h4, .serif-font {
     min-width: 100%;
     width: 100%;
     height: 100%;
-    
     object-fit: contain; 
-    
     object-position: center; 
-    
     flex-shrink: 0;
 }
-
-/*  */
 
 /* Navigation buttons */
 .about-prev,
@@ -437,8 +471,8 @@ h1, h2, h3, h4, .serif-font {
     top: 50%;
     transform: translateY(-50%);
     border: none;
-    background: rgba(0, 0, 0, 0.45);
-    color: white;
+    background: var(--black-alpha-45);
+    color: var(--white);
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
@@ -457,7 +491,7 @@ h1, h2, h3, h4, .serif-font {
 
 .about-prev:hover,
 .about-next:hover {
-    background: rgba(0, 0, 0, 0.7);
+    background: var(--black-alpha-70);
 }
 
 /* Dots */
@@ -474,26 +508,70 @@ h1, h2, h3, h4, .serif-font {
 .about-dot {
     width: 0.6rem;
     height: 0.6rem;
-    background: rgba(255, 255, 255, 0.6);
+    background: var(--white-alpha-60);
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .about-dot.active {
-    background: white;
+    background: var(--white);
     transform: scale(1.25);
 }
-/*  */
 
-/* Mobile Responsive adjustment (single column on small screens) */
 @media (max-width: 600px) {
   .about-gallery {
     grid-template-columns: 1fr;
   }
 }
-/*  */
 
+/* ==========================================================================
+   ABOUT DAD READ MORE / COLLAPSE TOGGLE
+   ========================================================================== */
+.text-collapse {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease-in-out, opacity 0.4s ease-in-out, margin-top 0.3s ease;
+}
+
+.text-collapse.expanded {
+    max-height: 500px; /* Adjust if your content is longer */
+    opacity: 1;
+    margin-top: 10px;
+}
+
+.btn-read-more {
+    background: transparent;
+    border: none;
+    color: var(--gold);
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 15px;
+    padding: 0;
+    transition: color 0.3s ease;
+}
+
+.btn-read-more:hover {
+    color: var(--emerald);
+}
+
+.btn-read-more .btn-icon {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+}
+
+.btn-read-more.expanded .btn-icon {
+    transform: rotate(180deg);
+}
+/*  */
 .program-timeline {
     display: flex;
     justify-content: space-between;
@@ -541,15 +619,10 @@ h1, h2, h3, h4, .serif-font {
     box-shadow: var(--shadow-md);
 }
 
-/*  */
 .rsvp-container:hover {
-    /* Rich elevation shadow */
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    
-    /* Optional: lifts the card up slightly (2px) on hover for a tactile feel */
+    box-shadow: 0 8px 24px var(--black-alpha-15);
     transform: translateY(-2px); 
 }
-/*  */
 
 .notice-box {
     background-color: var(--emerald);
@@ -588,8 +661,8 @@ label {
     width: 100%;
     padding: 12px 15px;
     border: 1px solid var(--border-color);
-    background-color: #FAF8F5;
-    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg-light);
+    font-family: var(--font-sans);
     font-size: 0.9rem;
     color: var(--text-dark);
     border-radius: 2px;
@@ -619,7 +692,7 @@ label {
 }
 
 .guest-card {
-    background-color: #FAF8F5;
+    background-color: var(--bg-light);
     border: 1px dashed var(--gold);
     padding: 20px;
     margin-bottom: 20px;
@@ -661,7 +734,7 @@ label {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: var(--black-alpha-75);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -678,15 +751,15 @@ label {
 
 /* Modal Card */
 .modal-card {
-    background: #ffffff;
+    background: var(--white);
     padding: 2.5rem 2rem;
     border-radius: 12px;
     max-width: 480px;
     width: 90%;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-lg);
     position: relative;
-    border: 2px solid var(--gold, #c5a059);
+    border: 2px solid var(--gold);
     transform: scale(0.8);
     transition: transform 0.3s ease;
 }
@@ -704,13 +777,13 @@ label {
     border: none;
     font-size: 1.8rem;
     line-height: 1;
-    color: #888888;
+    color: var(--text-subtle);
     cursor: pointer;
     transition: color 0.2s ease;
 }
 
 .modal-close-icon:hover {
-    color: #0b2b1d;
+    color: var(--emerald);
 }
 
 .modal-icon {
@@ -719,23 +792,23 @@ label {
 }
 
 .modal-title {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-serif);
     font-size: 1.8rem;
-    color: #0b2b1d;
+    color: var(--emerald);
     margin-bottom: 0.75rem;
 }
 
 .modal-body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.95rem;
-    color: #444;
+    color: var(--text-body);
     line-height: 1.6;
     margin-bottom: 1.5rem;
 }
 
 .btn-modal-close {
-    background-color: var(--gold, #c5a059);
-    color: #ffffff;
+    background-color: var(--gold);
+    color: var(--white);
     border: none;
     padding: 10px 28px;
     font-size: 0.85rem;
@@ -747,23 +820,501 @@ label {
 }
 
 .btn-modal-close:hover {
-    background-color: #a38241;
+    background-color: var(--gold-dark-hover);
 }
 
 /* ==========================================================================
-    8. FOOTER
+    8. DASHBOARD
+    ========================================================================== */
+.event-dashboard-app {
+  font-family: var(--font-sans);
+  background: var(--bg-surface);
+  color: var(--text-body);
+  padding: 2rem;
+}
+
+.event-dashboard-app h1,
+.event-dashboard-app h2 { 
+  font-family: var(--font-serif); 
+  color: var(--emerald); 
+}
+
+/* Cards */
+.event-dashboard-app .eda-card { 
+  background: var(--white); 
+  padding: 1.5rem; 
+  border-radius: 8px; 
+  box-shadow: var(--shadow-card); 
+  margin-bottom: 2rem; 
+}
+
+/* Desktop Base Table Styles */
+.event-dashboard-app table.eda-table { 
+  width: 100%; 
+  border-collapse: separate; 
+  border-spacing: 0;
+  margin-top: 1rem; 
+  background: var(--white);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px var(--black-alpha-10);
+}
+
+.event-dashboard-app table.eda-table th, 
+.event-dashboard-app table.eda-table td { 
+  border-bottom: 1px solid var(--border-light); 
+  padding: 12px 16px; 
+  text-align: left; 
+  vertical-align: middle;
+}
+
+.event-dashboard-app table.eda-table th { 
+  background: var(--emerald); 
+  color: var(--white); 
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--emerald-dark);
+}
+
+.event-dashboard-app table.eda-table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.event-dashboard-app table.eda-table tbody tr:hover {
+  background-color: var(--bg-hover-slate);
+}
+
+.event-dashboard-app table.eda-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.event-dashboard-app .eda-badge-count {
+    font-size: large;
+}
+
+.event-dashboard-app .eda-badge-count-number {
+    color: var(--gold);
+}
+
+/* Responsive Stacked Cards View (< 768px) */
+@media screen and (max-width: 768px) {
+  .event-dashboard-app table.eda-table thead {
+    display: none;
+  }
+
+  .event-dashboard-app table.eda-table,
+  .event-dashboard-app table.eda-table tbody,
+  .event-dashboard-app table.eda-table tr,
+  .event-dashboard-app table.eda-table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .event-dashboard-app table.eda-table {
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .event-dashboard-app table.eda-table tr {
+    background: var(--white);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    padding: 6px 0;
+    box-shadow: 0 2px 4px var(--black-alpha-10);
+  }
+
+  .event-dashboard-app table.eda-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--bg-divider-slate);
+    padding: 10px 14px;
+    text-align: right;
+  }
+
+  .event-dashboard-app table.eda-table td:last-child {
+    border-bottom: none;
+  }
+
+  .event-dashboard-app table.eda-table td:nth-of-type(1)::before {
+    content: "ID";
+  }
+
+  .event-dashboard-app table.eda-table td:nth-of-type(2)::before {
+    content: "Name / Details";
+  }
+
+  .event-dashboard-app table.eda-table td:nth-of-type(3)::before {
+    content: "Status";
+  }
+
+  .event-dashboard-app table.eda-table td:nth-of-type(4)::before {
+    content: "Actions";
+  }
+
+  .event-dashboard-app table.eda-table td::before {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-slate-muted);
+    letter-spacing: 0.05em;
+    text-align: left;
+    padding-right: 12px;
+  }
+
+  .event-dashboard-app table.eda-table td[colspan]::before {
+    display: none;
+  }
+
+  .event-dashboard-app table.eda-table td[colspan] {
+    justify-content: center;
+    text-align: center;
+    color: var(--text-slate-light);
+  }
+}
+
+/* Status Indicators */
+.event-dashboard-app .eda-status-attending {
+  color: var(--status-success);
+  font-weight: 600;
+}
+
+.event-dashboard-app .eda-status-declined {
+  color: var(--status-danger);
+  font-weight: 600;
+}
+
+/* Gallery Grid */
+.event-dashboard-app .eda-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+  gap: 1rem; 
+  margin-top: 1rem; 
+}
+
+.event-dashboard-app .eda-grid-item { 
+  border: 1px solid var(--border-color); 
+  padding: 10px; 
+  background: var(--white); 
+  border-radius: 6px; 
+  text-align: center; 
+}
+
+.event-dashboard-app .eda-grid-item img { 
+  width: 100%; 
+  height: 140px; 
+  object-fit: cover; 
+  border-radius: 4px; 
+}
+
+.event-dashboard-app .eda-caption {
+  margin: 8px 0 4px;
+}
+
+.event-dashboard-app .eda-btn { 
+  background: var(--gold); 
+  color: var(--white); 
+  border: none; 
+  padding: 8px 16px; 
+  cursor: pointer; 
+  border-radius: 4px; 
+  text-decoration: none; 
+  display: inline-block; 
+}
+
+.event-dashboard-app .eda-btn-sm {
+  padding: 4px 10px;
+  font-size: 0.875rem;
+}
+
+.event-dashboard-app .eda-btn-info {
+  background-color: var(--status-info);
+}
+
+.event-dashboard-app .eda-btn-danger { 
+  background-color: var(--status-danger); 
+}
+
+.event-dashboard-app .eda-badge { 
+  background: var(--cream); 
+  padding: 3px 8px; 
+  border-radius: 12px; 
+  font-size: 0.8rem; 
+}
+
+/* Alerts & Forms */
+.event-dashboard-app .eda-alert-success {
+  background: var(--status-success-bg); 
+  color: var(--status-success); 
+  padding: 10px; 
+  margin-bottom: 1rem; 
+  border-radius: 4px;
+}
+
+.event-dashboard-app .eda-form-delete {
+  margin-top: 10px;
+}
+
+/* ==========================================================================
+    9. VIEW RSVP
+    ========================================================================== */
+.rsvp-view-wrapper {
+    padding: 2rem 1rem;
+}
+
+.rsvp-view-card {
+    background: var(--white);
+    padding: 2rem;
+    max-width: 650px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: var(--shadow-card);
+}
+
+.rsvp-view-card h2 {
+    font-family: var(--font-serif);
+    color: var(--emerald);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.rsvp-view-group {
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.rsvp-view-group.no-border {
+    border-bottom: none;
+}
+
+.rsvp-view-label {
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.rsvp-view-value {
+    font-size: 1.1rem;
+    color: var(--emerald);
+    margin-top: 4px;
+    line-height: 1.5;
+}
+
+.rsvp-view-box {
+    background: var(--bg-slate);
+    padding: 1rem;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+}
+
+.rsvp-view-box ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.rsvp-view-actions {
+    margin-top: 2rem;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.rsvp-view-btn {
+    background: var(--gold);
+    color: var(--white);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-block;
+    transition: background-color 0.2s ease;
+}
+
+.rsvp-view-btn:hover {
+    background: var(--gold-dark-alt);
+    color: var(--white);
+}
+
+.rsvp-view-btn-secondary {
+    background: var(--btn-secondary);
+}
+
+.rsvp-view-btn-secondary:hover {
+    background: var(--btn-secondary-hover);
+}
+
+.status-attending {
+    color: var(--status-success);
+    font-weight: 700;
+}
+
+.status-declined {
+    color: var(--status-danger-dark);
+    font-weight: 700;
+}
+
+/* ==========================================================================
+    10. EDIT RSVP
+    ========================================================================== */
+.rsvp-edit-wrapper {
+    padding: 2rem 1rem;
+}
+
+.rsvp-edit-card {
+    background: var(--white);
+    padding: 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: var(--shadow-card);
+}
+
+.rsvp-edit-card h2 {
+    font-family: var(--font-serif);
+    color: var(--emerald);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.rsvp-edit-form p {
+    margin-bottom: 1.25rem;
+}
+
+.rsvp-edit-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--emerald);
+    font-size: 0.9rem;
+}
+
+.rsvp-edit-form input[type="text"],
+.rsvp-edit-form input[type="email"],
+.rsvp-edit-form input[type="number"],
+.rsvp-edit-form input[type="tel"],
+.rsvp-edit-form select,
+.rsvp-edit-form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-muted);
+    border-radius: 4px;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    box-sizing: border-box;
+}
+
+.rsvp-edit-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.rsvp-edit-btn {
+    background: var(--gold);
+    color: var(--white);
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.rsvp-edit-btn:hover {
+    background: var(--gold-dark-alt);
+}
+
+.rsvp-edit-cancel {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.rsvp-edit-cancel:hover {
+    text-decoration: underline;
+    color: var(--text-body);
+}
+
+/* ==========================================================================
+    11. FOOTER
     ========================================================================== */
 .footer {
-    background-color: var(--emerald-dark);
-    color: var(--gold-light);
+    background-color: var(--emerald);
+    color: var(--white);
+    padding: 3rem 1rem 1.5rem;
     text-align: center;
-    padding: 40px 20px;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
+}
+
+.footer-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.footer-contact h3 {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+}
+
+.footer-contact p {
+    color: var(--text-footer-light);
+    font-size: 0.95rem;
+    margin-bottom: 1.25rem;
+}
+
+.contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.contact-link {
+    color: var(--white);
+    background: var(--white-alpha-10);
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: background 0.2s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.contact-link:hover {
+    background: var(--gold);
+    color: var(--emerald);
+    transform: translateY(-2px);
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--white-alpha-10);
+    padding-top: 1.25rem;
+    font-size: 0.85rem;
+    color: var(--text-footer-muted);
 }
 
 /* ==========================================================================
-    9. RESPONSIVE BREAKPOINTS
+    12. RESPONSIVE BREAKPOINTS
     ========================================================================== */
 @media (max-width: 900px) {
     .hero-section, .about-container { grid-template-columns: 1fr; }
@@ -771,5 +1322,60 @@ label {
     .detail-card { border-right: none; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
     .program-timeline { flex-wrap: wrap; gap: 20px; }
     .program-step { flex: 1 1 30%; }
-    .nav-links { display: none; } /* Mobile toggle can be added here */
+    .nav-links { display: none; }
+    
+    .btn-gold-sm-hero {
+        display: none;
+    }
+
+    .nav-toggle {
+        display: flex;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--emerald);
+        flex-direction: column;
+        padding: 1.5rem 0;
+        box-shadow: 0 8px 16px var(--black-alpha-30);
+        text-align: center;
+        border-top: 1px solid var(--gold-border-alpha);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links a {
+        padding: 12px 0;
+        width: 100%;
+        display: block;
+    }
+
+    .nav-rsvp-btn {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    } 
+
+    .details-grid {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .form-row-contact {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 1rem;
+    }
+
+    .form-row-contact .form-group {
+        width: 100%;
+    }
 }

@@ -1,0 +1,69 @@
+<!-- Navigation Bar -->
+<nav class="navbar">
+  <a href="{% url 'home' %}#home" class="nav-brand">
+    <div class="logo-emblem">
+      <!-- Crown -->
+      <svg class="crown-svg" viewBox="0 0 100 45" fill="currentColor">
+        <path d="M 50 0 L 53 4 L 57 4 L 57 7 L 53 7 L 53 11 L 47 11 L 47 7 L 43 7 L 43 4 L 47 4 Z"/>
+        <path d="M 50 11 L 60 22 L 76 12 L 86 28 L 98 16 L 90 42 H 10 L 2 16 L 14 28 L 24 12 L 40 22 Z"/>
+        <rect x="8" y="43" width="84" height="5" rx="1.5"/>
+      </svg>
+
+      <!-- Center 80 -->
+      <span class="brand-number">80</span>
+
+      <!-- High-Density Laurel Wreath Leaves -->
+      <svg class="wreath-svg" viewBox="0 0 100 100" fill="currentColor">
+        <g>
+          <path d="M 48 94 C 28 92 12 76 12 52 C 12 36 22 22 34 16" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M 46 95 C 40 92 38 88 42 85 C 46 88 48 91 46 95 Z"/>
+          <path d="M 38 92 C 32 87 30 83 36 80 C 40 83 40 87 38 92 Z"/>
+          <path d="M 28 85 C 22 79 20 74 27 72 C 31 75 30 80 28 85 Z"/>
+          <path d="M 20 76 C 14 69 12 64 19 62 C 23 65 22 71 20 76 Z"/>
+          <path d="M 14 65 C 8 57 7 52 14 50 C 18 53 16 60 14 65 Z"/>
+          <path d="M 12 52 C 6 44 6 38 12 37 C 16 40 15 47 12 52 Z"/>
+          <path d="M 14 39 C 9 31 10 25 16 25 C 19 29 17 35 14 39 Z"/>
+          <path d="M 20 28 C 16 20 18 14 24 15 C 27 19 23 25 20 28 Z"/>
+          <path d="M 28 19 C 25 11 28 6 33 8 C 35 12 30 17 28 19 Z"/>
+        </g>
+        <g transform="translate(100, 0) scale(-1, 1)">
+          <path d="M 48 94 C 28 92 12 76 12 52 C 12 36 22 22 34 16" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M 46 95 C 40 92 38 88 42 85 C 46 88 48 91 46 95 Z"/>
+          <path d="M 38 92 C 32 87 30 83 36 80 C 40 83 40 87 38 92 Z"/>
+          <path d="M 28 85 C 22 79 20 74 27 72 C 31 75 30 80 28 85 Z"/>
+          <path d="M 20 76 C 14 69 12 64 19 62 C 23 65 22 71 20 76 Z"/>
+          <path d="M 14 65 C 8 57 7 52 14 50 C 18 53 16 60 14 65 Z"/>
+          <path d="M 12 52 C 6 44 6 38 12 37 C 16 40 15 47 12 52 Z"/>
+          <path d="M 14 39 C 9 31 10 25 16 25 C 19 29 17 35 14 39 Z"/>
+          <path d="M 20 28 C 16 20 18 14 24 15 C 27 19 23 25 20 28 Z"/>
+          <path d="M 28 19 C 25 11 28 6 33 8 C 35 12 30 17 28 19 Z"/>
+        </g>
+      </svg>
+    </div>
+  </a>
+
+  <div class="nav-links" id="navLinks">
+    <a href="{% url 'home' %}#home">HOME</a>
+    <a href="{% url 'home' %}#about">ABOUT DAD</a>
+    <a href="{% url 'home' %}#details">DETAILS</a>
+    <!-- <a href="{% url 'home' %}#program">PROGRAM</a> -->
+    <a href="{% url 'home' %}#contact">CONTACT</a>
+    
+    <!-- Public or Superuser Navigation Links -->
+    <a href="{% url 'home' %}#gallery">GALLERY</a>
+    <a href="{% url 'home' %}#rsvp">RSVP</a>
+
+    {% if user.is_authenticated and user.is_superuser %}
+      <a href="{% url 'admin_dashboard' %}" class="nav-dashboard-badge">DASHBOARD</a>
+    {% endif %}
+  </div>
+
+  <a href="{% url 'home' %}#rsvp" class="btn-gold-sm nav-rsvp-btn">RSVP NOW</a>
+
+  <!-- Mobile Hamburger Button -->
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>

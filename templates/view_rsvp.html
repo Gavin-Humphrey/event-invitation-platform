@@ -1,0 +1,89 @@
+{% extends "main.html" %}
+
+{% block title %}View RSVP #{{ rsvp.pk }}{% endblock %}
+
+{% block extra_head %}
+
+{% endblock %}
+
+{% block content %}
+<main class="rsvp-view-wrapper">
+  <div class="rsvp-view-card">
+    <h2>RSVP Details (#{{ rsvp.pk }})</h2>
+
+    <div class="rsvp-view-group">
+      <div class="rsvp-view-label">Primary Guest / Name</div>
+      <div class="rsvp-view-value">{{ rsvp.name|default:rsvp.full_name }}</div>
+    </div>
+
+    {% if rsvp.email %}
+      <div class="rsvp-view-group">
+        <div class="rsvp-view-label">Email Address</div>
+        <div class="rsvp-view-value">{{ rsvp.email }}</div>
+      </div>
+    {% endif %}
+
+    {% if rsvp.phone %}
+      <div class="rsvp-view-group">
+        <div class="rsvp-view-label">Phone Number</div>
+        <div class="rsvp-view-value">{{ rsvp.phone }}</div>
+      </div>
+    {% endif %}
+
+    <div class="rsvp-view-group">
+      <div class="rsvp-view-label">Attendance Status</div>
+      <div class="rsvp-view-value">
+        {% if rsvp.attending %}
+          <span class="status-attending">Attending</span>
+        {% else %}
+          <span class="status-declined">Regretfully Declined</span>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="rsvp-view-group">
+      <div class="rsvp-view-label">Total Guest Count</div>
+      <div class="rsvp-view-value">{{ rsvp.guest_count|default:"1" }}</div>
+    </div>
+
+    <!-- Additional Guests Section -->
+    {% if additional_guests %}
+      <div class="rsvp-view-group no-border">
+        <div class="rsvp-view-label">Additional Guests</div>
+        <div class="rsvp-view-box">
+          <ul>
+            {% for guest in additional_guests %}
+              <li>{{ guest.full_name }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% endif %}
+
+
+    <!--  -->
+    <!-- Dietary Requirements Section -->
+    {% if rsvp.dietary_requirements %}
+      <div class="rsvp-view-group">
+        <div class="rsvp-view-label">Dietary Requirements</div>
+        <div class="rsvp-view-value">{{ rsvp.dietary_requirements|linebreaksbr }}</div>
+      </div>
+    {% endif %}
+
+    <!-- Message / Note Section -->
+    {% if rsvp.message %}
+      <div class="rsvp-view-group">
+        <div class="rsvp-view-label">Message / Best Wishes</div>
+        <div class="rsvp-view-value">{{ rsvp.message|linebreaksbr }}</div>
+      </div>
+    {% endif %}
+    <!--  -->
+
+    <!-- Actions -->
+    <div class="rsvp-view-actions">
+      <a href="{% url 'edit_rsvp' rsvp.pk %}" class="rsvp-view-btn">Edit RSVP</a>
+      <a href="{% url 'admin_dashboard' %}" class="rsvp-view-btn rsvp-view-btn-secondary">Back to Dashboard</a>
+    </div>
+  </div>
+</main>
+{% endblock %}

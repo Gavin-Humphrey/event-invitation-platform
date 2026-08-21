@@ -1,0 +1,25 @@
+{% extends "main.html" %}
+
+{% block title %}Edit RSVP #{{ rsvp.pk }}{% endblock %}
+
+{% block extra_head %}
+
+{% endblock %}
+
+{% block content %}
+<main class="rsvp-edit-wrapper">
+  <div class="rsvp-edit-card">
+    <h2>Edit RSVP #{{ rsvp.pk }}</h2>
+    
+    <form method="post" class="rsvp-edit-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <div class="rsvp-edit-actions">
+        <button type="submit" class="rsvp-edit-btn">Save Changes</button>
+        <a href="{% url 'admin_dashboard' %}" class="rsvp-edit-cancel">Cancel</a>
+      </div>
+    </form>
+  </div>
+</main>
+{% endblock %}

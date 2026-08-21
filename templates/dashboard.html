@@ -1,0 +1,96 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block title %}Superuser Dashboard | Event Admin{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="event-dashboard-app">
+
+  <h1>Event Admin Dashboard</h1>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="eda-alert eda-alert-success">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <!-- RSVP Section -->
+  <div class="eda-card">
+    <h2>RSVP List</h2>
+    <div class="eda-badge-count">
+        Total Attending Headcount: <span class="eda-badge-count-number">{{ total_attending_headcount }}</span> Guests
+    </div>
+    <table class="eda-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name / Details</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for rsvp in rsvps %}
+          <tr>
+            <td>#{{ rsvp.id }}</td>
+            <td>{{rsvp.suffix }} {{ rsvp.full_name }}</td>
+            <td>
+              {% if rsvp.attending %}
+                <span class="eda-status-attending">Attending</span>
+              {% else %}
+                <span class="eda-status-declined">Declined</span>
+              {% endif %}
+            </td>
+            <td>
+              <a href="{% url 'view_rsvp' rsvp.pk %}" class="eda-btn eda-btn-sm eda-btn-info">View</a>
+              <a href="{% url 'edit_rsvp' rsvp.pk %}" class="eda-btn eda-btn-sm">Edit</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4">No RSVPs yet.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Gallery Image Upload Section -->
+  <div class="eda-card">
+    <h2>Upload New Gallery Image</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ image_form.as_p }}
+      <button type="submit" name="upload_image" class="eda-btn">Upload Image</button>
+    </form>
+  </div>
+
+  <!-- Manage Existing Gallery Images -->
+  <div class="eda-card">
+    <h2>Gallery Images ({{ gallery_images|length }})</h2>
+    <div class="eda-grid">
+      {% for img in gallery_images %}
+        <div class="eda-grid-item">
+          <img src="{{ img.image.url }}" alt="{{ img.caption }}">
+          <p class="eda-caption"><strong>{{ img.caption|default:"No Caption" }}</strong></p>
+          <span class="eda-badge">{{ img.get_category_display }}</span>
+          <form method="post" action="{% url 'delete_gallery_image' img.pk %}" class="eda-form-delete">
+            {% csrf_token %}
+            <button type="submit" class="eda-btn eda-btn-danger" onclick="return confirm('Delete this image?');">Delete</button>
+          </form>
+        </div>
+      {% empty %}
+        <p>No images uploaded yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
