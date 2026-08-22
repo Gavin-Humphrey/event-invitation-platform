@@ -160,3 +160,24 @@ SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 
 PASSWORD_RESET_TIMEOUT = 15000
+
+
+
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+    },
+}

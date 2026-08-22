@@ -11,10 +11,29 @@ from django.core.mail import send_mail
 
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-
+from datetime import datetime, date
 
 def home(request):
-    event, _ = Event.objects.get_or_create(pk=1)
+
+    # defaults={
+    #     "title": "Chief Jerry's 80th Birthday Celebration",
+    #     "event_date": datetime(2026, 10, 3, 17, 0),
+    #     "venue_name": "PRINCE REGENT HOTEL, Manor Rd, Chigwell, Essex IG8 8AE",
+    #     "rsvp_deadline": date(2026, 9, 20),
+    #     "invitation_passcode": "JERRY80",
+    #     }
+    
+    # )
+    event, _ = Event.objects.get_or_create(
+    pk=1,
+    defaults={
+        "title": "Chief Jerry's 80th Birthday Celebration",
+        "event_date": datetime(2026, 10, 3, 17, 0),
+        "venue_name": "PRINCE REGENT HOTEL, Manor Rd, Chigwell, Essex IG8 8AE",
+        "rsvp_deadline": date(2026, 9, 20),
+        "invitation_passcode": "JERRY80",
+        }
+    )
 
     if request.method == 'POST':
         form = RSVPForm(request.POST)
