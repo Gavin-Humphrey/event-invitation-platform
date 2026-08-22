@@ -6,6 +6,13 @@ from .models import Event, RSVP, GalleryImage
 from .forms import RSVPForm, AdditionalGuestFormSet, RSVPUpdateForm, GalleryImageForm
 from django.db.models import Sum
 
+from django.conf import settings
+from django.core.mail import send_mail
+
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
+
 def home(request):
     event, _ = Event.objects.get_or_create(pk=1)
 
@@ -20,6 +27,9 @@ def home(request):
             rsvp.save()
 
             guest_count = form.cleaned_data.get('guest_count', 1)
+            dietary_requirements = form.cleaned_data.get('dietary_requirements')
+            # event_date = form.cleaned_data.get('event_date')
+            # venue_name = form.cleaned_data.get('venue_name')
             additional_guests = formset.save(commit=False)
 
             for i, guest in enumerate(additional_guests):
@@ -27,20 +37,106 @@ def home(request):
                     guest.rsvp = rsvp
                     guest.save()
 
+            recipient_name = rsvp.full_name if rsvp.full_name else "Valued Guest"
+            greeting_prefix = f"{rsvp.suffix} " if rsvp.suffix else ""
+
+            if rsvp.attending == "YES":
+                # 1. Cleaner subject line (removing initial emoji prevents spam filter triggers on new domains)
+                subject = "RSVP Confirmed - We look forward to seeing you!"
+
+                html_content = f"""
+                <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #C5A059; border-radius: 8px; overflow: hidden;">
+                    <div style="background-color: #0B2B1D; padding: 24px; text-align: center;">
+                        <h1 style="color: #C5A059; margin: 0; font-size: 22px; letter-spacing: 1px; text-transform: uppercase;">
+                            RSVP Confirmed
+                        </h1>
+                    </div>
+                    <div style="padding: 30px; background-color: #ffffff; color: #333333; line-height: 1.6;">
+                        <p style="font-size: 16px; margin-top: 0;">
+                            Dear <strong>{greeting_prefix}{recipient_name}</strong>,
+                        </p>
+                        <p>
+                            Thank you for confirming your attendance! We are thrilled and delighted that you will be joining us to celebrate.
+                        </p>
+                        <div style="background-color: #F9F6F0; border-left: 4px solid #C5A059; padding: 15px; margin: 20px 0;">
+                            <p style="margin: 0; font-weight: bold; color: #0B2B1D;">Summary of your reservation:</p>
+                            <p style="margin: 5px 0 0 0;">Total Guests: <strong>{guest_count}</strong></p>
+                            <p style="margin: 5px 0 0 0;">Dietary Requirements: <strong>{dietary_requirements}</strong></p>
+                            <p style="margin: 5px 0 0 0;">Date: <strong>3rd of October 2026</strong></p>
+                            <p style="margin: 5px 0 0 0;">Event Venue: <strong>PRINCE REGENT HOTEL
+                                Manor Rd, Chigwell, Essex IG8 8AE</strong></p>
+                            <p style="margin: 5px 0 0 0;">Event Time: <strong>5 pm</strong>  * No African time.</p>
+                        </div>
+                        <p>We look forward to welcoming you!</p>
+                        <p style="margin-top: 30px;">
+                            Warm regards,<br>
+                            <strong>Event Hosting Committee</strong>
+                        </p>
+                    </div>
+                </div>
+                """
+
+                # 2. Complete plain text version matching the HTML structure (crucial for inbox delivery)
+                plain_message = (
+                    f"Dear {greeting_prefix}{recipient_name},\n\n"
+                    f"Thank you for confirming your attendance! We are thrilled and delighted that you will be joining us to celebrate.\n\n"
+                    f"Summary of your reservation:\n"
+                    f"- Total Guests: {guest_count}\n"
+                    f"- Dietary Requirements: {dietary_requirements}\n\n"
+                    f"We look forward to welcoming you!\n\n"
+                    f"Warm regards,\n"
+                    f"Event Hosting Committee"
+                )
+
+            else:
+                subject = "Thank you for your response"
+
+                html_content = f"""
+                <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; padding: 30px;">
+                    <p style="font-size: 16px; margin-top: 0;">
+                        Dear <strong>{greeting_prefix}{recipient_name}</strong>,
+                    </p>
+                    <p>
+                        Thank you for letting us know. We are sorry you won't be able to make it, but we appreciate your response!
+                    </p>
+                    <p style="margin-top: 30px;">
+                        Warm regards,<br>
+                        <strong>Event Hosting Committee</strong>
+                    </p>
+                </div>
+                """
+
+                plain_message = (
+                    f"Dear {greeting_prefix}{recipient_name},\n\n"
+                    f"Thank you for letting us know. We are sorry you won't be able to make it, but we appreciate your response!\n\n"
+                    f"Warm regards,\n"
+                    f"Event Hosting Committee"
+                )
+
+            # Send via Resend / Anymail
+            send_mail(
+                subject=subject,
+                message=plain_message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[rsvp.email],
+                html_message=html_content,
+                fail_silently=False,
+            )
+
             # Add success message for the modal pop-up
             messages.success(
-                request, 
-                "Thank you for your RSVP! Your response has been successfully received."
+                request,
+                "Thank you for your RSVP! Your response has been successfully received.",
             )
-            return redirect('home')  # Redirect to prevent form resubmission
+            return redirect("home")  # Redirect to prevent form resubmission
 
     else:
         form = RSVPForm()
         formset = AdditionalGuestFormSet(instance=RSVP())
 
-    return render(request, 'index.html', {'event': event, 'form': form, 'formset': formset})
-
-
+    return render(
+        request, "index.html", {"event": event, "form": form, "formset": formset}
+    )
 
 
 def is_superuser(user):

@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
+from decouple import config, Csv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +41,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "event_invitations_app",
+
+    "anymail",
 ]
 
 MIDDLEWARE = [
@@ -122,3 +126,23 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Sender address shown to recipients
+DEFAULT_FROM_EMAIL = "Event Celebration <noreply@jerryaguiyiat80.com>"
+###
+# Set Resend as the primary email backend
+EMAIL_BACKEND = "anymail.backends.resend.EmailBackend"
+
+ANYMAIL = {
+    "RESEND_API_KEY": config("RESEND_API_KEY"),
+}
+
+# Sender configuration using your verified domain
+DEFAULT_FROM_EMAIL = config(
+    "DEFAULT_FROM_EMAIL",
+    default="Event Celebration <noreply@jerryaguiyiat80.com>"
+)
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+
+PASSWORD_RESET_TIMEOUT = 15000
