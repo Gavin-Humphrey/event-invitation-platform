@@ -36,6 +36,11 @@ ALLOWED_HOSTS = config(
 ).split(",")
 
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://jerryaguiyiat80.com",
+    "https://www.jerryaguiyiat80.com",
+]
+
 # Application definition
 
 INSTALLED_APPS = [
