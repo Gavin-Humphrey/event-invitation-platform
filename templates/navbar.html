@@ -53,7 +53,7 @@
     <a href="{% url 'home' %}#gallery">GALLERY</a>
     <a href="{% url 'home' %}#rsvp">RSVP</a>
 
-    {% if user.is_authenticated and user.is_superuser %}
+    {% if user.is_authenticated and user.is_staff %}
       <a href="{% url 'admin_dashboard' %}" class="nav-dashboard-badge">DASHBOARD</a>
     {% endif %}
   </div>

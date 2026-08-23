@@ -158,10 +158,14 @@ def home(request):
     )
 
 
-def is_superuser(user):
-    return user.is_authenticated and user.is_superuser
+# def is_superuser(user):
+#     return user.is_authenticated and user.is_superuser
 
-@user_passes_test(is_superuser, login_url='/admin/login/')
+def is_admin_user(user):
+    return user.is_authenticated and user.is_active and (user.is_superuser or user.is_staff)
+
+
+@user_passes_test(is_admin_user, login_url='admin:login')
 def admin_dashboard(request):
     event = Event.objects.first()
     rsvps = RSVP.objects.all().order_by('-id')
@@ -194,7 +198,9 @@ def admin_dashboard(request):
     }
     return render(request, 'dashboard.html', context)
 
-@user_passes_test(is_superuser, login_url='/admin/login/')
+# @user_passes_test(is_superuser, login_url='/admin/login/')
+
+@user_passes_test(is_admin_user, login_url='admin:login')
 def edit_rsvp(request, pk):
     rsvp = get_object_or_404(RSVP, pk=pk)
     if request.method == 'POST':
@@ -209,7 +215,8 @@ def edit_rsvp(request, pk):
     return render(request, 'edit_rsvp.html', {'form': form, 'rsvp': rsvp})
 
 
-@user_passes_test(is_superuser, login_url='/admin/login/')
+#@user_passes_test(is_superuser, login_url='/admin/login/')
+@user_passes_test(is_admin_user, login_url='admin:login')
 def view_rsvp(request, pk):
     rsvp = get_object_or_404(RSVP, pk=pk)
     # Retrieves all additional guests linked to this RSVP (if using a ForeignKey or formset relation)
@@ -221,7 +228,8 @@ def view_rsvp(request, pk):
     }
     return render(request, 'view_rsvp.html', context)
 
-@user_passes_test(is_superuser, login_url='/admin/login/')
+#@user_passes_test(is_superuser, login_url='/admin/login/')
+@user_passes_test(is_admin_user, login_url='admin:login')
 def delete_gallery_image(request, pk):
     image = get_object_or_404(GalleryImage, pk=pk)
     if request.method == 'POST':

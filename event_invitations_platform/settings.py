@@ -29,7 +29,8 @@ SECRET_KEY = config("SECRET_KEY", default=get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 
-DEBUG=config("DEBUG", default=False, cast=bool) 
+DEBUG = config("DEBUG", default=False, cast=bool)
+
 
 ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
@@ -37,10 +38,36 @@ ALLOWED_HOSTS = config(
 ).split(",")
 
 
+# CSRF_TRUSTED_ORIGINS = [
+#     "https://jerryaguiyiat80.com",
+#     "https://www.jerryaguiyiat80.com",
+# ]
+
+# Trust Railway HTTPS proxy
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Only enforce Secure Cookies in production (when DEBUG is False)
+#DEBUG = os.getenv('DEBUG', 'True') == 'True'
+
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+
+# Login / Logout Redirects
+LOGIN_URL = 'admin:login'
+LOGIN_REDIRECT_URL = '/dashboard/'
+LOGOUT_REDIRECT_URL = '/'
+
+# CSRF Trusted Origins
 CSRF_TRUSTED_ORIGINS = [
     "https://jerryaguiyiat80.com",
     "https://www.jerryaguiyiat80.com",
+    "https://*.railway.app",
 ]
+
+RAILWAY_STATIC_URL = os.getenv('RAILWAY_PUBLIC_DOMAIN')
+if RAILWAY_STATIC_URL:
+    CSRF_TRUSTED_ORIGINS.append(f"https://{RAILWAY_STATIC_URL}")
+###############
 
 # Application definition
 
@@ -105,10 +132,11 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 if DATABASE_URL:
     DATABASES = {
-        "default": dj_database_url.config(
-            default=DATABASE_URL,
+        "default": dj_database_url.parse(
+            DATABASE_URL,
             conn_max_age=600,
             conn_health_checks=True,
+            ssl_require=False,  # Set to True if Railway enforces SSL
         )
     }
 else:
