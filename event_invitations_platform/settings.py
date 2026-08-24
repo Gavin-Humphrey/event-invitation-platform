@@ -78,18 +78,21 @@ if RAILWAY_STATIC_URL:
 # Application definition
 
 INSTALLED_APPS = [
+    # Core Django apps MUST come before cloudinary_storage
+    'django.contrib.staticfiles',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+
+    # Third-party storage
     'cloudinary_storage',
-    "django.contrib.staticfiles",
     'cloudinary',
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
 
-    "event_invitations_app",
-
-    "anymail",
+    # Your local apps
+    'event_invitations_app',
+    'anymail',
 ]
 
 MIDDLEWARE = [
@@ -184,7 +187,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
@@ -201,6 +204,7 @@ CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
     'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+    'STATICFILES_MANIFEST_ROOT': None,
 }
 
 cloudinary.config(
@@ -215,7 +219,7 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
 
