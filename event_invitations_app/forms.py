@@ -11,10 +11,26 @@ class RSVPUpdateForm(forms.ModelForm):
         model = RSVP
         fields = '__all__'
 
+
 class GalleryImageForm(forms.ModelForm):
     class Meta:
         model = GalleryImage
-        fields = ['image', 'caption', 'category']
+        fields = ['image', 'description', 'category']
+        widgets = {
+            'description': forms.Textarea(attrs={
+                'rows': 3,
+                'maxlength': '200',  # Client-side stop
+                'placeholder': 'Enter photo description (max 200 characters)...',
+                'class': 'form-control',
+                'id': 'gallery-description-input',
+            }),
+        }
+
+    def clean_description(self):
+        description = self.cleaned_data.get('description', '')
+        if description and len(description) > 200:
+            raise forms.ValidationError("Description cannot exceed 200 characters.")
+        return description
 
 GUEST_CHOICES = (
     (1, '1 Guest (Just Me)'),

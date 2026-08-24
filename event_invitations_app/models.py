@@ -19,6 +19,7 @@ class Event(models.Model):
     def __str__(self):
         return self.title
 
+
 class GalleryImage(models.Model):
     CATEGORY_CHOICES = [
         ('about', 'About Dad'),
@@ -26,13 +27,12 @@ class GalleryImage(models.Model):
     ]
 
     event = models.ForeignKey(Event, related_name='gallery_images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='gallery/')
-    caption = models.CharField(max_length=100, blank=True)
+    image = models.ImageField(upload_to='birthday_gallery/')
+    description = models.CharField(max_length=120, blank=True, null=True, help_text="Image description (max 120 chars)")
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
 
     def __str__(self):
-        return self.caption or f"Gallery Image {self.pk}"
-
+        return self.description or f"Gallery Image {self.pk}"
 
 class RSVP(models.Model):
     # Renamed to HONORIFIC_CHOICES or PREFIX_SUFFIX_CHOICES for clarity

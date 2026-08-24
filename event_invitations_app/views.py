@@ -35,6 +35,9 @@ def home(request):
         }
     )
 
+    # Fetch uploaded gallery images for the event
+    gallery_images = GalleryImage.objects.filter(event=event).order_by('-id')
+
     if request.method == 'POST':
         form = RSVPForm(request.POST)
         dummy_rsvp = RSVP(event=event)
@@ -154,7 +157,7 @@ def home(request):
         formset = AdditionalGuestFormSet(instance=RSVP())
 
     return render(
-        request, "index.html", {"event": event, "form": form, "formset": formset}
+        request, "index.html", {"event": event, "form": form, "formset": formset, "gallery_images": gallery_images}
     )
 
 
@@ -228,15 +231,22 @@ def view_rsvp(request, pk):
     }
     return render(request, 'view_rsvp.html', context)
 
-#@user_passes_test(is_superuser, login_url='/admin/login/')
 @user_passes_test(is_admin_user, login_url='admin:login')
 def delete_gallery_image(request, pk):
     image = get_object_or_404(GalleryImage, pk=pk)
-    if request.method == 'POST':
-        image.image.delete()  # Removes physical media file
-        image.delete()        # Removes database record
-        messages.success(request, "Image deleted successfully.")
-    return redirect('admin_dashboard')
+    
+    # Safely attempt to delete physical/cloud file
+    try:
+        image.image.delete(save=False)
+    except Exception as e:
+        # Ignore errors if the old local file doesn't exist on Cloudinary
+        print(f"Skipping storage delete for old media item: {e}")
+
+    # Remove the database record
+    image.delete()
+    
+    # Redirect back to your dashboard (use your actual URL pattern name)
+    return redirect('admin_dashboard')  # or 'event_invitations_app:dashboard'
 
 
 # def rsvp_confirmation_mail():

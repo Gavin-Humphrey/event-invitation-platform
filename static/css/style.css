@@ -440,38 +440,112 @@ h1, h2, h3, h4, .serif-font {
     line-height: 1.8;
 }
 
+/* Main Gallery Frame */
 .about-gallery {
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 30rem;
+    height: 36rem;
     border-radius: 8px;
-    background-color: var(--emerald);
+    background-color: var(--emerald, #0B2B1D);
 }
 
+/* Slides Flex Wrapper */
 .about-slides {
     display: flex;
+    width: 100%;
     height: 100%;
     transition: transform 0.6s ease-in-out;
 }
 
-.about-slides img {
+
+/* .about-slides .slide-card {
     min-width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+
+.about-slides .slide-card img {
+    width: 100%;
+    flex: 1; 
+    min-height: 0; 
+    object-fit: contain; 
+    object-position: center; 
+    border-radius: 8px 8px 0 0;
+
+    height: 85%;
+}
+   
+.slide-description {
+    background-color: rgba(11, 43, 29, 0.92); 
+    color: var(--gold-light, #C5A059);
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+    text-align: center;
+    border-radius: 6px;
+    flex-shrink: 0;
+    
+    
+    transform: translateY(-20px);
+    margin-bottom: -20px;
+    width: 90%;          
+    margin-left: auto;   
+    margin-right: auto;
+    z-index: 2;
+} */
+
+/* Individual Slide Card */
+/* Card relative container */
+.about-slides .slide-card {
+    min-width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Anchor for overlay positioning */
+    box-sizing: border-box;
+}
+
+/* Image fills full card height */
+.about-slides .slide-card img {
     width: 100%;
     height: 100%;
     object-fit: contain; 
     object-position: center; 
-    flex-shrink: 0;
+    border-radius: 8px;
+}
+   
+/* Floating description box elevated above dots */
+.slide-description {
+    position: absolute;
+    bottom: 1.2rem; 
+    left: 6%;
+    right: 6%;
+    background-color: rgba(11, 43, 29, 0.90); /* Semi-transparent dark emerald backdrop */
+    color: var(--gold-light);
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+    text-align: center;
+    border-radius: 6px;
+    backdrop-filter: blur(4px); /* Glassy blur effect */
+    z-index: 3;
+    pointer-events: none; /* Allows clicks to pass through to images if needed */
 }
 
-/* Navigation buttons */
+/* Navigation Buttons */
 .about-prev,
 .about-next {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     border: none;
-    background: var(--black-alpha-45);
+    background: var(--black-alpha-45, rgba(0, 0, 0, 0.45));
     color: var(--white);
     width: 2.5rem;
     height: 2.5rem;
@@ -491,7 +565,7 @@ h1, h2, h3, h4, .serif-font {
 
 .about-prev:hover,
 .about-next:hover {
-    background: var(--black-alpha-70);
+    background: var(--black-alpha-70, rgba(0, 0, 0, 0.70));
 }
 
 /* Dots */
@@ -508,7 +582,7 @@ h1, h2, h3, h4, .serif-font {
 .about-dot {
     width: 0.6rem;
     height: 0.6rem;
-    background: var(--white-alpha-60);
+    background: var(--white-alpha-60, rgba(255, 255, 255, 0.6));
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -519,8 +593,9 @@ h1, h2, h3, h4, .serif-font {
     transform: scale(1.25);
 }
 
+/* Responsive Fix */
 @media (max-width: 600px) {
-  .about-gallery {
+  .about-container {
     grid-template-columns: 1fr;
   }
 }

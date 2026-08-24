@@ -62,17 +62,60 @@
   </div>
 
   <!-- Gallery Image Upload Section -->
-  <div class="eda-card">
+  <!-- <div class="eda-card">
     <h2>Upload New Gallery Image</h2>
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {{ image_form.as_p }}
       <button type="submit" name="upload_image" class="eda-btn">Upload Image</button>
     </form>
+  </div> -->
+
+  <div class="eda-card">
+    <h2>Upload New Photo</h2>
+    <form method="post" enctype="multipart/form-data" action="{% url 'admin_dashboard' %}">
+      {% csrf_token %}
+      
+      <div class="form-group">
+        <label>Photo</label>
+        {{ image_form.image }}
+      </div>
+
+      <!-- <div class="form-group">
+        <label>Description</label>
+        {{ image_form.description }}
+      </div> -->
+      <label for="gallery-description-input">
+        Description 
+        <small class="text-muted">(<span id="char-count">0</span>/200)</small>
+      </label>
+      
+      {{ image_form.description }}
+
+      <!-- Render refusal errors -->
+      {% if image_form.description.errors %}
+        <div class="text-danger small">
+          {% for error in image_form.description.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <!--  -->
+
+      {% if image_form.category %}
+        <div class="form-group">
+          <label>Category</label>
+          {{ image_form.category }}
+        </div>
+      {% endif %}
+
+      <button type="submit" name="upload_image" class="eda-btn eda-btn-primary">Upload Image</button>
+    </form>
   </div>
 
   <!-- Manage Existing Gallery Images -->
-  <div class="eda-card">
+  <!-- <div class="eda-card">
     <h2>Gallery Images ({{ gallery_images|length }})</h2>
     <div class="eda-grid">
       {% for img in gallery_images %}
@@ -80,6 +123,28 @@
           <img src="{{ img.image.url }}" alt="{{ img.caption }}">
           <p class="eda-caption"><strong>{{ img.caption|default:"No Caption" }}</strong></p>
           <span class="eda-badge">{{ img.get_category_display }}</span>
+          <form method="post" action="{% url 'delete_gallery_image' img.pk %}" class="eda-form-delete">
+            {% csrf_token %}
+            <button type="submit" class="eda-btn eda-btn-danger" onclick="return confirm('Delete this image?');">Delete</button>
+          </form>
+        </div>
+      {% empty %}
+        <p>No images uploaded yet.</p>
+      {% endfor %}
+    </div>
+  </div> -->
+
+  <!-- Manage Existing Gallery Images -->
+  <div class="eda-card">
+    <h2>Gallery Images ({{ gallery_images|length }})</h2>
+    <div class="eda-grid">
+      {% for img in gallery_images %}
+        <div class="eda-grid-item">
+          <img src="{{ img.image.url }}" alt="{{ img.description|default:'Gallery Image' }}">
+          <p class="eda-caption"><strong>{{ img.description|default:"No Description" }}</strong></p>
+          {% if img.category %}
+            <span class="eda-badge">{{ img.category }}</span>
+          {% endif %}
           <form method="post" action="{% url 'delete_gallery_image' img.pk %}" class="eda-form-delete">
             {% csrf_token %}
             <button type="submit" class="eda-btn eda-btn-danger" onclick="return confirm('Delete this image?');">Delete</button>
