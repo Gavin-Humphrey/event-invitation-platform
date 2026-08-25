@@ -1354,25 +1354,57 @@ label {
     margin-bottom: 1.25rem;
 }
 
-.contact-links {
+.contact-section {
     display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+}
+
+.contact-card {
+    background: var(--white-alpha-10);
+    padding: 14px 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.contact-label {
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.contact-actions {
+    display: flex;
+    gap: 12px;
+    width: 100%;
     justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
 }
 
 .contact-link {
     color: var(--white);
-    background: var(--white-alpha-10);
-    padding: 10px 18px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
     border-radius: 6px;
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     transition: background 0.2s ease, transform 0.2s ease;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+}
+
+.contact-link:visited,
+.contact-link:focus,
+.contact-link:active {
+    color: var(--white);
+    text-decoration: none;
 }
 
 .contact-link:hover {
@@ -1452,5 +1484,27 @@ label {
 
     .form-row-contact .form-group {
         width: 100%;
+    }
+
+    .contact-section {
+        width: 95%;
+        gap: 12px;
+    }
+
+    .contact-card {
+        padding: 14px 12px;
+    }
+
+    .contact-actions {
+        flex-direction: column; /* Stacks Call & WhatsApp vertically on mobile for full-width tap targets */
+        gap: 10px;
+    }
+
+    .contact-link {
+        width: 100%; /* Full-width buttons are much easier to tap on phones */
+        box-sizing: border-box;
+        padding: 12px 16px; /* Slightly taller tap target for mobile thumbs */
+        font-size: 0.9rem;
+        justify-content: center;
     }
 }

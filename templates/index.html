@@ -340,9 +340,6 @@
     {% endfor %}
   {% endif %}
 
-  
-  <!-- ///////// -->
-
   <!-- Vanilla Dynamic JS Script -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -397,116 +394,115 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-   // Gallery Slides - Infinite Loop
-document.addEventListener('DOMContentLoaded', () => {
-  const gallery = document.querySelector('.about-gallery');
-  const slides = document.querySelector('.about-slides');
-  // TARGET .slide-card INSTEAD OF img
-  const originalCards = document.querySelectorAll('.about-slides .slide-card');
-  const dots = document.querySelectorAll('.about-dot');
-  const prevButton = document.querySelector('.about-prev');
-  const nextButton = document.querySelector('.about-next');
+    // Gallery Slides - Infinite Loop
+    document.addEventListener('DOMContentLoaded', () => {
+      const gallery = document.querySelector('.about-gallery');
+      const slides = document.querySelector('.about-slides');
+      // TARGET .slide-card INSTEAD OF img
+      const originalCards = document.querySelectorAll('.about-slides .slide-card');
+      const dots = document.querySelectorAll('.about-dot');
+      const prevButton = document.querySelector('.about-prev');
+      const nextButton = document.querySelector('.about-next');
 
-  if (slides && gallery && originalCards.length > 0) {
-    const firstClone = originalCards[0].cloneNode(true);
-    const lastClone = originalCards[originalCards.length - 1].cloneNode(true);
+      if (slides && gallery && originalCards.length > 0) {
+        const firstClone = originalCards[0].cloneNode(true);
+        const lastClone = originalCards[originalCards.length - 1].cloneNode(true);
 
-    slides.appendChild(firstClone);
-    slides.insertBefore(lastClone, originalCards[0]);
+        slides.appendChild(firstClone);
+        slides.insertBefore(lastClone, originalCards[0]);
 
-    // UPDATE ALL SLIDES TO SELECT CARDS
-    const allSlides = document.querySelectorAll('.about-slides .slide-card');
-    let currentSlide = 1;
-    let slideWidth = gallery.clientWidth; 
-    let isTransitioning = false;
-    let transitionTimeout = null;
+        // UPDATE ALL SLIDES TO SELECT CARDS
+        const allSlides = document.querySelectorAll('.about-slides .slide-card');
+        let currentSlide = 1;
+        let slideWidth = gallery.clientWidth; 
+        let isTransitioning = false;
+        let transitionTimeout = null;
 
-    function setTransform(index, useTransition) {
-      slides.style.transition = useTransition ? 'transform 0.6s ease-in-out' : 'none';
-      slides.style.transform = `translate3d(-${index * slideWidth}px, 0, 0)`;
-      void slides.offsetWidth;
-    }
+        function setTransform(index, useTransition) {
+          slides.style.transition = useTransition ? 'transform 0.6s ease-in-out' : 'none';
+          slides.style.transform = `translate3d(-${index * slideWidth}px, 0, 0)`;
+          void slides.offsetWidth;
+        }
 
-    setTransform(currentSlide, false);
-
-    window.addEventListener('resize', () => {
-      slideWidth = gallery.clientWidth;
-      setTransform(currentSlide, false);
-    });
-    
-    window.addEventListener('load', () => {
-      slideWidth = gallery.clientWidth;
-      setTransform(currentSlide, false);
-    });
-
-    function updateDots() {
-      let dotIndex = currentSlide - 1;
-      if (currentSlide === 0) dotIndex = originalCards.length - 1;
-      if (currentSlide === allSlides.length - 1) dotIndex = 0;
-
-      dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === dotIndex);
-      });
-    }
-
-    function handleTransitionEnd() {
-      if (transitionTimeout) clearTimeout(transitionTimeout);
-
-      if (currentSlide === allSlides.length - 1) {
-        currentSlide = 1;
         setTransform(currentSlide, false);
-      } else if (currentSlide === 0) {
-        currentSlide = allSlides.length - 2;
-        setTransform(currentSlide, false);
+
+        window.addEventListener('resize', () => {
+          slideWidth = gallery.clientWidth;
+          setTransform(currentSlide, false);
+        });
+        
+        window.addEventListener('load', () => {
+          slideWidth = gallery.clientWidth;
+          setTransform(currentSlide, false);
+        });
+
+        function updateDots() {
+          let dotIndex = currentSlide - 1;
+          if (currentSlide === 0) dotIndex = originalCards.length - 1;
+          if (currentSlide === allSlides.length - 1) dotIndex = 0;
+
+          dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === dotIndex);
+          });
+        }
+
+        function handleTransitionEnd() {
+          if (transitionTimeout) clearTimeout(transitionTimeout);
+
+          if (currentSlide === allSlides.length - 1) {
+            currentSlide = 1;
+            setTransform(currentSlide, false);
+          } else if (currentSlide === 0) {
+            currentSlide = allSlides.length - 2;
+            setTransform(currentSlide, false);
+          }
+
+          isTransitioning = false;
+        }
+
+        function showSlide(index) {
+          if (isTransitioning || index < 0 || index >= allSlides.length) return;
+          
+          isTransitioning = true;
+          currentSlide = index;
+          setTransform(currentSlide, true);
+          updateDots();
+
+          if (transitionTimeout) clearTimeout(transitionTimeout);
+          transitionTimeout = setTimeout(() => {
+            if (isTransitioning) handleTransitionEnd();
+          }, 650);
+        }
+
+        slides.addEventListener('transitionend', handleTransitionEnd);
+
+        if (nextButton) {
+          nextButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            if(!isTransitioning) showSlide(currentSlide + 1);
+          });
+        }
+
+        if (prevButton) {
+          prevButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            if(!isTransitioning) showSlide(currentSlide - 1);
+          });
+        }
+
+        dots.forEach((dot, index) => {
+          dot.addEventListener('click', (e) => {
+            e.preventDefault();
+            if(!isTransitioning) showSlide(index + 1);
+          });
+        });
+
+        setInterval(() => {
+          if (!isTransitioning) showSlide(currentSlide + 1);
+        }, 5000);
       }
-
-      isTransitioning = false;
-    }
-
-    function showSlide(index) {
-      if (isTransitioning || index < 0 || index >= allSlides.length) return;
-      
-      isTransitioning = true;
-      currentSlide = index;
-      setTransform(currentSlide, true);
-      updateDots();
-
-      if (transitionTimeout) clearTimeout(transitionTimeout);
-      transitionTimeout = setTimeout(() => {
-        if (isTransitioning) handleTransitionEnd();
-      }, 650);
-    }
-
-    slides.addEventListener('transitionend', handleTransitionEnd);
-
-    if (nextButton) {
-      nextButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        if(!isTransitioning) showSlide(currentSlide + 1);
-      });
-    }
-
-    if (prevButton) {
-      prevButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        if(!isTransitioning) showSlide(currentSlide - 1);
-      });
-    }
-
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', (e) => {
-        e.preventDefault();
-        if(!isTransitioning) showSlide(index + 1);
-      });
     });
 
-    setInterval(() => {
-      if (!isTransitioning) showSlide(currentSlide + 1);
-    }, 5000);
-  }
-});
-
-    // ///////////
 
     // RSVP Modal Dismissal Handlers
       const modal = document.getElementById('rsvpModal');
@@ -564,16 +560,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const button = document.getElementById('readMoreBtn');
     const buttonText = button.querySelector('.btn-text');
 
-    content.classList.toggle('expanded');
-    button.classList.toggle('expanded');
+      content.classList.toggle('expanded');
+      button.classList.toggle('expanded');
 
-    if (content.classList.contains('expanded')) {
-        buttonText.textContent = 'Read Less';
-    } else {
-        buttonText.textContent = 'Read More';
+      if (content.classList.contains('expanded')) {
+          buttonText.textContent = 'Read Less';
+      } else {
+          buttonText.textContent = 'Read More';
+      }
     }
-}
- 
   </script>
   
 {% endblock %}
