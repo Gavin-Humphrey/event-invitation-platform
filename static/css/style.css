@@ -445,12 +445,11 @@ h1, h2, h3, h4, .serif-font {
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 36rem;
+    height: 38rem;
     border-radius: 8px;
     background-color: var(--emerald, #0B2B1D);
 }
 
-/* Slides Flex Wrapper */
 .about-slides {
     display: flex;
     width: 100%;
@@ -458,74 +457,34 @@ h1, h2, h3, h4, .serif-font {
     transition: transform 0.6s ease-in-out;
 }
 
-
-/* .about-slides .slide-card {
-    min-width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-}
-
-
-.about-slides .slide-card img {
-    width: 100%;
-    flex: 1; 
-    min-height: 0; 
-    object-fit: contain; 
-    object-position: center; 
-    border-radius: 8px 8px 0 0;
-
-    height: 85%;
-}
-   
-.slide-description {
-    background-color: rgba(11, 43, 29, 0.92); 
-    color: var(--gold-light, #C5A059);
-    padding: 12px 16px;
-    font-size: 0.9rem;
-    letter-spacing: 0.5px;
-    line-height: 1.4;
-    text-align: center;
-    border-radius: 6px;
-    flex-shrink: 0;
-    
-    
-    transform: translateY(-20px);
-    margin-bottom: -20px;
-    width: 90%;          
-    margin-left: auto;   
-    margin-right: auto;
-    z-index: 2;
-} */
-
-/* Individual Slide Card */
-/* Card relative container */
 .about-slides .slide-card {
+    position: relative;
+    flex: 0 0 100%;
+    width: 100%;
     min-width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    position: relative; /* Anchor for overlay positioning */
     box-sizing: border-box;
+    overflow: hidden;
 }
 
-/* Image fills full card height */
 .about-slides .slide-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; 
-    object-position: center; 
-    border-radius: 8px;
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: cover;
+    object-position: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
 }
-   
 /* Floating description box elevated above dots */
 .slide-description {
     position: absolute;
-    bottom: 1.2rem; 
-    left: 6%;
-    right: 6%;
-    background-color: rgba(11, 43, 29, 0.90); /* Semi-transparent dark emerald backdrop */
+    bottom: 2.5rem; 
+    left: 2%;
+    right: 2%;
+    background-color: rgba(11, 43, 29, 0.90); 
     color: var(--gold-light);
     padding: 10px 16px;
     font-size: 0.9rem;
@@ -588,9 +547,16 @@ h1, h2, h3, h4, .serif-font {
     transition: all 0.3s ease;
 }
 
-.about-dot.active {
+/* .about-dot.active {
     background: var(--white);
     transform: scale(1.25);
+} */
+
+.about-photo-counter {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: var(--white);
+    letter-spacing: 0.03em;
 }
 
 /* Responsive Fix */

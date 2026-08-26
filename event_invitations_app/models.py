@@ -34,6 +34,97 @@ class GalleryImage(models.Model):
     def __str__(self):
         return self.description or f"Gallery Image {self.pk}"
 
+# from io import BytesIO
+
+# from PIL import Image, ImageOps
+# from django.core.files.base import ContentFile
+# from django.db import models
+
+
+# class GalleryImage(models.Model):
+#     CATEGORY_CHOICES = [
+#         ('about', 'About Dad'),
+#         ('memory', '80 Years'),
+#     ]
+
+#     event = models.ForeignKey(
+#         Event,
+#         related_name='gallery_images',
+#         on_delete=models.CASCADE
+#     )
+
+#     image = models.ImageField(
+#         upload_to='birthday_gallery/'
+#     )
+
+#     description = models.CharField(
+#         max_length=120,
+#         blank=True,
+#         null=True,
+#         help_text="Image description (max 120 chars)"
+#     )
+
+#     category = models.CharField(
+#         max_length=50,
+#         choices=CATEGORY_CHOICES
+#     )
+
+#     def __str__(self):
+#         return self.description or f"Gallery Image {self.pk}"
+
+#     def save(self, *args, **kwargs):
+#         if self.image:
+#             img = Image.open(self.image)
+
+#             # Correct orientation based on camera EXIF data
+#             img = ImageOps.exif_transpose(img)
+
+#             # Convert to RGB for JPEG
+#             if img.mode != 'RGB':
+#                 img = img.convert('RGB')
+
+#             target_width = 1200
+#             target_height = 900
+
+#             # Fit the entire photo inside 1200x900
+#             img.thumbnail(
+#                 (target_width, target_height),
+#                 Image.Resampling.LANCZOS
+#             )
+
+#             # Create 4:3 canvas
+#             canvas = Image.new(
+#                 'RGB',
+#                 (target_width, target_height),
+#                 '#0b2b1d'
+#             )
+
+#             # Center the photo
+#             x = (target_width - img.width) // 2
+#             y = (target_height - img.height) // 2
+
+#             canvas.paste(img, (x, y))
+
+#             # Save processed image
+#             buffer = BytesIO()
+
+#             canvas.save(
+#                 buffer,
+#                 format='JPEG',
+#                 quality=85,
+#                 optimize=True
+#             )
+
+#             buffer.seek(0)
+
+#             self.image.save(
+#                 self.image.name.rsplit('.', 1)[0] + '.jpg',
+#                 ContentFile(buffer.read()),
+#                 save=False
+#             )
+
+#         super().save(*args, **kwargs)
+
 class RSVP(models.Model):
     # Renamed to HONORIFIC_CHOICES or PREFIX_SUFFIX_CHOICES for clarity
     SUFFIX_CHOICES = [
