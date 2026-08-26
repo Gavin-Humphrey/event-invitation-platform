@@ -1446,6 +1446,18 @@ label {
         margin-bottom: 1rem;
     }
 
+    .notice-box {
+        width: 95%;
+        padding: 12px 14px;
+        font-size: 0.80rem;
+        line-height: 1.45;
+    }
+
+    .notice-box strong {
+        display: block; /* Puts "IMPORTANT:" on its own line on small screens for emphasis */
+        margin-bottom: 4px;
+    }
+
     .form-row-contact {
         display: flex;
         flex-direction: column;
@@ -1477,5 +1489,14 @@ label {
         padding: 12px 16px; /* Slightly taller tap target for mobile thumbs */
         font-size: 0.9rem;
         justify-content: center;
+    }
+    
+    .footer-copyright {
+        padding: 1rem 0.75rem;
+    }
+
+    .footer-copyright p {
+        font-size: 0.8rem;
+        line-height: 1.4;
     }
 }
