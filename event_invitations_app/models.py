@@ -28,7 +28,7 @@ class GalleryImage(models.Model):
 
     event = models.ForeignKey(Event, related_name='gallery_images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='birthday_gallery/')
-    description = models.CharField(max_length=120, blank=True, null=True, help_text="Image description (max 120 chars)")
+    description = models.CharField(max_length=200, blank=True, null=True, help_text="Image description (max 200 chars)")
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
 
     def __str__(self):

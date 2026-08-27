@@ -1,0 +1,75 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block title %}Edit Gallery Image | Event Admin{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="event-dashboard-app">
+  
+  <div class="eda-card" style="max-width: 600px; margin: 2rem auto;">
+    <h2>Edit Gallery Image</h2>
+    
+    <!-- Current Image Preview -->
+    <div class="current-image-preview" style="margin-bottom: 1.5rem; text-align: center;">
+      <p><strong>Current Image:</strong></p>
+      <img src="{{ gallery_image.image.url }}" alt="Current Photo" style="max-width: 100%; max-height: 250px; border-radius: 8px; object-fit: cover;">
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="form-group" style="margin-bottom: 1rem;">
+        <label>Replace Image (Optional):</label>
+        {{ form.image }}
+        {% if form.image.errors %}
+          <div class="text-danger small">{{ form.image.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group" style="margin-bottom: 1rem;">
+        <label for="gallery-description-input">
+          Description 
+          <small class="text-muted">(<span id="char-count">{{ form.description.value|default:''|length }}</span>/200)</small>
+        </label>
+        {{ form.description }}
+        {% if form.description.errors %}
+          <div class="text-danger small">{{ form.description.errors }}</div>
+        {% endif %}
+      </div>
+
+      {% if form.category %}
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label>Category:</label>
+          {{ form.category }}
+          {% if form.category.errors %}
+            <div class="text-danger small">{{ form.category.errors }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <button type="submit" class="eda-btn eda-btn-primary">Save Changes</button>
+        <a href="{% url 'admin_dashboard' %}" class="eda-btn eda-btn-info" style="text-decoration: none;">Cancel</a>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+<script>
+  // Dynamic Character Counter
+  document.addEventListener('DOMContentLoaded', function() {
+    const descInput = document.getElementById('gallery-description-input');
+    const charCount = document.getElementById('char-count');
+    if (descInput && charCount) {
+      descInput.addEventListener('input', function() {
+        charCount.textContent = this.value.length;
+      });
+    }
+  });
+</script>
+{% endblock %}

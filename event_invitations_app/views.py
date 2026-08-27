@@ -248,5 +248,32 @@ def delete_gallery_image(request, pk):
     # Redirect back to your dashboard (use your actual URL pattern name)
     return redirect('admin_dashboard')  # or 'event_invitations_app:dashboard'
 
+@user_passes_test(is_admin_user, login_url='admin:login')
+def edit_gallery_image(request, pk):
+    image = get_object_or_404(GalleryImage, pk=pk)
 
-# def rsvp_confirmation_mail():
+    if request.method == 'POST':
+        # Pass request.FILES for optional new image uploads, and instance=image for existing data
+        form = GalleryImageForm(request.POST, request.FILES, instance=image)
+        
+        if form.is_valid():
+            # If a new image file was uploaded, clean up the old file from storage first
+            if 'image' in form.changed_data and request.FILES.get('image'):
+                try:
+                    # Get the old file instance from database prior to saving new one
+                    old_image = GalleryImage.objects.get(pk=pk)
+                    old_image.image.delete(save=False)
+                except Exception as e:
+                    print(f"Skipping storage delete for old file: {e}")
+
+            form.save()
+            return redirect('admin_dashboard')
+    else:
+        # Pre-populate the form with existing model instance
+        form = GalleryImageForm(instance=image)
+
+    context = {
+        'form': form,
+        'gallery_image': image,
+    }
+    return render(request, 'edit_gallery_image.html', context)

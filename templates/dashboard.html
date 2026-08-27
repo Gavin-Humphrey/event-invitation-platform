@@ -139,16 +139,24 @@
     <h2>Gallery Images ({{ gallery_images|length }})</h2>
     <div class="eda-grid">
       {% for img in gallery_images %}
+        
         <div class="eda-grid-item">
           <img src="{{ img.image.url }}" alt="{{ img.description|default:'Gallery Image' }}">
           <p class="eda-caption"><strong>{{ img.description|default:"No Description" }}</strong></p>
           {% if img.category %}
             <span class="eda-badge">{{ img.category }}</span>
           {% endif %}
-          <form method="post" action="{% url 'delete_gallery_image' img.pk %}" class="eda-form-delete">
-            {% csrf_token %}
-            <button type="submit" class="eda-btn eda-btn-danger" onclick="return confirm('Delete this image?');">Delete</button>
-          </form>
+          
+          <div class="eda-actions" style="margin-top: 10px; display: flex; gap: 8px; justify-content: center;">
+            <!-- EDIT LINK -->
+            <a href="{% url 'edit_gallery_image' img.pk %}" class="eda-btn eda-btn-sm eda-btn-info">Edit</a>
+            
+            <!-- DELETE FORM -->
+            <form method="post" action="{% url 'delete_gallery_image' img.pk %}" class="eda-form-delete" style="margin: 0;">
+              {% csrf_token %}
+              <button type="submit" class="eda-btn eda-btn-sm eda-btn-danger" onclick="return confirm('Delete this image?');">Delete</button>
+            </form>
+          </div>
         </div>
       {% empty %}
         <p>No images uploaded yet.</p>

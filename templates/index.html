@@ -16,7 +16,7 @@
     </div>
     
     <div class="hero-image">
-      <img src="{% static 'images/Pic 2.jpeg' %}" alt="Chief Jerry Aguiyi Portrait">
+      <img src="{% static 'images/Pic 0.jpeg' %}" alt="Chief Jerry Aguiyi Portrait">
     </div>
   </header>
 
@@ -66,14 +66,55 @@
     </div>
   </section>
 
-  <!-- About Section -->
-  <section id="about" class="section-padding bg-white">
-    <div class="about-container">
-      <!-- <div class="about-text">
-        <h2 class="section-title serif-font">ABOUT DAD</h2>
-        <p>A devoted husband, loving father, proud grandfather, cherished uncle, and a man of faith and integrity. For eight decades, he has inspired lives, built a legacy of hard work, kindness, and service, and continues to be a pillar of strength and wisdom to us all.</p>
-      </div> -->
+  <!-- Accommodation & Logistics Section -->
+  <section id="accommodation" class="section-padding text-center bg-white">
+    <h2 class="section-title serif-font">ACCOMMODATION & PARKING</h2>
+    <div class="details-grid accommodation-grid">
+      
+      <!-- Accommodation Card -->
+      <div class="detail-card accommodation-card">
+        <div>
+          <div class="card-icon">🏨</div>
+          <h3 class="serif-font card-title">ACCOMMODATION</h3>
+          <p class="card-text">
+            For your convenience, bedroom accommodation is available directly at the venue with an <strong>exclusive 18% discount</strong> on rates for our guests.
+          </p>
+        </div>
+        <div class="card-action">
+          <a href="https://booking.profitroom.com/en/chigwellprinceregenthotel/details/offer/1164554?codes=2566657&no-cache=1&currency=GBP&accepted-cookie-policies=necessary%2Canalytics%2Cmarketing" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             class="btn-gold-sm card-btn">
+            BOOK YOUR STAY
+          </a>
+        </div>
+      </div>
 
+      <!-- Parking Card -->
+      <div class="detail-card accommodation-card">
+        <div>
+          <div class="card-icon">🅿️</div>
+          <h3 class="serif-font card-title">COMPLIMENTARY PARKING</h3>
+          <p class="card-text">
+            Complimentary parking is available for all event guests, with approximately 110 spaces on site.
+          </p>
+          <p class="parking-note">
+            <strong>Important:</strong> Please register your vehicle within 10 minutes of arrival using the QR code located in the hotel’s welcome area.
+          </p>
+        </div>
+        <div class="card-footer-note">
+          <p class="disclaimer-text">
+            * Additional complimentary parking is also available on the main road directly in front of the hotel.
+          </p>
+        </div>
+      </div>
+
+    </div>
+</section>
+
+  <!-- About Section -->
+  <section id="about" class="section-padding bg-cream">
+    <div class="about-container">
       <div class="about-text">
         <h2 class="section-title serif-font">ABOUT DAD</h2>
         <p>A devoted husband, loving father, proud grandfather, cherished uncle, and a man of faith and integrity. For eight decades, he has inspired lives, built a legacy of hard work, kindness, and service, and continues to be a pillar of strength and wisdom to us all.</p>
@@ -81,7 +122,7 @@
         <!-- Collapsible Container -->
         <div class="text-collapse" id="aboutTextCollapse">
           <p>Throughout his full and vibrant journey, his dedication to family, community, and his core values has remained unwavering. From mentoring younger generations to offering guidance during challenging times, his presence brings comfort and joy to everyone fortunate enough to know him.</p>
-          <p>As we celebrate this milestone milestone, we honor not just the years he has lived, but the profound impact, warmth, and enduring wisdom he shares with every step forward.</p>
+          <p>As we celebrate this milestone, we honor not just the years he has lived, but the profound impact, warmth, and enduring wisdom he shares with every step forward.</p>
         </div>
 
         <button type="button" class="btn-read-more" id="readMoreBtn" onclick="toggleReadMore()">
@@ -89,7 +130,7 @@
           <span class="btn-icon">▼</span>
         </button>
       </div>
-      <!--  -->
+
       <div class="about-gallery">
         <div class="about-slides">
           {% if gallery_images.exists %}
@@ -99,7 +140,6 @@
                   {% if item.description %}
                     <div class="slide-description">{{ item.description }}</div>
                   {% endif %}    
-                  
               </div>
             {% endfor %}
           {% else %}
@@ -126,76 +166,20 @@
         <button class="about-prev" aria-label="Previous photo">&#10094;</button>
         <button class="about-next" aria-label="Next photo">&#10095;</button>
 
-        <!-- <div class="about-dots">
-          {% if gallery_images.count <= 4 %}
-            {% for item in gallery_images %}
-              <span class="about-dot {% if forloop.first %}active{% endif %}"></span>
-            {% endfor %}
-          {% else %}
-            <span class="about-dot active"></span>
-            <span class="about-dot"></span>
-            <span class="about-dot"></span>
-            <span class="about-dot"></span>
-          {% endif %}
-        </div> -->
-
-
         <div class="about-dots">
           <span class="about-photo-counter">
             Photo 1 of {% if gallery_images %}{{ gallery_images|length }}{% else %}4{% endif %}
           </span>
         </div>
-
-        <!--  -->
       </div>
-      <!--  -->
     </div>
   </section>
-
-  <!-- Celebration Program -->
-  <!-- <section id="program" class="section-padding text-center bg-cream">
-    <h2 class="section-title serif-font">CELEBRATION PROGRAM</h2>
-    <div class="program-timeline">
-      <div class="program-step">
-        <div class="icon-bubble">🍸</div>
-        <p>ARRIVAL & RECEPTION</p>
-      </div>
-      <div class="program-step">
-        <div class="icon-bubble">👑</div>
-        <p>GRAND ENTRANCE</p>
-      </div>
-      <div class="program-step">
-        <div class="icon-bubble">🍽️</div>
-        <p>DINNER</p>
-      </div>
-      <div class="program-step">
-        <div class="icon-bubble">🎤</div>
-        <p>TRIBUTES</p>
-      </div>
-      <div class="program-step">
-        <div class="icon-bubble">🎂</div>
-        <p>CAKE CUTTING</p>
-      </div>
-      <div class="program-step">
-        <div class="icon-bubble">🎵</div>
-        <p>DANCING</p>
-      </div>
-    </div>
-  </section> -->
 
   <!-- RSVP Section -->
   <section id="rsvp" class="section-padding bg-white">
     <div class="rsvp-container">
       <h2 class="section-title serif-font text-center">KINDLY RSVP</h2>
       <p style="text-align: center; color: var(--gold); font-size: 0.85rem; letter-spacing: 1px;">WE LOOK FORWARD TO CELEBRATING WITH YOU!</p>
-
-      <!-- {% if messages %}
-        {% for message in messages %}
-          <div class="notice-box" style="border-color: var(--gold); background: rgba(197, 160, 89, 0.1);">
-            <strong>{{ message }}</strong>
-          </div>
-        {% endfor %}
-      {% endif %} -->
 
       <div class="notice-box">
         <strong>IMPORTANT:</strong> This celebration is strictly by invitation. Entry will be limited to confirmed guests (Max 3 guests per invitation).
@@ -322,7 +306,7 @@
             <div class="modal-icon">🎉</div>
             <h3 class="modal-title" id="modalTitle">RSVP RECEIVED!</h3>
             <p class="modal-body">{{ message }}</p>
-            <p class="modal-body">A reservation confirmation was sent to your email; please check your spam. </p>
+            <p class="modal-body">A reservation confirmation was sent to your email; please check your spam.</p>
             <button type="button" class="btn-modal-close" id="closeModalBtn">BACK TO PAGE</button>
           </div>
         </div>
@@ -334,8 +318,8 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const guestSelect = document.getElementById('id_guest_count');
-      const guest1Card = document.getElementById('guest-1-card'); // Corresponds to Guest 2 in Formset
-      const guest2Card = document.getElementById('guest-2-card'); // Corresponds to Guest 3 in Formset
+      const guest1Card = document.getElementById('guest-1-card');
+      const guest2Card = document.getElementById('guest-2-card');
 
       function updateGuestCards() {
         if (!guestSelect) return;
@@ -384,371 +368,136 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // // Gallery Slides - Infinite Loop
-    
-
-    // ////////////
     // Gallery Slides - Infinite Loop
-// document.addEventListener('DOMContentLoaded', () => {
-//   const gallery = document.querySelector('.about-gallery');
-//   const slides = document.querySelector('.about-slides');
+    document.addEventListener('DOMContentLoaded', () => {
+      const gallery = document.querySelector('.about-gallery');
+      const slides = document.querySelector('.about-slides');
+      const originalCards = document.querySelectorAll('.about-slides .slide-card');
+      const photoCounter = document.querySelector('.about-photo-counter');
+      const prevButton = document.querySelector('.about-prev');
+      const nextButton = document.querySelector('.about-next');
 
-//   // TARGET .slide-card INSTEAD OF img
-//   const originalCards = document.querySelectorAll('.about-slides .slide-card');
-//   const dots = document.querySelectorAll('.about-dot');
-//   const prevButton = document.querySelector('.about-prev');
-//   const nextButton = document.querySelector('.about-next');
+      if (slides && gallery && originalCards.length > 0) {
+        const firstClone = originalCards[0].cloneNode(true);
+        const lastClone = originalCards[originalCards.length - 1].cloneNode(true);
 
-//   if (slides && gallery && originalCards.length > 0) {
-//     const firstClone = originalCards[0].cloneNode(true);
-//     const lastClone = originalCards[originalCards.length - 1].cloneNode(true);
+        slides.appendChild(firstClone);
+        slides.insertBefore(lastClone, originalCards[0]);
 
-//     slides.appendChild(firstClone);
-//     slides.insertBefore(lastClone, originalCards[0]);
+        const allSlides = document.querySelectorAll('.about-slides .slide-card');
 
-//     // UPDATE ALL SLIDES TO SELECT CARDS
-//     const allSlides = document.querySelectorAll('.about-slides .slide-card');
+        let currentSlide = 1;
+        let slideWidth = gallery.clientWidth;
+        let isTransitioning = false;
+        let transitionTimeout = null;
 
-//     let currentSlide = 1;
-//     let slideWidth = gallery.clientWidth;
-//     let isTransitioning = false;
-//     let transitionTimeout = null;
+        function setTransform(index, useTransition) {
+          slides.style.transition = useTransition
+            ? 'transform 0.6s ease-in-out'
+            : 'none';
 
-//     function setTransform(index, useTransition) {
-//       slides.style.transition = useTransition
-//         ? 'transform 0.6s ease-in-out'
-//         : 'none';
+          slides.style.transform = `translate3d(-${index * slideWidth}px, 0, 0)`;
+          void slides.offsetWidth;
+        }
 
-//       slides.style.transform =
-//         `translate3d(-${index * slideWidth}px, 0, 0)`;
-
-//       void slides.offsetWidth;
-//     }
-
-//     setTransform(currentSlide, false);
-
-//     window.addEventListener('resize', () => {
-//       slideWidth = gallery.clientWidth;
-//       setTransform(currentSlide, false);
-//     });
-
-//     window.addEventListener('load', () => {
-//       slideWidth = gallery.clientWidth;
-//       setTransform(currentSlide, false);
-//     });
-
-//     // UPDATE DOTS
-//     // Always keeps exactly ONE dot active.
-//     // With 4 dots:
-//     // 1 → 2 → 3 → 4 → 1 → 2 → 3 → 4 ...
-//     function updateDots() {
-//       let dotIndex = (currentSlide - 1) % dots.length;
-
-//       // Handle the cloned slides used for the infinite loop
-//       if (currentSlide === 0) {
-//         dotIndex = (originalCards.length - 1) % dots.length;
-//       } else if (currentSlide === allSlides.length - 1) {
-//         dotIndex = 0;
-//       }
-
-//       dots.forEach((dot, index) => {
-//         dot.classList.toggle('active', index === dotIndex);
-//       });
-//     }
-
-//     function handleTransitionEnd() {
-//       if (transitionTimeout) {
-//         clearTimeout(transitionTimeout);
-//       }
-
-//       // When reaching the first clone, jump to the real first slide
-//       if (currentSlide === allSlides.length - 1) {
-//         currentSlide = 1;
-//         setTransform(currentSlide, false);
-//       }
-
-//       // When reaching the last clone, jump to the real last slide
-//       else if (currentSlide === 0) {
-//         currentSlide = allSlides.length - 2;
-//         setTransform(currentSlide, false);
-//       }
-
-//       // Make sure the dots are updated after the infinite-loop jump
-//       updateDots();
-
-//       isTransitioning = false;
-//     }
-
-//     function showSlide(index) {
-//       if (
-//         isTransitioning ||
-//         index < 0 ||
-//         index >= allSlides.length
-//       ) {
-//         return;
-//       }
-
-//       isTransitioning = true;
-//       currentSlide = index;
-
-//       setTransform(currentSlide, true);
-
-//       // Update active dot immediately
-//       updateDots();
-
-//       if (transitionTimeout) {
-//         clearTimeout(transitionTimeout);
-//       }
-
-//       transitionTimeout = setTimeout(() => {
-//         if (isTransitioning) {
-//           handleTransitionEnd();
-//         }
-//       }, 650);
-//     }
-
-//     slides.addEventListener(
-//       'transitionend',
-//       handleTransitionEnd
-//     );
-
-//     // NEXT BUTTON
-//     if (nextButton) {
-//       nextButton.addEventListener('click', (e) => {
-//         e.preventDefault();
-
-//         if (!isTransitioning) {
-//           showSlide(currentSlide + 1);
-//         }
-//       });
-//     }
-
-//     // PREVIOUS BUTTON
-//     if (prevButton) {
-//       prevButton.addEventListener('click', (e) => {
-//         e.preventDefault();
-
-//         if (!isTransitioning) {
-//           showSlide(currentSlide - 1);
-//         }
-//       });
-//     }
-
-//     // DOT BUTTONS
-//     dots.forEach((dot, index) => {
-//       dot.addEventListener('click', (e) => {
-//         e.preventDefault();
-
-//         if (!isTransitioning) {
-//           showSlide(index + 1);
-//         }
-//       });
-//     });
-
-//     // AUTO SLIDE
-//     setInterval(() => {
-//       if (!isTransitioning) {
-//         showSlide(currentSlide + 1);
-//       }
-//     }, 5000);
-
-//     // Set initial active dot
-//     updateDots();
-//   }
-// });
-
-
-// Gallery Slides - Infinite Loop
-document.addEventListener('DOMContentLoaded', () => {
-  const gallery = document.querySelector('.about-gallery');
-  const slides = document.querySelector('.about-slides');
-
-  // TARGET .slide-card INSTEAD OF img
-  const originalCards = document.querySelectorAll('.about-slides .slide-card');
-  const photoCounter = document.querySelector('.about-photo-counter');
-  const prevButton = document.querySelector('.about-prev');
-  const nextButton = document.querySelector('.about-next');
-
-  if (slides && gallery && originalCards.length > 0) {
-    const firstClone = originalCards[0].cloneNode(true);
-    const lastClone = originalCards[originalCards.length - 1].cloneNode(true);
-
-    slides.appendChild(firstClone);
-    slides.insertBefore(lastClone, originalCards[0]);
-
-    // UPDATE ALL SLIDES TO SELECT CARDS
-    const allSlides = document.querySelectorAll('.about-slides .slide-card');
-
-    let currentSlide = 1;
-    let slideWidth = gallery.clientWidth;
-    let isTransitioning = false;
-    let transitionTimeout = null;
-
-    function setTransform(index, useTransition) {
-      slides.style.transition = useTransition
-        ? 'transform 0.6s ease-in-out'
-        : 'none';
-
-      slides.style.transform =
-        `translate3d(-${index * slideWidth}px, 0, 0)`;
-
-      void slides.offsetWidth;
-    }
-
-    setTransform(currentSlide, false);
-
-    window.addEventListener('resize', () => {
-      slideWidth = gallery.clientWidth;
-      setTransform(currentSlide, false);
-    });
-
-    window.addEventListener('load', () => {
-      slideWidth = gallery.clientWidth;
-      setTransform(currentSlide, false);
-    });
-
-    // UPDATE PHOTO COUNTER
-    function updatePhotoCounter() {
-      if (!photoCounter) return;
-
-      let photoNumber = currentSlide;
-
-      // When we're on the cloned last slide
-      if (currentSlide === 0) {
-        photoNumber = originalCards.length;
-      }
-
-      // When we're on the cloned first slide
-      else if (currentSlide === allSlides.length - 1) {
-        photoNumber = 1;
-      }
-
-      photoCounter.textContent =
-        `Photo ${photoNumber} of ${originalCards.length}`;
-    }
-
-    function handleTransitionEnd() {
-      if (transitionTimeout) {
-        clearTimeout(transitionTimeout);
-      }
-
-      // When reaching the first clone, jump to the real first slide
-      if (currentSlide === allSlides.length - 1) {
-        currentSlide = 1;
         setTransform(currentSlide, false);
-      }
 
-      // When reaching the last clone, jump to the real last slide
-      else if (currentSlide === 0) {
-        currentSlide = allSlides.length - 2;
-        setTransform(currentSlide, false);
-      }
+        window.addEventListener('resize', () => {
+          slideWidth = gallery.clientWidth;
+          setTransform(currentSlide, false);
+        });
 
-      updatePhotoCounter();
+        window.addEventListener('load', () => {
+          slideWidth = gallery.clientWidth;
+          setTransform(currentSlide, false);
+        });
 
-      isTransitioning = false;
-    }
+        function updatePhotoCounter() {
+          if (!photoCounter) return;
+          let photoNumber = currentSlide;
 
-    function showSlide(index) {
-      if (
-        isTransitioning ||
-        index < 0 ||
-        index >= allSlides.length
-      ) {
-        return;
-      }
+          if (currentSlide === 0) {
+            photoNumber = originalCards.length;
+          } else if (currentSlide === allSlides.length - 1) {
+            photoNumber = 1;
+          }
 
-      isTransitioning = true;
-      currentSlide = index;
-
-      setTransform(currentSlide, true);
-
-      // Update counter immediately
-      updatePhotoCounter();
-
-      if (transitionTimeout) {
-        clearTimeout(transitionTimeout);
-      }
-
-      transitionTimeout = setTimeout(() => {
-        if (isTransitioning) {
-          handleTransitionEnd();
+          photoCounter.textContent = `Photo ${photoNumber} of ${originalCards.length}`;
         }
-      }, 650);
-    }
 
-    slides.addEventListener(
-      'transitionend',
-      handleTransitionEnd
-    );
+        function handleTransitionEnd() {
+          if (transitionTimeout) clearTimeout(transitionTimeout);
 
-    // NEXT BUTTON
-    if (nextButton) {
-      nextButton.addEventListener('click', (e) => {
-        e.preventDefault();
+          if (currentSlide === allSlides.length - 1) {
+            currentSlide = 1;
+            setTransform(currentSlide, false);
+          } else if (currentSlide === 0) {
+            currentSlide = allSlides.length - 2;
+            setTransform(currentSlide, false);
+          }
 
-        if (!isTransitioning) {
-          showSlide(currentSlide + 1);
+          updatePhotoCounter();
+          isTransitioning = false;
         }
-      });
-    }
 
-    // PREVIOUS BUTTON
-    if (prevButton) {
-      prevButton.addEventListener('click', (e) => {
-        e.preventDefault();
+        function showSlide(index) {
+          if (isTransitioning || index < 0 || index >= allSlides.length) return;
 
-        if (!isTransitioning) {
-          showSlide(currentSlide - 1);
+          isTransitioning = true;
+          currentSlide = index;
+          setTransform(currentSlide, true);
+          updatePhotoCounter();
+
+          if (transitionTimeout) clearTimeout(transitionTimeout);
+
+          transitionTimeout = setTimeout(() => {
+            if (isTransitioning) handleTransitionEnd();
+          }, 650);
         }
-      });
-    }
 
-    // AUTO SLIDE
-    setInterval(() => {
-      if (!isTransitioning) {
-        showSlide(currentSlide + 1);
+        slides.addEventListener('transitionend', handleTransitionEnd);
+
+        if (nextButton) {
+          nextButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (!isTransitioning) showSlide(currentSlide + 1);
+          });
+        }
+
+        if (prevButton) {
+          prevButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (!isTransitioning) showSlide(currentSlide - 1);
+          });
+        }
+
+        setInterval(() => {
+          if (!isTransitioning) showSlide(currentSlide + 1);
+        }, 5000);
+
+        updatePhotoCounter();
       }
-    }, 5000);
-
-    // Set initial counter
-    updatePhotoCounter();
-  }
-});
-
-    // ///////////
-
+    });
 
     // RSVP Modal Dismissal Handlers
-      const modal = document.getElementById('rsvpModal');
-      const closeBtn = document.getElementById('closeModalBtn');
-      const closeIconBtn = document.getElementById('closeModalIconBtn');
+    const modal = document.getElementById('rsvpModal');
+    const closeBtn = document.getElementById('closeModalBtn');
+    const closeIconBtn = document.getElementById('closeModalIconBtn');
 
-      function hideModal() {
-        if (modal) {
-          modal.classList.remove('active');
-        }
-      }
+    function hideModal() {
+      if (modal) modal.classList.remove('active');
+    }
 
-      if (modal) {
-        // 1. Click main button
-        if (closeBtn) closeBtn.addEventListener('click', hideModal);
-
-        // 2. Click top-right 'X' icon
-        if (closeIconBtn) closeIconBtn.addEventListener('click', hideModal);
-
-        // 3. Click outside modal box on overlay backdrop
-        modal.addEventListener('click', (e) => {
-          if (e.target === modal) hideModal();
-        });
-
-        // 4. Press Escape key on keyboard
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && modal.classList.contains('active')) {
-            hideModal();
-          }
-        });
-      }
+    if (modal) {
+      if (closeBtn) closeBtn.addEventListener('click', hideModal);
+      if (closeIconBtn) closeIconBtn.addEventListener('click', hideModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) hideModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) hideModal();
+      });
+    }
 
     // Mobile Hamburger
     document.addEventListener('DOMContentLoaded', () => {
@@ -760,7 +509,6 @@ document.addEventListener('DOMContentLoaded', () => {
           navLinks.classList.toggle('active');
         });
 
-        // Close mobile dropdown after selecting a section link
         navLinks.querySelectorAll('a').forEach(link => {
           link.addEventListener('click', () => {
             navLinks.classList.remove('active');
@@ -771,21 +519,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ABOUT DAD COLLAPSE
     function toggleReadMore() {
-    const content = document.getElementById('aboutTextCollapse');
-    const button = document.getElementById('readMoreBtn');
-    const buttonText = button.querySelector('.btn-text');
+      const content = document.getElementById('aboutTextCollapse');
+      const button = document.getElementById('readMoreBtn');
+      const buttonText = button.querySelector('.btn-text');
 
       content.classList.toggle('expanded');
       button.classList.toggle('expanded');
 
       if (content.classList.contains('expanded')) {
-          buttonText.textContent = 'Read Less';
+        buttonText.textContent = 'Read Less';
       } else {
-          buttonText.textContent = 'Read More';
+        buttonText.textContent = 'Read More';
       }
     }
-
-
   </script>
 
 {% endblock %}
