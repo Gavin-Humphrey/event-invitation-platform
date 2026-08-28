@@ -41,7 +41,7 @@
             <td>#{{ rsvp.id }}</td>
             <td>{{ rsvp.suffix }} {{ rsvp.full_name }}</td>
             <td>
-              {% if rsvp.attending %}
+              {% if rsvp.attending == "YES" or rsvp.attending == True %}
                 <span class="eda-status-attending">Attending</span>
               {% else %}
                 <span class="eda-status-declined">Declined</span>

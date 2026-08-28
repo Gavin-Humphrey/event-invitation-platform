@@ -302,7 +302,7 @@
 
         <button type="submit" class="btn-submit">SUBMIT RSVP &#9992;</button>
       </form>
-      <p style="text-align: center; margin-top: 10px; color: var(--gold);">RSVP DEADLINE: SEPTEMBER 20 2026</p>
+      <p style="text-align: center; margin-top: 10px; color: var(--gold);">RSVP DEADLINE: SEPTEMBER 20, 2026 AT 11:59 PM (UK)</p>
     </div>
   </section>
 
@@ -323,6 +323,38 @@
       {% endif %}
     {% endfor %}
   {% endif %}
+
+  <!-- RSVP MESSAGES -->
+<!-- Messages Wall Section (Displays right after RSVP Form) -->
+  {% if confirmed_messages %}
+  <section id="messages-wall" class="section-padding bg-cream">
+    <div class="messages-container">
+      <h2 class="section-title serif-font text-center">GUEST MESSAGES & GOOD WISHES</h2>
+      <p class="messages-subtitle text-center">Wishes from family and friends celebrating Chief Jerry Aguiyi</p>
+
+      <div class="messages-slider">
+        <div class="messages-grid" id="messagesGrid">
+          {% for rsvp_item in confirmed_messages %}
+            <div class="message-card">
+              <div class="message-quote-icon">“</div>
+              <p class="message-text">{{ rsvp_item.message }}</p>
+              <div class="message-author">— {{ rsvp_item.suffix }} {{ rsvp_item.full_name }}</div>
+              <div class="message-date">{{ rsvp_item.created_at }}</div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Pagination Loop Controls -->
+      <div class="messages-nav-controls">
+        <button type="button" class="messages-nav-btn" id="msgPrevBtn" aria-label="Previous messages">&#10094; Previous</button>
+        <span class="messages-page-indicator" id="msgPageIndicator">Page 1</span>
+        <button type="button" class="messages-nav-btn" id="msgNextBtn" aria-label="Next messages">Next &#10095;</button>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+  <!-- ------------- -->
 
   <!-- Vanilla Dynamic JS Script -->
   <script>
@@ -489,6 +521,33 @@
       }
     });
 
+    ///////RSVP ATTENDING CHOICE/////////
+    document.addEventListener('DOMContentLoaded', function () {
+      const attendingRadios = document.querySelectorAll('input[name="attending"]');
+      
+      // Elements to toggle
+      const guestCountGroup = document.getElementById('id_guest_count')?.closest('.form-group');
+      const dietaryGroup = document.getElementById('id_dietary_requirements')?.closest('.form-group');
+      const formsetContainer = document.getElementById('additional-guests-container'); // Container wrapping formset inputs
+
+      function toggleAttendingFields() {
+        const selectedAttending = document.querySelector('input[name="attending"]:checked')?.value;
+        const isAttending = selectedAttending === 'YES';
+
+        if (guestCountGroup) guestCountGroup.style.display = isAttending ? 'block' : 'none';
+        if (dietaryGroup) dietaryGroup.style.display = isAttending ? 'block' : 'none';
+        if (formsetContainer) formsetContainer.style.display = isAttending ? 'block' : 'none';
+      }
+
+      // Attach event listeners to radios
+      attendingRadios.forEach(radio => {
+        radio.addEventListener('change', toggleAttendingFields);
+      });
+
+      // Run on initial page load
+      toggleAttendingFields();
+    });
+
     // RSVP Modal Dismissal Handlers
     const modal = document.getElementById('rsvpModal');
     const closeBtn = document.getElementById('closeModalBtn');
@@ -542,6 +601,63 @@
         buttonText.textContent = 'Read More';
       }
     }
-  </script>
 
+  ///RSVP MESSAGES
+  document.addEventListener('DOMContentLoaded', function () {
+    const cards = Array.from(document.querySelectorAll('#messagesGrid .message-card'));
+    if (!cards.length) return;
+
+    const pageSize = 3; // Displays 3 messages per page
+    let currentPage = 0;
+    const totalPages = Math.ceil(cards.length / pageSize);
+
+    const prevBtn = document.getElementById('msgPrevBtn');
+    const nextBtn = document.getElementById('msgNextBtn');
+    const pageIndicator = document.getElementById('msgPageIndicator');
+
+    function renderPage(page) {
+      const start = page * pageSize;
+      const end = start + pageSize;
+
+      cards.forEach((card, index) => {
+        if (index >= start && index < end) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (pageIndicator) {
+        pageIndicator.textContent = `Page ${page + 1} of ${totalPages}`;
+      }
+
+      // Hide controls only if total messages are 3 or fewer across the database
+      if (totalPages <= 1) {
+        if (prevBtn) prevBtn.style.display = 'none';
+        if (nextBtn) nextBtn.style.display = 'none';
+        if (pageIndicator) pageIndicator.style.display = 'none';
+      } else {
+        if (prevBtn) prevBtn.style.display = 'inline-block';
+        if (nextBtn) nextBtn.style.display = 'inline-block';
+        if (pageIndicator) pageIndicator.style.display = 'inline-block';
+      }
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function () {
+        currentPage = (currentPage - 1 + totalPages) % totalPages;
+        renderPage(currentPage);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function () {
+        currentPage = (currentPage + 1) % totalPages;
+        renderPage(currentPage);
+      });
+    }
+
+    renderPage(currentPage);
+  });
+  </script>
 {% endblock %}

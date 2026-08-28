@@ -13,7 +13,7 @@
 
     <div class="rsvp-view-group">
       <div class="rsvp-view-label">Primary Guest / Name</div>
-      <div class="rsvp-view-value">{{ rsvp.name|default:rsvp.full_name }}</div>
+      <div class="rsvp-view-value">{{ rsvp.display_name }}</div>
     </div>
 
     {% if rsvp.email %}
@@ -33,7 +33,7 @@
     <div class="rsvp-view-group">
       <div class="rsvp-view-label">Attendance Status</div>
       <div class="rsvp-view-value">
-        {% if rsvp.attending %}
+        {% if rsvp.attending == "YES" %}
           <span class="status-attending">Attending</span>
         {% else %}
           <span class="status-declined">Regretfully Declined</span>
@@ -43,11 +43,11 @@
 
     <div class="rsvp-view-group">
       <div class="rsvp-view-label">Total Guest Count</div>
-      <div class="rsvp-view-value">{{ rsvp.guest_count|default:"1" }}</div>
+      <div class="rsvp-view-value">{{ rsvp.total_guests }}</div>
     </div>
 
-    <!-- Additional Guests Section -->
-    {% if additional_guests %}
+    <!-- Additional Guests Section (Only show if attending) -->
+    {% if rsvp.attending == "YES" and additional_guests %}
       <div class="rsvp-view-group no-border">
         <div class="rsvp-view-label">Additional Guests</div>
         <div class="rsvp-view-box">
@@ -60,24 +60,21 @@
       </div>
     {% endif %}
 
-
-    <!--  -->
-    <!-- Dietary Requirements Section -->
-    {% if rsvp.dietary_requirements %}
+    <!-- Dietary Requirements Section (Only show if attending) -->
+    {% if rsvp.attending == "YES" and rsvp.dietary_requirements %}
       <div class="rsvp-view-group">
         <div class="rsvp-view-label">Dietary Requirements</div>
         <div class="rsvp-view-value">{{ rsvp.dietary_requirements|linebreaksbr }}</div>
       </div>
     {% endif %}
 
-    <!-- Message / Note Section -->
+    <!-- Message / Note Section (Renders regardless of attendance status) -->
     {% if rsvp.message %}
       <div class="rsvp-view-group">
         <div class="rsvp-view-label">Message / Best Wishes</div>
         <div class="rsvp-view-value">{{ rsvp.message|linebreaksbr }}</div>
       </div>
     {% endif %}
-    <!--  -->
 
     <!-- Actions -->
     <div class="rsvp-view-actions">

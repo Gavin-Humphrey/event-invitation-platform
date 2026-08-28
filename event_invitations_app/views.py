@@ -12,31 +12,35 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from datetime import datetime, date
+from django.views.decorators.csrf import ensure_csrf_cookie
 
+
+
+@ensure_csrf_cookie
 def home(request):
 
-    # defaults={
-    #     "title": "Chief Jerry's 80th Birthday Celebration",
-    #     "event_date": datetime(2026, 10, 3, 17, 0),
-    #     "venue_name": "PRINCE REGENT HOTEL, Manor Rd, Chigwell, Essex IG8 8AE",
-    #     "rsvp_deadline": date(2026, 9, 20),
-    #     "invitation_passcode": "JERRY80",
-    #     }
-    
-    # )
     event, _ = Event.objects.get_or_create(
-    pk=1,
-    defaults={
-        "title": "Chief Jerry's 80th Birthday Celebration",
-        "event_date": datetime(2026, 10, 3, 17, 0),
-        "venue_name": "PRINCE REGENT HOTEL, Manor Rd, Chigwell, Essex IG8 8AE",
-        "rsvp_deadline": date(2026, 9, 20),
-        "invitation_passcode": "JERRY80",
+        pk=1,
+        defaults={
+            "title": "Chief Jerry's 80th Birthday Celebration",
+            "event_date": datetime(2026, 10, 3, 17, 0),
+            "venue_name": "PRINCE REGENT HOTEL, Manor Rd, Chigwell, Essex IG8 8AE",
+            "rsvp_deadline": date(2026, 9, 20),
+            "invitation_passcode": "JERRY80",
         }
     )
 
     # Fetch uploaded gallery images for the event
     gallery_images = GalleryImage.objects.filter(event=event).order_by('-id')
+
+    # Fetch ALL messages (attending and declined)
+    confirmed_messages = RSVP.objects.filter(
+        event=event
+    ).exclude(
+        message__exact=''
+    ).exclude(
+        message__isnull=True
+    ).order_by('-created_at')
 
     if request.method == 'POST':
         form = RSVPForm(request.POST)
@@ -46,24 +50,29 @@ def home(request):
         if form.is_valid() and formset.is_valid():
             rsvp = form.save(commit=False)
             rsvp.event = event
+
+            # Check attendance status
+            is_attending = rsvp.attending in ["YES", getattr(RSVP.AttendingStatus, "YES", "YES")]
+
+            # Zero out headcount if declining
+            if not is_attending:
+                rsvp.guest_count = 0
+
             rsvp.save()
-
-            guest_count = form.cleaned_data.get('guest_count', 1)
-            dietary_requirements = form.cleaned_data.get('dietary_requirements')
-            # event_date = form.cleaned_data.get('event_date')
-            # venue_name = form.cleaned_data.get('venue_name')
-            additional_guests = formset.save(commit=False)
-
-            for i, guest in enumerate(additional_guests):
-                if i < (guest_count - 1):
-                    guest.rsvp = rsvp
-                    guest.save()
 
             recipient_name = rsvp.full_name if rsvp.full_name else "Valued Guest"
             greeting_prefix = f"{rsvp.suffix} " if rsvp.suffix else ""
 
-            if rsvp.attending == "YES":
-                # 1. Cleaner subject line (removing initial emoji prevents spam filter triggers on new domains)
+            if is_attending:
+                guest_count = form.cleaned_data.get('guest_count', 1)
+                dietary_requirements = form.cleaned_data.get('dietary_requirements', 'None')
+                additional_guests = formset.save(commit=False)
+
+                for i, guest in enumerate(additional_guests):
+                    if i < (guest_count - 1):
+                        guest.rsvp = rsvp
+                        guest.save()
+
                 subject = "RSVP Confirmed - We look forward to seeing you!"
 
                 html_content = f"""
@@ -85,9 +94,8 @@ def home(request):
                             <p style="margin: 5px 0 0 0;">Total Guests: <strong>{guest_count}</strong></p>
                             <p style="margin: 5px 0 0 0;">Dietary Requirements: <strong>{dietary_requirements}</strong></p>
                             <p style="margin: 5px 0 0 0;">Date: <strong>3rd of October 2026</strong></p>
-                            <p style="margin: 5px 0 0 0;">Event Venue: <strong>PRINCE REGENT HOTEL
-                                Manor Rd, Chigwell, Essex IG8 8AE</strong></p>
-                            <p style="margin: 5px 0 0 0;">Event Time: <strong>5 pm</strong>  * No African time.</p>
+                            <p style="margin: 5px 0 0 0;">Event Venue: <strong>PRINCE REGENT HOTEL<br>Manor Rd, Chigwell, Essex IG8 8AE</strong></p>
+                            <p style="margin: 5px 0 0 0;">Event Time: <strong>5 pm (UK).</strong>  * No African time.</p>
                         </div>
                         <p>We look forward to welcoming you!</p>
                         <p style="margin-top: 30px;">
@@ -98,7 +106,6 @@ def home(request):
                 </div>
                 """
 
-                # 2. Complete plain text version matching the HTML structure (crucial for inbox delivery)
                 plain_message = (
                     f"Dear {greeting_prefix}{recipient_name},\n\n"
                     f"Thank you for confirming your attendance! We are thrilled and delighted that you will be joining us to celebrate.\n\n"
@@ -135,7 +142,6 @@ def home(request):
                     f"Event Hosting Committee"
                 )
 
-            # Send via Resend / Anymail
             send_mail(
                 subject=subject,
                 message=plain_message,
@@ -145,20 +151,28 @@ def home(request):
                 fail_silently=False,
             )
 
-            # Add success message for the modal pop-up
             messages.success(
                 request,
                 "Thank you for your RSVP! Your response has been successfully received.",
             )
-            return redirect("home")  # Redirect to prevent form resubmission
+            return redirect("home")
 
     else:
         form = RSVPForm()
         formset = AdditionalGuestFormSet(instance=RSVP())
 
     return render(
-        request, "index.html", {"event": event, "form": form, "formset": formset, "gallery_images": gallery_images}
+        request, 
+        "index.html", 
+        {
+            "event": event, 
+            "form": form, 
+            "formset": formset, 
+            "gallery_images": gallery_images,
+            "confirmed_messages": confirmed_messages
+        }
     )
+#########
 
 
 # def is_superuser(user):

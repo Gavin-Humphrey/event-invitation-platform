@@ -72,6 +72,7 @@ class RSVPForm(forms.ModelForm):
         choices=GUEST_CHOICES,
         coerce=int,
         initial=1,
+        required=False,  # Set to False so declining guests aren't blocked
         widget=forms.Select(attrs={'class': 'form-control', 'id': 'id_guest_count'}),
         label="NUMBER OF GUESTS ATTENDING (MAX 3) *"
     )
@@ -96,6 +97,7 @@ class RSVPForm(forms.ModelForm):
             'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your phone number'}),
             'attending': forms.RadioSelect(attrs={'class': 'radio-input'}),
             'dietary_requirements': forms.Textarea(attrs={
+                'id': 'id_dietary_requirements',
                 'class': 'form-control', 
                 'rows': 3, 
                 'placeholder': 'List any dietary restrictions or allergies'
@@ -105,15 +107,28 @@ class RSVPForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Attach field validators dynamically
         self.fields['full_name'].validators.append(name_validator)
         self.fields['phone'].validators.append(phone_validator)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        attending = cleaned_data.get('attending')
+
+        # If declining, zero out guest count and clear dietary requirements
+        if attending == 'NO':
+            cleaned_data['guest_count'] = 0
+            cleaned_data['dietary_requirements'] = ''
+        elif attending == 'YES' and not cleaned_data.get('guest_count'):
+            # Default to 1 if attending but guest_count wasn't selected
+            cleaned_data['guest_count'] = 1
+
+        return cleaned_data
 
     def clean_full_name(self):
         full_name = self.cleaned_data.get('full_name', '').strip()
         if len(full_name) < 2:
             raise forms.ValidationError("Please enter a valid full name (at least 2 characters).")
-        return full_name.title()  # Formats name cleanly (e.g., "john doe" -> "John Doe")
+        return full_name.title()
 
     def clean_email(self):
         email = self.cleaned_data.get('email', '').strip().lower()
@@ -121,7 +136,6 @@ class RSVPForm(forms.ModelForm):
         if email and not re.match(EMAIL_REGEX, email):
             raise forms.ValidationError("Please enter a valid email address.")
 
-        # Uniqueness Check
         if email:
             query = RSVP.objects.filter(email__iexact=email)
             if self.instance and self.instance.pk:
@@ -143,7 +157,6 @@ class RSVPForm(forms.ModelForm):
         if len(cleaned_phone) < 8:
             raise forms.ValidationError("Phone number is too short.")
 
-        # Uniqueness Check
         if cleaned_phone:
             query = RSVP.objects.filter(phone=cleaned_phone)
             if self.instance and self.instance.pk:
@@ -157,7 +170,6 @@ class RSVPForm(forms.ModelForm):
     def clean_passcode(self):
         code_input = self.cleaned_data.get('passcode', '').strip().upper()
         
-        # Fetch valid passcode set in Django Admin (Event model)
         event = Event.objects.first()
         valid_code = event.invitation_passcode.strip().upper() if (event and event.invitation_passcode) else "JERRY80"
 
@@ -165,7 +177,6 @@ class RSVPForm(forms.ModelForm):
             raise forms.ValidationError("Invalid invitation passcode. Please check your invitation card.")
         
         return code_input
-
 
 class AdditionalGuestForm(forms.ModelForm):
     class Meta:
