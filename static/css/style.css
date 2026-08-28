@@ -1638,3 +1638,14 @@ label {
         line-height: 1.4;
     }
 }
+
+/* Unstick navigation in landscape mode on small screens */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    .navbar { 
+        position: absolute; /* Moves with page scrolling instead of staying fixed */
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+    }
+}
