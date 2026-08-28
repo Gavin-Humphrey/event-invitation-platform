@@ -1,5 +1,6 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from cloudinary.utils import cloudinary_url
 
 
 
@@ -20,6 +21,39 @@ class Event(models.Model):
         return self.title
 
 
+# class GalleryImage(models.Model):
+#     CATEGORY_CHOICES = [
+#         ('about', 'About Dad'),
+#         ('memory', '80 Years'),
+#     ]
+
+#     event = models.ForeignKey(Event, related_name='gallery_images', on_delete=models.CASCADE)
+#     image = models.ImageField(upload_to='birthday_gallery/')
+#     description = models.CharField(max_length=200, blank=True, null=True, help_text="Image description (max 200 chars)")
+#     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='about')
+
+#     def __str__(self):
+#         return self.description or f"Gallery Image {self.pk}"
+
+#     @property
+#     def smart_url(self):
+#         """
+#         Generates a Cloudinary URL with smart face detection enabled.
+#         Crops dynamically around faces to fit a 4:5 frame without cutting off heads.
+#         """
+#         if self.image:
+#             url, _ = cloudinary_url(
+#                 self.image.name,
+#                 width=600,
+#                 height=750,
+#                 # crop="fill",
+#                 crop="pad",
+#                 background="auto:predominant", # <--- Fills letterbox with dark/matching color
+#                 secure=True
+#             )
+#             return url
+#         return ""
+
 class GalleryImage(models.Model):
     CATEGORY_CHOICES = [
         ('about', 'About Dad'),
@@ -29,10 +63,11 @@ class GalleryImage(models.Model):
     event = models.ForeignKey(Event, related_name='gallery_images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='birthday_gallery/')
     description = models.CharField(max_length=200, blank=True, null=True, help_text="Image description (max 200 chars)")
-    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='about')
 
     def __str__(self):
         return self.description or f"Gallery Image {self.pk}"
+
 
 # from io import BytesIO
 

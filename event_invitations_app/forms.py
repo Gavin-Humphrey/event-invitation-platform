@@ -15,14 +15,17 @@ class RSVPUpdateForm(forms.ModelForm):
 class GalleryImageForm(forms.ModelForm):
     class Meta:
         model = GalleryImage
-        fields = ['image', 'description', 'category']
+        fields = ['image', 'description', 'category']  # Removed crop_position
         widgets = {
             'description': forms.Textarea(attrs={
                 'rows': 3,
-                'maxlength': '200',  # Client-side stop
+                'maxlength': '200',
                 'placeholder': 'Enter photo description (max 200 characters)...',
                 'class': 'form-control',
                 'id': 'gallery-description-input',
+            }),
+            'category': forms.Select(attrs={
+                'class': 'form-control eda-form-control',
             }),
         }
 
@@ -32,6 +35,7 @@ class GalleryImageForm(forms.ModelForm):
             raise forms.ValidationError("Description cannot exceed 200 characters.")
         return description
 
+    
 GUEST_CHOICES = (
     (1, '1 Guest (Just Me)'),
     (2, '2 Guests'),

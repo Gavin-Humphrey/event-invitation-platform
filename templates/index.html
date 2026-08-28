@@ -1,5 +1,6 @@
 {% extends "main.html" %}
 {% load static %}
+{% load cloudinary %}
 
 {% block content %}
 <!-- Hero Section -->
@@ -110,7 +111,7 @@
       </div>
 
     </div>
-</section>
+  </section>
 
   <!-- About Section -->
   <section id="about" class="section-padding bg-cream">
@@ -131,15 +132,24 @@
         </button>
       </div>
 
+      <!-- Admin control -->
       <div class="about-gallery">
         <div class="about-slides">
           {% if gallery_images.exists %}
             {% for item in gallery_images %}
               <div class="slide-card">
-                  <img src="{{ item.image.url }}" alt="{{ item.description|default:'Dad Photo' }}">
-                  {% if item.description %}
-                    <div class="slide-description">{{ item.description }}</div>
-                  {% endif %}    
+                <!-- Blurred background layer (fills empty space smoothly) -->
+                <img src="{{ item.image.url }}" class="slide-bg-blur" aria-hidden="true">
+                
+                <!-- Clear foreground image (100% uncropped view) -->
+                <img src="{{ item.image.url }}" 
+                    alt="{{ item.description|default:'Dad Photo' }}"
+                    class="slide-img-main"
+                    loading="lazy">
+                    
+                {% if item.description %}
+                  <div class="slide-description">{{ item.description }}</div>
+                {% endif %}    
               </div>
             {% endfor %}
           {% else %}
@@ -168,7 +178,7 @@
 
         <div class="about-dots">
           <span class="about-photo-counter">
-            Photo 1 of {% if gallery_images %}{{ gallery_images|length }}{% else %}4{% endif %}
+            Photo 1 of {% if gallery_images.exists %}{{ gallery_images|length }}{% else %}4{% endif %}
           </span>
         </div>
       </div>

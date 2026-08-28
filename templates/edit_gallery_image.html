@@ -41,6 +41,20 @@
         {% endif %}
       </div>
 
+      <!-- ======================================================== -->
+      <!-- START: ADDED CROP POSITION (FOCUS AREA) FIELD           -->
+      <!-- ======================================================== -->
+      <div class="form-group" style="margin-bottom: 1rem;">
+        <label for="{{ form.crop_position.id_for_label }}">Image Alignment (Focus Area):</label>
+        {{ form.crop_position }}
+        {% if form.crop_position.errors %}
+          <div class="text-danger small">{{ form.crop_position.errors }}</div>
+        {% endif %}
+      </div>
+      <!-- ======================================================== -->
+      <!-- END: ADDED CROP POSITION FIELD                          -->
+      <!-- ======================================================== -->
+
       {% if form.category %}
         <div class="form-group" style="margin-bottom: 1.5rem;">
           <label>Category:</label>
