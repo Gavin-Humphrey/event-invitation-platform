@@ -103,7 +103,7 @@ class RSVP(models.Model):
     # Set MinValueValidator(0) so zero headcount for declined RSVPs is valid
     guest_count = models.PositiveSmallIntegerField(
         default=1,
-        validators=[MinValueValidator(0), MaxValueValidator(3)]
+        validators=[MinValueValidator(0), MaxValueValidator(2)]
     )
     dietary_requirements = models.TextField(
         blank=True, 

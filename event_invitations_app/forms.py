@@ -38,8 +38,7 @@ class GalleryImageForm(forms.ModelForm):
     
 GUEST_CHOICES = (
     (1, '1 Guest (Just Me)'),
-    (2, '2 Guests'),
-    (3, '3 Guests (Max Limit)'),
+    (2, '2 Guests (Max Limit)'),
 )
 
 # Regex Validators
