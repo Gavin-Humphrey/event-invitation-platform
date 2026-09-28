@@ -33,15 +33,11 @@ class Command(BaseCommand):
         )
 
         reminder = (
-            "Good evening 😊 We're so excited and looking forward to seeing you "
-            "and celebrating this very special milestone — Chief Jerry "
-            "Chukwuemeka Aguiyi's 80th birthday! 🎉 "
-            "A little reminder to please come early so you don't miss any part "
-            "of the celebration. The party starts promptly at 5:00 PM — "
-            "please, no African time o! 😄 "
-            "📍 Prince Regent Hotel, Manor Road, Woodford, Chigwell, "
-            "Essex, IG8 8AE "
-            "We can't wait to celebrate together. See you soon! 🎉"
+            "Good evening 😊 Just a reminder that Chief Jerry's 80th birthday "
+            "celebration is this Saturday! 🎉 "
+            "🕔 5:00 PM — please come early, no African time o! 😄 "
+            "📍 Prince Regent Hotel, Manor Road, Woodford, Chigwell, IG8 8AE "
+            "We can't wait to celebrate with you! 🎉"
         )
 
         messages = [
