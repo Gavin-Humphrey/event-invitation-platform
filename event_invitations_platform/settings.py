@@ -269,3 +269,10 @@ PASSWORD_RESET_TIMEOUT = 15000
 #         },
 #     },
 # }
+
+# # PureSMS Configuration
+# PURESMS_API_KEY = config("PURESMS_API_KEY", default="")
+# PURESMS_SENDER = config("PURESMS_SENDER", default="ConnectTest")
+
+CLICKSEND_USERNAME = config("CLICKSEND_USERNAME", default="")
+CLICKSEND_API_KEY = config("CLICKSEND_API_KEY", default="")
