@@ -39,7 +39,7 @@ class Command(BaseCommand):
             "📍 Prince Regent Hotel, Manor Road, Woodford, Chigwell, IG8 8AE "
             "We can't wait to celebrate with you! 🎉"
         )
-
+        
         messages = [
             {
                 "recipient": rsvp.phone,
