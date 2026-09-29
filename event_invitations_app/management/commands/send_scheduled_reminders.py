@@ -2,6 +2,7 @@ from datetime import date
 
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
+from django.db import connection
 
 
 class Command(BaseCommand):
@@ -9,6 +10,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         today = date.today()
+
+        self.stdout.write(
+            f"Database engine: {connection.settings_dict['ENGINE']}"
+        )
 
         if today == date(2026, 9, 29):
             self.stdout.write(
