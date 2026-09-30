@@ -18,6 +18,12 @@ class Event(models.Model):
         help_text="Shared passcode required for guests to submit an RSVP"
     )
 
+    live_access_code = models.CharField(
+        max_length=50,
+        default="JERRYLIVE",
+        help_text="Code required to access the live event and livestream"
+    )
+
     live_stream_link = models.URLField(
         max_length=500, 
         blank=True, 

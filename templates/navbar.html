@@ -51,7 +51,9 @@
     
     <!-- Public or Superuser Navigation Links -->
     <!-- <a href="{% url 'home' %}#gallery">GALLERY</a> -->
+     {% if not rsvp_closed and not event.is_live_day and not event.is_past %}
     <a href="{% url 'home' %}#rsvp">RSVP</a>
+    {% endif %}
 
     {% if user.is_authenticated and user.is_staff %}
       <a href="{% url 'admin_dashboard' %}" class="nav-dashboard-badge">DASHBOARD</a>

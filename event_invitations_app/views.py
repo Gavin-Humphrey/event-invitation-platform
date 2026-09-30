@@ -18,6 +18,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 
 
 
+
 @ensure_csrf_cookie
 def home(request):
 
@@ -29,25 +30,71 @@ def home(request):
             "venue_name": "PRINCE REGENT HOTEL, Manor Rd, Chigwell, Essex IG8 8AE",
             "rsvp_deadline": date(2026, 9, 30),
             "invitation_passcode": "JERRY80",
+            "live_access_code": "JERRYLIVE",
         }
     )
 
-    uk_today = timezone.now().astimezone(ZoneInfo("Europe/London")).date()
+    uk_today = timezone.now().astimezone(
+        ZoneInfo("Europe/London")
+    ).date()
+
     rsvp_closed = uk_today >= event.rsvp_deadline
 
-    # Fetch uploaded gallery images for the event
-    gallery_images = GalleryImage.objects.filter(event=event).order_by('-id')
+    # ============================================================
+    # LIVE ACCESS
+    # ============================================================
 
-    # Fetch ALL messages (attending and declined)
+    live_access_granted = request.session.get(
+        "live_access_granted",
+        False
+    )
+
+    live_access_error = None
+
+    # Handle LIVE ACCESS CODE submission separately from RSVP.
+    if request.method == "POST" and "live_access_code" in request.POST:
+
+        submitted_code = request.POST.get(
+            "live_access_code",
+            ""
+        ).strip().upper()
+
+        valid_code = (
+            event.live_access_code.strip().upper()
+            if event.live_access_code
+            else ""
+        )
+
+        if submitted_code == valid_code:
+
+            request.session["live_access_granted"] = True
+            live_access_granted = True
+
+            return redirect("home")
+
+        else:
+
+            live_access_error = (
+                "Invalid live access code. Please check your invitation."
+            )
+
+    # FETCH GALLERY
+    gallery_images = GalleryImage.objects.filter(
+        event=event
+    ).order_by("-id")
+
+    # FETCH ALL RSVP MESSAGES
     confirmed_messages = RSVP.objects.filter(
         event=event
     ).exclude(
-        message__exact=''
+        message__exact=""
     ).exclude(
         message__isnull=True
-    ).order_by('-created_at')
+    ).order_by("-created_at")
 
-    if request.method == 'POST':
+    # NORMAL RSVP SUBMISSION
+    if request.method == "POST" and "live_access_code" not in request.POST:
+
         if rsvp_closed:
             messages.error(
                 request,
@@ -56,15 +103,29 @@ def home(request):
             return redirect("home")
 
         form = RSVPForm(request.POST)
+
         dummy_rsvp = RSVP(event=event)
-        formset = AdditionalGuestFormSet(request.POST, instance=dummy_rsvp)
+
+        formset = AdditionalGuestFormSet(
+            request.POST,
+            instance=dummy_rsvp
+        )
 
         if form.is_valid() and formset.is_valid():
+
             rsvp = form.save(commit=False)
+
             rsvp.event = event
 
             # Check attendance status
-            is_attending = rsvp.attending in ["YES", getattr(RSVP.AttendingStatus, "YES", "YES")]
+            is_attending = rsvp.attending in [
+                "YES",
+                getattr(
+                    RSVP.AttendingStatus,
+                    "YES",
+                    "YES"
+                )
+            ]
 
             # Zero out headcount if declining
             if not is_attending:
@@ -72,88 +133,173 @@ def home(request):
 
             rsvp.save()
 
-            recipient_name = rsvp.full_name if rsvp.full_name else "Valued Guest"
-            greeting_prefix = f"{rsvp.suffix} " if rsvp.suffix else ""
+            recipient_name = (
+                rsvp.full_name
+                if rsvp.full_name
+                else "Valued Guest"
+            )
 
+            greeting_prefix = (
+                f"{rsvp.suffix} "
+                if rsvp.suffix
+                else ""
+            )
+
+            # ATTENDING
             if is_attending:
-                guest_count = form.cleaned_data.get('guest_count', 1)
-                dietary_requirements = form.cleaned_data.get('dietary_requirements', 'None')
-                additional_guests = formset.save(commit=False)
 
-                for i, guest in enumerate(additional_guests):
+                guest_count = form.cleaned_data.get(
+                    "guest_count",
+                    1
+                )
+
+                dietary_requirements = form.cleaned_data.get(
+                    "dietary_requirements",
+                    "None"
+                )
+
+                additional_guests = formset.save(
+                    commit=False
+                )
+
+                for i, guest in enumerate(
+                    additional_guests
+                ):
+
                     if i < (guest_count - 1):
+
                         guest.rsvp = rsvp
                         guest.save()
 
-                subject = "RSVP Confirmed - We look forward to seeing you!"
+                subject = (
+                    "RSVP Confirmed - "
+                    "We look forward to seeing you!"
+                )
 
                 html_content = f"""
                 <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #C5A059; border-radius: 8px; overflow: hidden;">
+
                     <div style="background-color: #0B2B1D; padding: 24px; text-align: center;">
+
                         <h1 style="color: #C5A059; margin: 0; font-size: 22px; letter-spacing: 1px; text-transform: uppercase;">
                             RSVP Confirmed
                         </h1>
+
                     </div>
+
                     <div style="padding: 30px; background-color: #ffffff; color: #333333; line-height: 1.6;">
+
                         <p style="font-size: 16px; margin-top: 0;">
                             Dear <strong>{greeting_prefix}{recipient_name}</strong>,
                         </p>
+
                         <p>
-                            Thank you for confirming your attendance! We are thrilled and delighted that you will be joining us to celebrate.
+                            Thank you for confirming your attendance!
+                            We are thrilled and delighted that you will
+                            be joining us to celebrate.
                         </p>
+
                         <div style="background-color: #F9F6F0; border-left: 4px solid #C5A059; padding: 15px; margin: 20px 0;">
-                            <p style="margin: 0; font-weight: bold; color: #0B2B1D;">Summary of your reservation:</p>
-                            <p style="margin: 5px 0 0 0;">Total Guests: <strong>{guest_count}</strong></p>
-                            <p style="margin: 5px 0 0 0;">Dietary Requirements: <strong>{dietary_requirements}</strong></p>
-                            <p style="margin: 5px 0 0 0;">Date: <strong>3rd of October 2026</strong></p>
-                            <p style="margin: 5px 0 0 0;">Event Venue: <strong>PRINCE REGENT HOTEL<br>Manor Rd, Chigwell, Essex IG8 8AE</strong></p>
-                            <p style="margin: 5px 0 0 0;">Event Time: <strong>5 pm (UK).</strong>  * No African time.</p>
+
+                            <p style="margin: 0; font-weight: bold; color: #0B2B1D;">
+                                Summary of your reservation:
+                            </p>
+
+                            <p style="margin: 5px 0 0 0;">
+                                Total Guests:
+                                <strong>{guest_count}</strong>
+                            </p>
+
+                            <p style="margin: 5px 0 0 0;">
+                                Dietary Requirements:
+                                <strong>{dietary_requirements}</strong>
+                            </p>
+
+                            <p style="margin: 5px 0 0 0;">
+                                Date:
+                                <strong>3rd of October 2026</strong>
+                            </p>
+
+                            <p style="margin: 5px 0 0 0;">
+                                Event Venue:
+                                <strong>
+                                    PRINCE REGENT HOTEL<br>
+                                    Manor Rd, Chigwell, Essex IG8 8AE
+                                </strong>
+                            </p>
+
+                            <p style="margin: 5px 0 0 0;">
+                                Event Time:
+                                <strong>5 pm (UK).</strong>
+                                * No African time.
+                            </p>
+
                         </div>
-                        <p>We look forward to welcoming you!</p>
+
+                        <p>
+                            We look forward to welcoming you!
+                        </p>
+
                         <p style="margin-top: 30px;">
                             Warm regards,<br>
                             <strong>Event Hosting Committee</strong>
                         </p>
+
                     </div>
+
                 </div>
                 """
 
                 plain_message = (
                     f"Dear {greeting_prefix}{recipient_name},\n\n"
-                    f"Thank you for confirming your attendance! We are thrilled and delighted that you will be joining us to celebrate.\n\n"
+                    f"Thank you for confirming your attendance! "
+                    f"We are thrilled and delighted that you will be "
+                    f"joining us to celebrate.\n\n"
                     f"Summary of your reservation:\n"
                     f"- Total Guests: {guest_count}\n"
-                    f"- Dietary Requirements: {dietary_requirements}\n\n"
+                    f"- Dietary Requirements: "
+                    f"{dietary_requirements}\n\n"
                     f"We look forward to welcoming you!\n\n"
                     f"Warm regards,\n"
                     f"Event Hosting Committee"
                 )
 
+            # NOT ATTENDING
             else:
+
                 subject = "Thank you for your response"
 
                 html_content = f"""
                 <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; padding: 30px;">
+
                     <p style="font-size: 16px; margin-top: 0;">
                         Dear <strong>{greeting_prefix}{recipient_name}</strong>,
                     </p>
+
                     <p>
-                        Thank you for letting us know. We are sorry you won't be able to make it, but we appreciate your response!
+                        Thank you for letting us know.
+                        We are sorry you won't be able to make it,
+                        but we appreciate your response!
                     </p>
+
                     <p style="margin-top: 30px;">
                         Warm regards,<br>
                         <strong>Event Hosting Committee</strong>
                     </p>
+
                 </div>
                 """
 
                 plain_message = (
                     f"Dear {greeting_prefix}{recipient_name},\n\n"
-                    f"Thank you for letting us know. We are sorry you won't be able to make it, but we appreciate your response!\n\n"
+                    f"Thank you for letting us know. "
+                    f"We are sorry you won't be able to make it, "
+                    f"but we appreciate your response!\n\n"
                     f"Warm regards,\n"
                     f"Event Hosting Committee"
                 )
 
+            # SEND CONFIRMATION EMAIL
             send_mail(
                 subject=subject,
                 message=plain_message,
@@ -165,13 +311,30 @@ def home(request):
 
             messages.success(
                 request,
-                "Thank you for your RSVP! Your response has been successfully received.",
+                "Thank you for your RSVP! "
+                "Your response has been successfully received.",
             )
+
             return redirect("home")
 
-    else:
+    # GET / INVALID LIVE ACCESS POST
+    if request.method == "GET":
+
         form = RSVPForm()
-        formset = AdditionalGuestFormSet(instance=RSVP())
+
+        formset = AdditionalGuestFormSet(
+            instance=RSVP()
+        )
+
+    # If the live access code was invalid, we still need
+    # fresh blank RSVP forms for the page.
+    elif "live_access_code" in request.POST:
+
+        form = RSVPForm()
+
+        formset = AdditionalGuestFormSet(
+            instance=RSVP()
+        )
 
     return render(
         request,
@@ -183,6 +346,8 @@ def home(request):
             "gallery_images": gallery_images,
             "confirmed_messages": confirmed_messages,
             "rsvp_closed": rsvp_closed,
+            "live_access_granted": live_access_granted,
+            "live_access_error": live_access_error,
         }
     )
 
@@ -199,6 +364,12 @@ def admin_dashboard(request):
     rsvps = RSVP.objects.all().order_by('-id')
     gallery_images = GalleryImage.objects.all().order_by('-id')
 
+    uk_today = timezone.now().astimezone(
+        ZoneInfo("Europe/London")
+    ).date()
+
+    rsvp_closed = uk_today >= event.rsvp_deadline
+
     if request.method == 'POST' and 'upload_image' in request.POST:
         image_form = GalleryImageForm(request.POST, request.FILES)
         if image_form.is_valid():
@@ -210,7 +381,6 @@ def admin_dashboard(request):
     else:
         image_form = GalleryImageForm()
 
-
     # Sum total guest_count for all attending RSVPs
     total_attending_headcount = RSVP.objects.filter(
         attending='YES'
@@ -220,6 +390,7 @@ def admin_dashboard(request):
 
     context = {
         'rsvps': rsvps,
+        'rsvp_closed': rsvp_closed,
         'gallery_images': gallery_images,
         'image_form': image_form,
         'total_attending_headcount': total_attending_headcount,
