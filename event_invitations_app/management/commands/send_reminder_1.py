@@ -18,10 +18,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        if date.today() != date(2026, 9, 29):
+        if date.today() != date(2026, 9, 30):
             self.stdout.write(
                 self.style.WARNING(
-                    "Reminder 1 is only allowed to be sent on September 29, 2026."
+                    "Reminder 1 is only allowed to be sent on September 30, 2026."
                 )
             )
             return

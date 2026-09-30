@@ -15,9 +15,9 @@ class Command(BaseCommand):
             f"Database engine: {connection.settings_dict['ENGINE']}"
         )
 
-        if today == date(2026, 9, 29):
+        if today == date(2026, 9, 30):
             self.stdout.write(
-                "Today is September 29, 2026. Sending Reminder 1..."
+                "Today is September 30, 2026. Sending Reminder 1..."
             )
             call_command("send_reminder_1")
 
