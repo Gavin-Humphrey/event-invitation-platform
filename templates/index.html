@@ -13,7 +13,9 @@
       <div class="age-badge">80<sup>TH</sup></div>
       <p style="letter-spacing: 2px; color: var(--gold-light); margin-bottom: 10px;">BIRTHDAY</p>
       <p class="hero-quote">"Your life is a blessing and your legacy, an inspiration"</p>
+      {% if not rsvp_closed and not event.is_live_day and not event.is_past %}
       <a href="#rsvp" class="btn-gold-sm btn-gold-sm-hero" style="padding: 12px 28px; font-size: 0.85rem;">RSVP NOW</a>
+      {% endif %}
     </div>
     
     <div class="hero-image">
@@ -185,125 +187,222 @@
     </div>
   </section>
 
-  <!-- RSVP Section -->
+  <!-- RSVP / LIVE STREAM SECTION -->
   <section id="rsvp" class="section-padding bg-white">
-    <div class="rsvp-container">
-      <h2 class="section-title serif-font text-center">KINDLY RSVP</h2>
-      <p style="text-align: center; color: var(--gold); font-size: 0.85rem; letter-spacing: 1px;">WE LOOK FORWARD TO CELEBRATING WITH YOU!</p>
 
-      <div class="notice-box">
-        <strong>IMPORTANT:</strong> This celebration is strictly by invitation. Entry will be limited to confirmed guests (Max 3 guests per invitation).
+    {% if event.is_live_day and event.live_stream_link %}
+
+    <!-- LIVE STREAM - SHOWN ON EVENT DAY -->
+    <div class="live-stream-container">
+
+      <h2 class="section-title serif-font text-center">
+        WE ARE LIVE!
+      </h2>
+
+      <p class="live-stream-subtitle">
+        Join us live as we celebrate Chief Jerry's 80th Birthday.
+      </p>
+
+      <div class="youtube-wrapper">
+        <iframe
+            src="https://www.youtube.com/embed/a05yLSYRwKM"
+            title="Chief Jerry's 80th Birthday Celebration - Live Stream"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+        </iframe>
       </div>
 
-      <form method="POST" action="#rsvp" class="rsvp-form">
-        {% csrf_token %}
+      <p class="live-stream-note">
+        Having trouble viewing the livestream?
+        <a href="https://youtube.com/live/a05yLSYRwKM?feature=share"
+          target="_blank"
+          rel="noopener noreferrer">
+          Watch directly on YouTube
+        </a>
+      </p>
 
-        <!-- INVITATION PASSCODE FIELD -->
-        <div class="form-group">
-          <label>INVITATION PASSCODE *</label>
-          {{ form.passcode }}
-          {% if form.passcode.errors %}
-            <div style="color: #d9534f; font-size: 0.85rem; margin-top: 4px; font-weight: 600;">
-              {{ form.passcode.errors.0 }}
-            </div>
-          {% endif %}
+    </div>
+
+    {% elif rsvp_closed and not event.is_past %}
+
+      <!-- LIVE EVENT COMING SOON -->
+      <div class="live-coming-soon-container">
+
+        <div class="live-coming-soon-badge">
+          ✦ LIVE EVENT ✦
         </div>
 
-        <div class="form-group">
-          <label for="{{ form.suffix.id_for_label }}">TITLE / SUFFIX</label>
-          {{ form.suffix }}
-          {% if form.suffix.errors %}
-            <div class="invalid-feedback">{{ form.suffix.errors }}</div>
-          {% endif %}
-        </div>
+        <h2 class="section-title serif-font text-center">
+          WATCH OUT — WE'RE GOING LIVE!
+        </h2>
 
-        <div class="form-group">
-          <label>FULL NAME (AS INVITED) *</label>
-          {{ form.full_name }}
-          {% if form.full_name.errors %}
-            <div style="color: #d9534f; font-size: 0.85rem; margin-top: 4px;">
-              {{ form.full_name.errors.0 }}
-            </div>
-          {% endif %}
-        </div>
+        <p class="live-coming-soon-subtitle">
+          The celebration doesn't end here.
+          Join us online as we celebrate this remarkable milestone.
+        </p>
 
-        <div class="form-row form-row-contact">
-          <div class="form-group">
-            <label>EMAIL ADDRESS *</label>
-            {{ form.email }}
-            {% if form.email.errors %}
-              <div style="color: #d9534f; font-size: 0.85rem; margin-top: 4px;">
-                {{ form.email.errors.0 }}
-              </div>
-            {% endif %}
+        <div class="live-coming-soon-card">
+
+          <div class="live-icon">
+            ▶
           </div>
-          <div class="form-group">
-            <label>PHONE NUMBER *</label>
-            {{ form.phone }}
-            {% if form.phone.errors %}
-              <div style="color: #d9534f; font-size: 0.85rem; margin-top: 4px;">
-                {{ form.phone.errors.0 }}
-              </div>
-            {% endif %}
+
+          <div>
+            <h3 class="serif-font">
+              LIVE STREAM COMING SOON
+            </h3>
+
+            <p>
+              The livestream will be available right here on
+              <strong>October 3, 2026</strong>.
+            </p>
+
+            <span class="live-coming-soon-note">
+              Come back and celebrate with us!
+            </span>
           </div>
+
         </div>
 
-        <div class="form-group">
-          <label>WILL YOU BE ATTENDING? *</label>
-          <div class="radio-options">
-            {% for radio in form.attending %}
-              <label class="radio-label">{{ radio.tag }} {{ radio.choice_label }}</label>
-            {% endfor %}
+      </div>
+
+    {% elif not event.is_past %}
+
+      <!-- NORMAL RSVP FORM -->
+       {% if not rsvp_closed and not event.is_past %}
+        <div class="rsvp-container">
+
+          <h2 class="section-title serif-font text-center">KINDLY RSVP</h2>
+
+          <p style="text-align: center; color: var(--gold); font-size: 0.85rem; letter-spacing: 1px;">
+            WE LOOK FORWARD TO CELEBRATING WITH YOU!
+          </p>
+
+          <div class="notice-box">
+            <strong>IMPORTANT:</strong>
+            This celebration is strictly by invitation.
+            Entry will be limited to confirmed guests (Max 3 guests per invitation).
           </div>
-          {% if form.attending.errors %}
-            <div style="color: #d9534f; font-size: 0.85rem; margin-top: 4px;">
-              {{ form.attending.errors.0 }}
-            </div>
-          {% endif %}
-        </div>
 
-        <div class="form-group">
-          <label>NUMBER OF GUESTS ATTENDING *</label>
-          {{ form.guest_count }}
-          {% if form.guest_count.errors %}
-            <div style="color: #d9534f; font-size: 0.85rem; margin-top: 4px;">
-              {{ form.guest_count.errors.0 }}
-            </div>
-          {% endif %}
-        </div>
+          <form method="POST" action="#rsvp" class="rsvp-form">
+            {% csrf_token %}
 
-        <!-- Formset Management Form for Dynamic Additional Guests -->
-        {{ formset.management_form }}
-
-        {% for g_form in formset %}
-          <div id="guest-{{ forloop.counter }}-card" class="guest-card" style="display: none;">
-            <h3 class="serif-font">Guest {{ forloop.counter|add:1 }} Details</h3>
+            <!-- INVITATION PASSCODE FIELD -->
             <div class="form-group">
-              <label>GUEST {{ forloop.counter|add:1 }} FULL NAME *</label>
-              {{ g_form.full_name }}
-              {% if g_form.full_name.errors %}
-                <div style="color: #d9534f; font-size: 0.85rem; margin-top: 4px;">
-                  {{ g_form.full_name.errors.0 }}
+              <label>INVITATION PASSCODE *</label>
+              {{ form.passcode }}
+              {% if form.passcode.errors %}
+                <div style="color: #d9534f; font-size: 0.85rem; margin-top: 4px; font-weight: 600;">
+                  {{ form.passcode.errors.0 }}
                 </div>
               {% endif %}
             </div>
-          </div>
-        {% endfor %}
 
-        <div class="form-group">
-          <label>DIETARY RESTRICTIONS / ALLERGIES</label>
-          {{ form.dietary_requirements }}
+            <div class="form-group">
+              <label for="{{ form.suffix.id_for_label }}">TITLE / SUFFIX</label>
+              {{ form.suffix }}
+              {% if form.suffix.errors %}
+                <div class="invalid-feedback">{{ form.suffix.errors }}</div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label>FULL NAME (AS INVITED) *</label>
+              {{ form.full_name }}
+              {% if form.full_name.errors %}
+                <div style="color: #d9534f; font-size: 0.85rem; margin-top: 4px;">
+                  {{ form.full_name.errors.0 }}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="form-row form-row-contact">
+              <div class="form-group">
+                <label>EMAIL ADDRESS *</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                  <div style="color: #d9534f; font-size: 0.85rem; margin-top: 4px;">
+                    {{ form.email.errors.0 }}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="form-group">
+                <label>PHONE NUMBER *</label>
+                {{ form.phone }}
+                {% if form.phone.errors %}
+                  <div style="color: #d9534f; font-size: 0.85rem; margin-top: 4px;">
+                    {{ form.phone.errors.0 }}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>WILL YOU BE ATTENDING? *</label>
+              <div class="radio-options">
+                {% for radio in form.attending %}
+                  <label class="radio-label">{{ radio.tag }} {{ radio.choice_label }}</label>
+                {% endfor %}
+              </div>
+              {% if form.attending.errors %}
+                <div style="color: #d9534f; font-size: 0.85rem; margin-top: 4px;">
+                  {{ form.attending.errors.0 }}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label>NUMBER OF GUESTS ATTENDING *</label>
+              {{ form.guest_count }}
+              {% if form.guest_count.errors %}
+                <div style="color: #d9534f; font-size: 0.85rem; margin-top: 4px;">
+                  {{ form.guest_count.errors.0 }}
+                </div>
+              {% endif %}
+            </div>
+
+            <!-- Formset Management Form for Dynamic Additional Guests -->
+            {{ formset.management_form }}
+
+            {% for g_form in formset %}
+              <div id="guest-{{ forloop.counter }}-card" class="guest-card" style="display: none;">
+                <h3 class="serif-font">Guest {{ forloop.counter|add:1 }} Details</h3>
+                <div class="form-group">
+                  <label>GUEST {{ forloop.counter|add:1 }} FULL NAME *</label>
+                  {{ g_form.full_name }}
+                  {% if g_form.full_name.errors %}
+                    <div style="color: #d9534f; font-size: 0.85rem; margin-top: 4px;">
+                      {{ g_form.full_name.errors.0 }}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+
+            <div class="form-group">
+              <label>DIETARY RESTRICTIONS / ALLERGIES</label>
+              {{ form.dietary_requirements }}
+            </div>
+
+            <div class="form-group">
+              <label>A SPECIAL MESSAGE FOR THE CELEBRANT</label>
+              {{ form.message }}
+            </div>
+
+            <button type="submit" class="btn-submit">SUBMIT RSVP &#9992;</button>
+          </form>
+
+          <p style="text-align: center; margin-top: 10px; color: var(--gold);">
+            RSVP DEADLINE: SEPTEMBER 30, 2026 AT 11:59 PM (UK)
+          </p>
+
         </div>
+      {% endif %}
 
-        <div class="form-group">
-          <label>A SPECIAL MESSAGE FOR THE CELEBRANT</label>
-          {{ form.message }}
-        </div>
+    {% endif %}
 
-        <button type="submit" class="btn-submit">SUBMIT RSVP &#9992;</button>
-      </form>
-      <p style="text-align: center; margin-top: 10px; color: var(--gold);">RSVP DEADLINE: SEPTEMBER 20, 2026 AT 11:59 PM (UK)</p>
-    </div>
   </section>
 
   <!-- Thank You Pop-Up Modal -->
@@ -660,4 +759,5 @@
     renderPage(currentPage);
   });
   </script>
+
 {% endblock %}

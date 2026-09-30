@@ -12,6 +12,8 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from datetime import datetime, date
+from django.utils import timezone
+from zoneinfo import ZoneInfo
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 
@@ -25,10 +27,13 @@ def home(request):
             "title": "Chief Jerry's 80th Birthday Celebration",
             "event_date": datetime(2026, 10, 3, 17, 0),
             "venue_name": "PRINCE REGENT HOTEL, Manor Rd, Chigwell, Essex IG8 8AE",
-            "rsvp_deadline": date(2026, 9, 20),
+            "rsvp_deadline": date(2026, 9, 30),
             "invitation_passcode": "JERRY80",
         }
     )
+
+    uk_today = timezone.now().astimezone(ZoneInfo("Europe/London")).date()
+    rsvp_closed = uk_today >= event.rsvp_deadline
 
     # Fetch uploaded gallery images for the event
     gallery_images = GalleryImage.objects.filter(event=event).order_by('-id')
@@ -43,6 +48,13 @@ def home(request):
     ).order_by('-created_at')
 
     if request.method == 'POST':
+        if rsvp_closed:
+            messages.error(
+                request,
+                "RSVPs for this event are now closed."
+            )
+            return redirect("home")
+
         form = RSVPForm(request.POST)
         dummy_rsvp = RSVP(event=event)
         formset = AdditionalGuestFormSet(request.POST, instance=dummy_rsvp)
@@ -162,18 +174,17 @@ def home(request):
         formset = AdditionalGuestFormSet(instance=RSVP())
 
     return render(
-        request, 
-        "index.html", 
+        request,
+        "index.html",
         {
-            "event": event, 
-            "form": form, 
-            "formset": formset, 
+            "event": event,
+            "form": form,
+            "formset": formset,
             "gallery_images": gallery_images,
-            "confirmed_messages": confirmed_messages
+            "confirmed_messages": confirmed_messages,
+            "rsvp_closed": rsvp_closed,
         }
     )
-#########
-
 
 # def is_superuser(user):
 #     return user.is_authenticated and user.is_superuser

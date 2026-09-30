@@ -1,6 +1,7 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from cloudinary.utils import cloudinary_url
+from django.utils import timezone
 
 
 
@@ -17,42 +18,32 @@ class Event(models.Model):
         help_text="Shared passcode required for guests to submit an RSVP"
     )
 
+    live_stream_link = models.URLField(
+        max_length=500, 
+        blank=True, 
+        null=True, 
+        help_text="Optional link for virtual attendance (Zoom, YouTube, Google Meet, etc.)"
+    )
+
     def __str__(self):
         return self.title
 
+    @property
+    def is_live_day(self):
+        """Returns True only if today matches the calendar date of the event."""
+        if not self.event_date:
+            return False
+        event_local_date = timezone.localtime(self.event_date).date()
+        today_local_date = timezone.localdate()
+        return event_local_date == today_local_date
 
-# class GalleryImage(models.Model):
-#     CATEGORY_CHOICES = [
-#         ('about', 'About Dad'),
-#         ('memory', '80 Years'),
-#     ]
+    @property
+    def is_past(self):
+        """Returns True if the event date has already passed."""
+        if not self.event_date:
+            return False
+        return timezone.localtime(self.event_date).date() < timezone.localdate()
 
-#     event = models.ForeignKey(Event, related_name='gallery_images', on_delete=models.CASCADE)
-#     image = models.ImageField(upload_to='birthday_gallery/')
-#     description = models.CharField(max_length=200, blank=True, null=True, help_text="Image description (max 200 chars)")
-#     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='about')
-
-#     def __str__(self):
-#         return self.description or f"Gallery Image {self.pk}"
-
-#     @property
-#     def smart_url(self):
-#         """
-#         Generates a Cloudinary URL with smart face detection enabled.
-#         Crops dynamically around faces to fit a 4:5 frame without cutting off heads.
-#         """
-#         if self.image:
-#             url, _ = cloudinary_url(
-#                 self.image.name,
-#                 width=600,
-#                 height=750,
-#                 # crop="fill",
-#                 crop="pad",
-#                 background="auto:predominant", # <--- Fills letterbox with dark/matching color
-#                 secure=True
-#             )
-#             return url
-#         return ""
 
 class GalleryImage(models.Model):
     CATEGORY_CHOICES = [
