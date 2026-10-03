@@ -44,9 +44,14 @@ def home(request):
     # LIVE ACCESS
     # ============================================================
 
-    live_access_granted = request.session.get(
-        "live_access_granted",
-        False
+    # live_access_granted = request.session.get(
+    #     "live_access_granted",
+    #     False
+    # )
+
+    live_access_granted = (
+        request.user.is_superuser
+        or request.session.get("live_access_granted", False)
     )
 
     live_access_error = None
