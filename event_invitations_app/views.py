@@ -53,6 +53,7 @@ def home(request):
         request.user.is_staff
         or request.session.get("live_access_granted", False)
     )
+    
 
     live_access_error = None
 
@@ -340,6 +341,16 @@ def home(request):
         formset = AdditionalGuestFormSet(
             instance=RSVP()
         )
+
+
+    print(
+    "LIVE DEBUG:",
+    "authenticated=", request.user.is_authenticated,
+    "username=", request.user.username,
+    "is_staff=", request.user.is_staff,
+    "is_live_day=", event.is_live_day,
+    "live_access_granted=", live_access_granted,
+    )   
 
     return render(
         request,
