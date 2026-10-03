@@ -2,6 +2,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from cloudinary.utils import cloudinary_url
 from django.utils import timezone
+from zoneinfo import ZoneInfo
 
 
 
@@ -34,14 +35,32 @@ class Event(models.Model):
     def __str__(self):
         return self.title
 
+    # @property
+    # def is_live_day(self):
+    #     """Returns True only if today matches the calendar date of the event."""
+    #     if not self.event_date:
+    #         return False
+    #     event_local_date = timezone.localtime(self.event_date).date()
+    #     today_local_date = timezone.localdate()
+    #     return event_local_date == today_local_date
+
     @property
     def is_live_day(self):
-        """Returns True only if today matches the calendar date of the event."""
+        """Returns True only if today matches the event date in UK time."""
+
         if not self.event_date:
             return False
-        event_local_date = timezone.localtime(self.event_date).date()
-        today_local_date = timezone.localdate()
-        return event_local_date == today_local_date
+
+        uk_timezone = ZoneInfo("Europe/London")
+
+        event_uk_date = timezone.localtime(
+            self.event_date,
+            uk_timezone
+        ).date()
+
+        today_uk_date = timezone.localdate(uk_timezone)
+
+        return event_uk_date == today_uk_date
 
     @property
     def is_past(self):
