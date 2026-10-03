@@ -50,7 +50,7 @@ def home(request):
     # )
 
     live_access_granted = (
-        request.user.is_superuser
+        request.user.is_staff
         or request.session.get("live_access_granted", False)
     )
 
