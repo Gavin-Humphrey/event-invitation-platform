@@ -58,7 +58,9 @@ class Event(models.Model):
             uk_timezone
         ).date()
 
-        today_uk_date = timezone.localdate(uk_timezone)
+        today_uk_date = timezone.now().astimezone(
+            uk_timezone
+        ).date()
 
         return event_uk_date == today_uk_date
 
