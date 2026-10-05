@@ -27,6 +27,12 @@ class Command(BaseCommand):
             )
             call_command("send_reminder_2")
 
+        elif today == date(2026, 10, 5):
+            self.stdout.write(
+                "Today is October 5, 2026. Sending Thank You message..."
+            )
+            call_command("send_thank_you")
+
         else:
             self.stdout.write(
                 f"No SMS reminder is scheduled for {today}."
